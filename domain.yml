@@ -31,7 +31,10 @@ slots:
     influence_conversation: false
 
 actions:
-  - action_query_knowledge_base
+  - action_compare_entities
+  - action_query_attribute
+  - action_query_entities
+  - action_resolve_entity
   
 responses:
   utter_greet:

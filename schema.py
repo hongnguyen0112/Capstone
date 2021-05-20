@@ -1,5 +1,5 @@
 schema = {
-    "capstone": {
+    "product": {
         "attributes": [
             "Product_RMIT", 
             "Segment", 

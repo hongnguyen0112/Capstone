@@ -14,5 +14,5 @@ rules:
 
 - rule: query knowledge base on user's query
   steps:
-  - intent: query_knowledge_base
-  - action: action_query_knowledge_base
+  - intent: query_attribute
+  - action: action_query_attribute
