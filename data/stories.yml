@@ -29,9 +29,11 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-- story: greet and then query knowledge base
+- story: greet and then query entities
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: query_knowledge_base
-  - action: action_query_knowledge_base
+  - intent: query_entities
+  - action: action_query_entities
+  - slot_was_set:
+    - entity_type: "product"

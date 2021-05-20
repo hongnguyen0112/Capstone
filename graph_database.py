@@ -1,6 +1,7 @@
 import logging
 from typing import List, Dict, Any, Optional, Text
 from grakn.client import Grakn, GraknClient, SessionType, TransactionType
+from schema import schema
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +48,7 @@ class GraphDatabase(KnowledgeBase):
         return entity
 
     def _execute_entity_query(self, query: Text) -> List[Dict[Text, Any]]:
-        with Grakn.core_client(uri = self.uri) as client:
+        with Grakn.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     logger.debug("Executing Graql query: " + query)
@@ -59,7 +60,7 @@ class GraphDatabase(KnowledgeBase):
                     return entities
 
     def _execute_attribute_query(self, query: Text) -> List[Any]:
-        with Grakn.core_client(uri = self.uri) as client:
+        with Grakn.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     print("Executing Graql Query: " + query)
@@ -72,7 +73,7 @@ class GraphDatabase(KnowledgeBase):
         query: Text,
         relation_name: Text
     ) -> List[Dict[Text, Any]]:
-        with Grakn.core_client(uri = self.uri) as client:
+        with Grakn.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     print("Executing Graql Query: " + query)
@@ -139,7 +140,7 @@ class GraphDatabase(KnowledgeBase):
         attribute_clause = self._get_attribute_clause(attributes)
         return self._execute_entity_query(
             f"match "
-            f"${entity_type} isa {entity_type}{attribute_clause}; "
+            f"${entity_type} isa {entity_type}, {attribute_clause};"
             f"get ${entity_type};"
         )[:limit]
 
@@ -170,3 +171,4 @@ class GraphDatabase(KnowledgeBase):
         )
         if value and len(value) == 1:
             return value[0]
+    

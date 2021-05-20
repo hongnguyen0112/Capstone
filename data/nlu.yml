@@ -91,9 +91,11 @@ nlu:
     - am I talking to a bot?
     - am I talking to a human?
 
-- intent: action_query_attribute
+- intent: query_entities
   examples: |
-    - In [April cycle]{"entity": "attribute", "value": "cycle"}, how many [products]{"entity": "object_type"} have been in the scope? 
-    - Count the [products]{"entity": "object_type"} in [April cycle]{"entity": "attribute", "value": "cycle"}.
-    - Give me the number of [April cycle]{"entity": "attribute", "value": "cycle"} [products]{"entity": "object_type"}.
+    - In [Apr_21]{"entity": "attribute", "value": "cycle"}, how many product have been in the scope? 
+    - Count the product in [Apr_21]{"entity": "attribute", "value": "cycle"}.
+    - Give me the number of [Apr_21]{"entity": "attribute", "value": "cycle"} product.
+    - Get [Apr_21]{"entity": "attribute", "value": "cycle"}.
+# [products]{"entity": "object_type"}
 

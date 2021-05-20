@@ -9,6 +9,7 @@ intents:
   - mood_unhappy
   - bot_challenge
   - query_knowledge_base
+  - query_entites
 
 entities:
   - product
@@ -55,6 +56,9 @@ responses:
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
+
+  utter_rephrase: 
+  - text: "Sorry, I did not get that..."
 
 session_config:
   session_expiration_time: 60

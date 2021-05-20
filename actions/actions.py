@@ -98,16 +98,102 @@ class ActionQueryEntities(Action):
 
     def run(self, dispatcher, tracker, domain):
         graph_database = GraphDatabase()
+
         entity_type = get_entity_type(tracker)
+        
         if entity_type is None:
             dispatcher.utter_template("utter_rephrase", tracker)
+            return []
+            
         attributes = get_attributes_of_entity(entity_type, tracker)
+        
         entities = graph_database.get_entities(entity_type, attributes)
+        
         if not entities:
             dispatcher.utter_template(
                 "I could not find any entities for '{}'.".format(entity_type), tracker
             )
             return []
+        
+        entity_representation = schema[entity_type]["representation"]
+
         dispatcher.utter_message(
             "Found the following '{}' entities: ".format(entity_type)
         )
+        
+        sorted_entities = sorted([to_str(e, entity_representation) for e in entities])
+        for i, e in enumerate(sorted_entities):
+            dispatcher.utter_message(f"{i + 1}: {e}")
+
+        # set slots
+        # set the entities slot in order to resolve references to one of the found
+        # entities later on
+        entity_key = schema[entity_type]["key"]
+        
+        slots = [
+            SlotSet("entity_type", entity_type),
+            SlotSet("listed_items", list(map(lambda x: to_str(x, entity_key), entities))),
+        ]
+        
+        # if only one entity was found, that the slot of that entity type to the found entity
+        if len(entities) == 1:
+            slots.sappend(SlotSet(entity_type, to_str(entities[0], entity_key)))
+
+        reset_attribute_slots(slots, entity_type, tracker)
+        
+        return slots   
+
+    
+class ActionQueryAttribute(Action):
+    def name(self):
+        return "action_query_attributes"
+    def run(self, dispatcher, tracker, domain):
+        graph_database = GraphDatabase()
+
+        entity_type = get_entity_type(tracker)
+        
+        if entity_type is None:
+            dispatcher.utter_template("utter_rephrase",tracker)
+            return []
+        
+        name = get_entity_type(tracker,entity_type)
+        attribute = get_attribute(tracker)
+        
+        if name is None or attribute is None:
+            dispatcher.utter_template("utter_rephrase",tracker)
+            slots = [SlotSet("mention", None)]
+            reset_attribute_slots(slots, entity_type, tracker)
+            return slots
+
+        key_attribute = schema[entity_type]["key"]
+        value = graph_database.get_attribute_of(entity_type,key_attribute,name,attribute )
+
+        
+
+
+#Action for resolving a mention
+class ActionResolveEntity(Action):
+    def name (self):
+        return "action_resolve_entity"
+    
+    def run(self, dispatcher, tracker, domain):
+        entity_type = tracker.get_slot("entity_type")
+        listed_items = tracker.get_slot("listed_items")
+
+        if entity_type is None:
+            dispatcher.utter_template("utter_rephrase", tracker)
+            return []
+        
+        mention = tracker.get_slot("mention")
+        if mention is not None:
+            value = resolve_mention(tracker)
+            if value is not None: 
+                return [SlotSet(entity_type, value), SlotSet("mention", None)]
+        
+        # Check if NER recognized entity directly
+        value = tracker.get_slot(entity_type)
+        if value is not None and value in listed_items:
+            return [SlotSet(entity_type, value), SlotSet("mention", None)]
+
+        dispatcher.utter_template("utter_rephrase", tracker)
+        return [SlotSet(entity_type, None), SlotSet("mention", None)]
