@@ -16,6 +16,26 @@ product sub entity,
     owns WW,
     owns comment;
 
+# mention_mapping sub entity,
+#     owns mapping_key,
+#     owns mapping_value;
+
+# object_type_mapping sub entity,
+#     owns mapping_key,
+#     owns mapping_value;
+
+# attribute_mapping sub entity,
+#     owns mapping_key,
+#     owns mapping_value;
+
+mapping sub entity,
+    owns mapping_key,
+    owns mapping_value;
+
+mention_mapping sub mapping;
+object_type_mapping sub mapping;
+attribute_mapping sub mapping;
+
 #Attribute
 
 Product_RMIT sub attribute,
@@ -52,4 +72,10 @@ WW sub attribute,
     value string;
 
 comment sub attribute,
+    value string;
+
+mapping_key sub attribute,
+    value string;
+
+mapping_value sub attribute,
     value string;

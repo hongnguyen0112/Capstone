@@ -93,9 +93,13 @@ nlu:
 
 - intent: query_entities
   examples: |
-    - In [Apr_21]{"entity": "attribute", "value": "cycle"}, how many product have been in the scope? 
-    - Count the product in [Apr_21]{"entity": "attribute", "value": "cycle"}.
-    - Give me the number of [Apr_21]{"entity": "attribute", "value": "cycle"} product.
-    - Get [Apr_21]{"entity": "attribute", "value": "cycle"}.
+    - In [Apr_21]{"entity": "cycle"}, how many [products]{"entity": "object_type", "value": "product"} have been in the scope? 
+    - Count the [products]{"entity": "object_type", "value": "product"} in [Apr_21]{"entity": "cycle"}.
+    - Give me the number of [Mar_21]{"entity": "cycle"} [products]{"entity": "object_type", "value": "product"}.
+    - Get all [products]{"entity": "object_type", "value": "product"} in [Mar_21]{"entity": "cycle"}.
+    - List all [products]{"entity": "object_type", "value": "product"} in [Mar_21]{"entity": "cycle"}.
+    - List all [products]{"entity": "object_type", "value": "product"}.
+    - What are the [products]{"entity": "object_type", "value": "product"}.
+    - Get all [products]{"entity": "object_type", "value": "product"}
 # [products]{"entity": "object_type"}
 

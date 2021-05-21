@@ -36,4 +36,4 @@ stories:
   - intent: query_entities
   - action: action_query_entities
   - slot_was_set:
-    - entity_type: "product"
+    - object_type: "product"

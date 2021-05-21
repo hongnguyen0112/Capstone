@@ -9,7 +9,7 @@ intents:
   - mood_unhappy
   - bot_challenge
   - query_knowledge_base
-  - query_entites
+  - query_entities
 
 entities:
   - product

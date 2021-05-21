@@ -1,6 +1,7 @@
 schema = {
     "product": {
         "attributes": [
+            "iid",
             "Product_RMIT", 
             "Segment", 
             "TCSS", 
@@ -14,6 +15,7 @@ schema = {
             "WW",
             "comment"
         ],
-        "representation": ["RMIT_Product"],
+        "key": "iid",
+        "representation": ["iid"],
     }
 }

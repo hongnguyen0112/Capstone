@@ -9,6 +9,7 @@ def parse_data_to_dictionaries(input):
             items.append(item)
     return items
 
+
 def load_data_into_grakn(input, session):
     items = parse_data_to_dictionaries(input)
 
@@ -21,20 +22,41 @@ def load_data_into_grakn(input, session):
 
     print("\nInserted " + str(len(items)) + " items from [ " + input["data_path"] + "] into Grakn.\n")
 
-def product_template(capstone):
-    graql_insert_query = 'insert $product isa product, has Product_RMIT "' + capstone["Product_RMIT"] + '"'
-    graql_insert_query += ', has Product_RMIT "' + capstone["Product_RMIT"] + '"'
-    graql_insert_query += ', has Segment "' + capstone["Segment"] + '"'
-    graql_insert_query += ', has AT_Site "' + capstone["AT_Site"] + '"'
-    graql_insert_query += ', has Division "' + capstone["Division"] + '"'
-    graql_insert_query += ', has Package_Tech "' + capstone["Package_Tech"] + '"'
-    graql_insert_query += ', has Chip_Attach "' + capstone["Chip_Attach"] + '"'
-    graql_insert_query += ', has Tester_Platform "' + capstone["Tester_Platform"] + '"'
-    graql_insert_query += ', has cycle "' + capstone["cycle"] + '"'
-    graql_insert_query += ', has Phase "' + capstone["Phase"] + '"'
-    graql_insert_query += ', has WW "' + capstone["WW"] + '"'
-    graql_insert_query += ', has comment "' + capstone["comment"] + '";'
+
+def product_template(product):
+    graql_insert_query = 'insert $product isa product, has Product_RMIT "' + product["Product_RMIT"] + '"'
+    graql_insert_query += ', has Segment "' + product["Segment"] + '"'
+    graql_insert_query += ', has AT_Site "' + product["AT_Site"] + '"'
+    graql_insert_query += ', has Division "' + product["Division"] + '"'
+    graql_insert_query += ', has Package_Tech "' + product["Package_Tech"] + '"'
+    graql_insert_query += ', has Chip_Attach "' + product["Chip_Attach"] + '"'
+    graql_insert_query += ', has Tester_Platform "' + product["Tester_Platform"] + '"'
+    graql_insert_query += ', has cycle "' + product["cycle"] + '"'
+    graql_insert_query += ', has Phase "' + product["Phase"] + '"'
+    graql_insert_query += ', has WW "' + product["WW"] + '"'
+    graql_insert_query += ', has comment "' + product["comment"] + '";'
     return graql_insert_query
+
+def mention_mapping_template(mapping):
+    graql_insert_query = 'insert $mapping isa mention_mapping, has mapping_key "' + mapping["mapping_key"] + '"'
+    graql_insert_query += ', has mapping_value "' + mapping["mapping_value"] + '";'
+    return graql_insert_query
+
+
+def attribute_mapping_template(mapping):
+    graql_insert_query = 'insert $mapping isa attribute_mapping, has mapping_key "' + mapping["mapping_key"] + '"'
+    graql_insert_query += ', has mapping_value "' + mapping["mapping_value"] + '";'
+    return graql_insert_query
+
+
+def object_type_mapping_template(mapping):
+    graql_insert_query = 'insert $mapping isa object_type_mapping, has mapping_key "' + mapping["mapping_key"] + '"'
+    graql_insert_query += ', has mapping_value "' + mapping["mapping_value"] + '";'
+    return graql_insert_query
+
+
+
+
 
 # def call_template(call):
 #     graql_insert_query = 'match $product, owns Product_RMIT "' + call["Product_RMIT"] + '";'
@@ -50,6 +72,7 @@ def product_template(capstone):
 #     graql_insert_query += 'match $product, owns comment "' + call["comment"] + '";'
 #     return graql_insert_query
 
+
 def build_product_graph(inputs):
     with Grakn.core_client("localhost:1729") as client:
         with client.session("capstone", SessionType.DATA) as session:
@@ -61,6 +84,18 @@ inputs = [
     {
         "data_path": "product",
         "template": product_template
+    },
+    {
+        "data_path": "attribute_mapping",
+        "template": attribute_mapping_template
+    },
+    {
+        "data_path": "mention_mapping",
+        "template": mention_mapping_template
+    },
+    {
+        "data_path": "object_type_mapping",
+        "template": object_type_mapping_template
     }
 ]
 

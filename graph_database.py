@@ -10,7 +10,7 @@ class KnowledgeBase(object):
 
     def get_entities (
         self,
-        entity_type: Text,
+        object_type: Text,
         attributes: Optional[List[Dict[Text, Text]]] = None,
         limit: int = 5,
     ) -> List[Dict[Text, Any]]:
@@ -18,7 +18,7 @@ class KnowledgeBase(object):
 
     def get_attribute_of (
         self,
-        entity_type: Text,
+        object_type: Text,
         key_attribute: Text,
         entity: Text,
         attributes: Text
@@ -26,9 +26,12 @@ class KnowledgeBase(object):
         raise NotImplementedError("Method is not implemented!")
 
     def validate_entity (
-        self, entity_type, entity, key_attribute, attributes
+        self, object_type, entity, key_attribute, attributes
     ) -> Optional[Dict[Text, Any]]:
         raise NotImplementedError("Method is not implemented!")
+    
+    def map(self, mapping_type: Text, mapping_key: Text) -> Text:
+        raise NotImplementedError("Method is not implemented.")
     
 
 class GraphDatabase(KnowledgeBase):
@@ -52,21 +55,31 @@ class GraphDatabase(KnowledgeBase):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     logger.debug("Executing Graql query: " + query)
-                    result_iter = tx.query(query)
-                    concepts = result_iter.collect_concepts()
+                    result_iter = tx.query().match(query)
                     entities = []
-                    for c in concepts:
+                    for c in result_iter:
                         entities.append(self._thing_to_dict(c))
                     return entities
 
+    # def _execute_attribute_query(self, query: Text) -> List[Any]:
+    #     with Grakn.core_client(self.uri) as client:
+    #         with client.session(self.keyspace, SessionType.DATA) as session:
+    #             with session.transaction(TransactionType.READ) as tx:
+    #                 print("Executing Graql Query: " + query)
+    #                 result_iter = tx.query().match(query)
+    #                 return [c.value() for c in result_iter]
+
     def _execute_attribute_query(self, query: Text) -> List[Any]:
+        """
+        Executes a query that returns the value(s) an entity has for a specific
+        attribute.
+        """
         with Grakn.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     print("Executing Graql Query: " + query)
-                    result_iter = tx.query(query)
-                    concepts = result_iter.collect_concepts()
-                    return [c.value() for c in concepts]
+                    result_iter = [ans.get("c") for ans in tx.query().match("match $x isa product, has cycle $c;")]                   
+                    return result_iter
 
     def _execute_relation_query(
         self, 
@@ -77,7 +90,7 @@ class GraphDatabase(KnowledgeBase):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     print("Executing Graql Query: " + query)
-                    result_iter = tx.query(query)
+                    result_iter = tx.query().match(query)
                     relations = []
                     for concept in result_iter:
                         relation_entity = concept.map().get(relation_name)
@@ -89,7 +102,7 @@ class GraphDatabase(KnowledgeBase):
                         relations.append(relation)
                     return relations
 
-
+    # Construct attribute clause
     def _get_attribute_clause (
         self,
         attributes: Optional[List[Dict[Text, Text]]] = None
@@ -98,11 +111,13 @@ class GraphDatabase(KnowledgeBase):
         if attributes:
             clause = ",".join([f"has {a['key']} '{a['value']}'" for a in attributes])
             clause = ", " + clause
+            #, has key 'value', 
         return clause
     
+    # Get the value of the given attribute for the provided entity.
     def _get_attribute_of (
         self,
-        entity_type: Text,
+        object_type: Text,
         key_attribute: Text,
         entity: Text,
         attributes: Text
@@ -110,7 +125,7 @@ class GraphDatabase(KnowledgeBase):
         return self._execute_attribute_query (
             f"""
                 match
-                    ${entity_type} isa {entity_type},
+                    ${object_type} isa {object_type},
                     has {key_attribute} '{entity}',
                     has {attributes} $a;
                 get $a
@@ -131,17 +146,17 @@ class GraphDatabase(KnowledgeBase):
 
     def get_entities (
         self, 
-        entity_type: Text,
+        object_type: Text,
         attributes: Optional[List[Dict[Text, Text]]] = None,
         limit: int = 10
     ) -> List[Dict[Text, Any]]:
-        if entity_type == "product":
+        if object_type == "product":
             return self._get_product_entities(attributes, limit)
         attribute_clause = self._get_attribute_clause(attributes)
         return self._execute_entity_query(
             f"match "
-            f"${entity_type} isa {entity_type}, {attribute_clause};"
-            f"get ${entity_type};"
+            f"${object_type} isa {object_type}{attribute_clause};"
+            f"get ${object_type};"
         )[:limit]
 
     def map (
@@ -152,22 +167,22 @@ class GraphDatabase(KnowledgeBase):
         value = self._execute_attribute_query(
             f"match "
             f"$mapping isa {mapping_type}, "
-            f"has mapping-key '{mapping_key}', "
-            f"has mapping-value $v;"
+            f"has mapping_key '{mapping_key}', "
+            f"has mapping_value $v;"
             f"get $v;"
         )
         if value and len(value) == 1:
             return value[0]
     
     def validate_entity(
-        self, entity_type, entity, key_attribute, attributes
+        self, object_type, entity, key_attribute, attributes
     ) -> Dict[Text, Any]:
         attribute_clause = self._get_attribute_clause(attributes)
         value = self._execute_entity_query(
             f"match "
-            f"${entity_type} isa {entity_type}{attribute_clause}, "
+            f"${object_type} isa {object_type}{attribute_clause}, "
             f"has {key_attribute} '{entity}'; "
-            f"get ${entity_type};"
+            f"get ${object_type};"
         )
         if value and len(value) == 1:
             return value[0]
