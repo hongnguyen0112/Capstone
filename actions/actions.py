@@ -5,7 +5,6 @@ from rasa_sdk import Action, Tracker
 from schema import schema
 from graph_database import GraphDatabase
 
-
 def resolve_mention(tracker: Tracker) -> Text:
     graph_database = GraphDatabase()
     mention = tracker.get_slot("mention")
@@ -79,15 +78,11 @@ def to_str(
     v_list = []
     for key in entity_keys:
         _e = entity
+        print("Got following entities:")
         for k in key.split("."):
+            print(_e)
             _e = _e[k]
-
-        if "balance" in key or "amount" in key:
-            v_list.append(f"{str(_e)} €")
-        elif "date" in key:
-            v_list.append(_e.strftime("%d.%m.%Y (%H:%M:%S)"))
-        else:
-            v_list.append(str(_e))
+        v_list.append(str(_e))
     return ", ".join(v_list)
 
 
@@ -118,7 +113,7 @@ class ActionQueryEntities(Action):
         entity_representation = schema[object_type]["representation"]
 
         dispatcher.utter_message(
-            "Found the following '{}' entities: ".format(object_type)
+            "Found the following {} entities: ".format(object_type)
         )
         
         sorted_entities = sorted([to_str(e, entity_representation) for e in entities])

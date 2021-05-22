@@ -1,6 +1,6 @@
 import logging
 from typing import List, Dict, Any, Optional, Text
-from grakn.client import Grakn, GraknClient, SessionType, TransactionType
+from grakn.client import Grakn, SessionType, TransactionType
 from schema import schema
 
 logger = logging.getLogger(__name__)
@@ -45,7 +45,7 @@ class GraphDatabase(KnowledgeBase):
         self.keyspace = keyspace
 
     def _thing_to_dict(self, thing, transaction):
-        entity = {"id": thing.get_iid(), "type": thing.get_type()}
+        entity = {"id": thing.get_iid(), "type": thing.get_type().get_label().name()}
         for each in thing.as_remote(transaction).get_has():
             entity[each.get_type().get_label().name()] = each.get_value()
         return entity
@@ -175,7 +175,7 @@ class GraphDatabase(KnowledgeBase):
             f"has mapping_value $v;"
             f"get $v;"
         )
-        print(value[0])
+        print("mapping_value: ", value[0])
         if value and len(value) == 1:
             return value[0]
     

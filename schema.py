@@ -16,6 +16,6 @@ schema = {
             "comment"
         ],
         "key": "id",
-        "representation": ["Product_RMIT", "WW"],
+        "representation": ["Product_RMIT", "Phase"],
     }
 }
