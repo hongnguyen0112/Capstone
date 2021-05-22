@@ -29,6 +29,7 @@ entities:
   - Phase
   - WW
   - comment
+  - listed_items
   
 slots: 
   product:
@@ -80,6 +81,9 @@ slots:
     type: text
     influence_conversation: false
   comment:
+    type: text
+    influence_conversation: false
+  listed_items:
     type: text
     influence_conversation: false
 
