@@ -68,7 +68,7 @@
   manifest_preallocation_size=4194304
   write_thread_slow_yield_usec=3
   unordered_write=true
-  wal_dir=C\:\\Users\\ntmkn\\Desktop\\Capstone\\grakn\\server\\data\\capstone\\data
+  wal_dir=C\:\\Users\\ntmkn\\Desktop\\Final\\Capstone\\grakn\\server\\data\\capstone\\schema
   WAL_size_limit_MB=0
   persist_stats_to_disk=false
   allow_concurrent_memtable_write=true

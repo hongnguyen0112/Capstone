@@ -248,3 +248,11 @@ grakn.core.common.exception.GraknException: [TYR03] Invalid Type Read: The type 
 2021-05-22 16:19:36,439 [main] [INFO ] grakn.core.server.GraknServer - - data directory configured to: C:\Users\ntmkn\Desktop\Capstone\grakn\server\data
 2021-05-22 16:19:36,439 [main] [INFO ] grakn.core.server.GraknServer - - bootup completed in: 944 ms
 2021-05-22 16:19:36,440 [main] [INFO ] grakn.core.server.GraknServer - ...
+2021-05-22 18:00:00,415 [main] [INFO ] grakn.core.server.GraknServer - Grakn Core Server is now running and will keep this process alive.
+2021-05-22 18:00:00,418 [main] [INFO ] grakn.core.server.GraknServer - You can press CTRL+C to shutdown this server.
+2021-05-22 18:00:00,418 [main] [INFO ] grakn.core.server.GraknServer - 
+2021-05-22 18:00:00,419 [main] [INFO ] grakn.core.server.GraknServer - - version: 2.0.2
+2021-05-22 18:00:00,419 [main] [INFO ] grakn.core.server.GraknServer - - listening to port: 1729
+2021-05-22 18:00:00,421 [main] [INFO ] grakn.core.server.GraknServer - - data directory configured to: C:\Users\ntmkn\Desktop\Final\Capstone\grakn\server\data
+2021-05-22 18:00:00,422 [main] [INFO ] grakn.core.server.GraknServer - - bootup completed in: 1044 ms
+2021-05-22 18:00:00,423 [main] [INFO ] grakn.core.server.GraknServer - ...
