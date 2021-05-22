@@ -15,7 +15,7 @@ schema = {
             "WW",
             "comment"
         ],
-        "key": "iid",
-        "representation": ["iid"],
+        "key": "id",
+        "representation": ["Product_RMIT", "WW"],
     }
 }

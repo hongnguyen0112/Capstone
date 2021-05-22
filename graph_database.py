@@ -44,10 +44,10 @@ class GraphDatabase(KnowledgeBase):
         self.uri = uri
         self.keyspace = keyspace
 
-    def _thing_to_dict(self, thing):
-        entity = {"id": thing.id, "type": thing.type().label()}
-        for each in thing.attributes():
-            entity[each.type().label()] = each.value()
+    def _thing_to_dict(self, thing, transaction):
+        entity = {"id": thing.get_iid(), "type": thing.get_type()}
+        for each in thing.as_remote(transaction).get_has():
+            entity[each.get_type().get_label().name()] = each.get_value()
         return entity
 
     def _execute_entity_query(self, query: Text) -> List[Dict[Text, Any]]:
@@ -56,9 +56,10 @@ class GraphDatabase(KnowledgeBase):
                 with session.transaction(TransactionType.READ) as tx:
                     logger.debug("Executing Graql query: " + query)
                     result_iter = tx.query().match(query)
+                    answers = [ans.get("product") for ans in result_iter]
                     entities = []
-                    for c in result_iter:
-                        entities.append(self._thing_to_dict(c))
+                    for c in answers:
+                        entities.append(self._thing_to_dict(c, tx))
                     return entities
 
     # def _execute_attribute_query(self, query: Text) -> List[Any]:
@@ -78,8 +79,11 @@ class GraphDatabase(KnowledgeBase):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     print("Executing Graql Query: " + query)
-                    result_iter = [ans.get("c") for ans in tx.query().match("match $x isa product, has cycle $c;")]                   
-                    return result_iter
+                    query = "".join(query)
+                    iterator = tx.query().match(query)   
+                    answers = [ans.get('v') for ans in iterator]
+                    result = [answer.get_value() for answer in answers]
+                    return result
 
     def _execute_relation_query(
         self, 
@@ -171,6 +175,7 @@ class GraphDatabase(KnowledgeBase):
             f"has mapping_value $v;"
             f"get $v;"
         )
+        print(value[0])
         if value and len(value) == 1:
             return value[0]
     

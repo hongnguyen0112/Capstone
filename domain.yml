@@ -16,6 +16,19 @@ entities:
   - object_type
   - cycle
   - attribute
+  - mention
+  - iid
+  - Product_RMIT
+  - Segment
+  - TCSS
+  - AT_Site
+  - Division
+  - Package_Tech
+  - Chip_Attach
+  - Tester_Platform
+  - Phase
+  - WW
+  - comment
   
 slots: 
   product:
@@ -28,6 +41,45 @@ slots:
     type: text
     influence_conversation: false
   attribute:
+    type: text
+    influence_conversation: false
+  mention:
+    type: text
+    influence_conversation: false
+  iid:
+    type: text
+    influence_conversation: false
+  Product_RMIT:
+    type: text
+    influence_conversation: false
+  Segment:
+    type: text
+    influence_conversation: false
+  TCSS:
+    type: text
+    influence_conversation: false
+  AT_Site:
+    type: text
+    influence_conversation: false
+  Division:
+    type: text
+    influence_conversation: false
+  Package_Tech:
+    type: text
+    influence_conversation: false
+  Chip_Attach:
+    type: text
+    influence_conversation: false
+  Tester_Platform:
+    type: text
+    influence_conversation: false
+  Phase:
+    type: text
+    influence_conversation: false
+  WW:
+    type: text
+    influence_conversation: false
+  comment:
     type: text
     influence_conversation: false
 
