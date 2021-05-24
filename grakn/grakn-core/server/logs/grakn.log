@@ -251,3 +251,11 @@ grakn.core.common.exception.GraknException: [TYR03] Invalid Type Read: The type 
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - Grakn Core Server is now running and will keep this process alive.
+2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - You can press CTRL+C to shutdown this server.
+2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - 
+2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - - version: 2.0.2
+2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - - listening to port: 1729
+2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - - data directory configured to: D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data
+2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - - bootup completed in: 2211 ms
+2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - ...

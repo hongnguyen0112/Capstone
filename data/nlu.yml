@@ -101,6 +101,5 @@ nlu:
     - List all [products]{"entity": "object_type", "value": "product"}.
     - What are the [products]{"entity": "object_type", "value": "product"}.
     - Get all [products]{"entity": "object_type", "value": "product"}
-    - Get all in [Mar_21]{"entity": "object_type", "value": "cycle_info"}.
 # [products]{"entity": "object_type"}
 
