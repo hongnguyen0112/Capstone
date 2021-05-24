@@ -1,0 +1,253 @@
+2021-05-24 10:26:41,548 [main] [INFO ] grakn.core.server.GraknServer - Grakn Core Server is now running and will keep this process alive.
+2021-05-24 10:26:41,553 [main] [INFO ] grakn.core.server.GraknServer - You can press CTRL+C to shutdown this server.
+2021-05-24 10:26:41,554 [main] [INFO ] grakn.core.server.GraknServer - 
+2021-05-24 10:26:41,554 [main] [INFO ] grakn.core.server.GraknServer - - version: 2.0.2
+2021-05-24 10:26:41,557 [main] [INFO ] grakn.core.server.GraknServer - - listening to port: 1729
+2021-05-24 10:26:41,557 [main] [INFO ] grakn.core.server.GraknServer - - data directory configured to: D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data
+2021-05-24 10:26:41,558 [main] [INFO ] grakn.core.server.GraknServer - - bootup completed in: 2402 ms
+2021-05-24 10:26:41,571 [main] [INFO ] grakn.core.server.GraknServer - ...
+2021-05-24 10:33:05,352 [grakn-core-service::0] [ERROR] grakn.core.server.GraknService - [DBS02] Invalid Database Operations: The database with the name 'test' does not exist.
+grakn.core.common.exception.GraknException: [DBS02] Invalid Database Operations: The database with the name 'test' does not exist.
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.rocks.RocksGrakn.session(RocksGrakn.java:127)
+	at grakn.core.rocks.RocksGrakn.session(RocksGrakn.java:44)
+	at grakn.core.server.GraknService.sessionOpen(GraknService.java:156)
+	at grakn.protocol.GraknCoreGrpc$MethodHandlers.invoke(GraknCoreGrpc.java:825)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:814)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 10:38:08,419 [grakn-core-service::0] [ERROR] grakn.core.server.GraknService - [DBS02] Invalid Database Operations: The database with the name 'capstone' does not exist.
+grakn.core.common.exception.GraknException: [DBS02] Invalid Database Operations: The database with the name 'capstone' does not exist.
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.rocks.RocksGrakn.session(RocksGrakn.java:127)
+	at grakn.core.rocks.RocksGrakn.session(RocksGrakn.java:44)
+	at grakn.core.server.GraknService.sessionOpen(GraknService.java:156)
+	at grakn.protocol.GraknCoreGrpc$MethodHandlers.invoke(GraknCoreGrpc.java:825)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:814)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 11:01:35,292 [grakn-core-service::0] [ERROR] grakn.core.server.TransactionService - [QRY16] Invalid Query Pattern: The pattern '{{ $_0 isa cycle; $_0 = "Mar_21"; 
+$product isa product; $product has $_0; }}' can never be satisfied the current schema, specifically due to '[{ $_0 isa cycle; $_0 = "Mar_21"; 
+$product isa product; $product has $_0; }]'.
+grakn.core.common.exception.GraknException: [QRY16] Invalid Query Pattern: The pattern '{{ $_0 isa cycle; $_0 = "Mar_21"; 
+$product isa product; $product has $_0; }}' can never be satisfied the current schema, specifically due to '[{ $_0 isa cycle; $_0 = "Mar_21"; 
+$product isa product; $product has $_0; }]'.
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.reasoner.Reasoner.execute(Reasoner.java:115)
+	at grakn.core.query.Matcher.execute(Matcher.java:125)
+	at grakn.core.query.Matcher.execute(Matcher.java:121)
+	at grakn.core.query.QueryManager.match(QueryManager.java:72)
+	at grakn.core.server.query.QueryService.match(QueryService.java:131)
+	at grakn.core.server.query.QueryService.execute(QueryService.java:84)
+	at grakn.core.server.TransactionService.executeRequest(TransactionService.java:159)
+	at grakn.core.server.TransactionService.execute(TransactionService.java:135)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:115)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:74)
+	at io.grpc.stub.ServerCalls$StreamingServerCallHandler$StreamingServerCallListener.onMessage(ServerCalls.java:255)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailableInternal(ServerCallImpl.java:309)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailable(ServerCallImpl.java:292)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1MessagesAvailable.runInContext(ServerImpl.java:782)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 11:30:04,653 [grakn-core-service::0] [ERROR] grakn.core.server.TransactionService - [TXN08] Invalid Transaction Operation: Attempted data writes when transaction type does not allow.
+grakn.core.common.exception.GraknException: [TXN08] Invalid Transaction Operation: Attempted data writes when transaction type does not allow.
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.rocks.RocksStorage.exception(RocksStorage.java:141)
+	at grakn.core.rocks.RocksStorage$TransactionBounded.exception(RocksStorage.java:272)
+	at grakn.core.rocks.RocksStorage$Data.exception(RocksStorage.java:345)
+	at grakn.core.graph.GraphManager.exception(GraphManager.java:51)
+	at grakn.core.concept.ConceptManager.exception(ConceptManager.java:223)
+	at grakn.core.query.QueryManager.delete(QueryManager.java:138)
+	at grakn.core.server.query.QueryService.delete(QueryService.java:165)
+	at grakn.core.server.query.QueryService.execute(QueryService.java:99)
+	at grakn.core.server.TransactionService.executeRequest(TransactionService.java:159)
+	at grakn.core.server.TransactionService.execute(TransactionService.java:135)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:115)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:74)
+	at io.grpc.stub.ServerCalls$StreamingServerCallHandler$StreamingServerCallListener.onMessage(ServerCalls.java:255)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailableInternal(ServerCallImpl.java:309)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailable(ServerCallImpl.java:292)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1MessagesAvailable.runInContext(ServerImpl.java:782)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 11:33:30,630 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: Failed to create lock file: D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data\product\schema/LOCK: The process cannot access the file because it is being used by another process.
+
+2021-05-24 11:33:35,441 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: Failed to create lock file: D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data\product\schema/LOCK: The process cannot access the file because it is being used by another process.
+
+2021-05-24 11:34:04,974 [main] [INFO ] grakn.core.server.GraknServer - Grakn Core Server is now running and will keep this process alive.
+2021-05-24 11:34:04,980 [main] [INFO ] grakn.core.server.GraknServer - You can press CTRL+C to shutdown this server.
+2021-05-24 11:34:04,980 [main] [INFO ] grakn.core.server.GraknServer - 
+2021-05-24 11:34:04,980 [main] [INFO ] grakn.core.server.GraknServer - - version: 2.0.2
+2021-05-24 11:34:04,984 [main] [INFO ] grakn.core.server.GraknServer - - listening to port: 1729
+2021-05-24 11:34:04,984 [main] [INFO ] grakn.core.server.GraknServer - - data directory configured to: D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data
+2021-05-24 11:34:04,985 [main] [INFO ] grakn.core.server.GraknServer - - bootup completed in: 2749 ms
+2021-05-24 11:34:04,985 [main] [INFO ] grakn.core.server.GraknServer - ...
+2021-05-24 14:30:04,229 [main] [INFO ] grakn.core.server.GraknServer - Grakn Core Server is now running and will keep this process alive.
+2021-05-24 14:30:04,241 [main] [INFO ] grakn.core.server.GraknServer - You can press CTRL+C to shutdown this server.
+2021-05-24 14:30:04,242 [main] [INFO ] grakn.core.server.GraknServer - 
+2021-05-24 14:30:04,242 [main] [INFO ] grakn.core.server.GraknServer - - version: 2.0.2
+2021-05-24 14:30:04,248 [main] [INFO ] grakn.core.server.GraknServer - - listening to port: 1729
+2021-05-24 14:30:04,249 [main] [INFO ] grakn.core.server.GraknServer - - data directory configured to: D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data
+2021-05-24 14:30:04,250 [main] [INFO ] grakn.core.server.GraknServer - - bootup completed in: 3666 ms
+2021-05-24 14:30:04,251 [main] [INFO ] grakn.core.server.GraknServer - ...
+2021-05-24 14:52:16,004 [grakn-core-service::0] [ERROR] grakn.core.server.TransactionService - [TYR04] Invalid Type Read: There are no role types of label 'cycle_info' in the scope of 'include_cycle'
+grakn.core.common.exception.GraknException: [TYR04] Invalid Type Read: There are no role types of label 'cycle_info' in the scope of 'include_cycle'
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.logic.tool.TypeResolver.lambda$resolveVariableLabels$4(TypeResolver.java:110)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at grakn.core.logic.tool.TypeResolver.resolveVariableLabels(TypeResolver.java:105)
+	at grakn.core.logic.tool.TypeResolver.resolveVariables(TypeResolver.java:140)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:129)
+	at grakn.core.logic.tool.TypeResolver.lambda$resolve$5(TypeResolver.java:125)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:125)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:121)
+	at grakn.core.reasoner.Reasoner.execute(Reasoner.java:111)
+	at grakn.core.query.Matcher.execute(Matcher.java:125)
+	at grakn.core.query.Matcher.execute(Matcher.java:121)
+	at grakn.core.query.QueryManager.match(QueryManager.java:72)
+	at grakn.core.server.query.QueryService.match(QueryService.java:131)
+	at grakn.core.server.query.QueryService.execute(QueryService.java:84)
+	at grakn.core.server.TransactionService.executeRequest(TransactionService.java:159)
+	at grakn.core.server.TransactionService.execute(TransactionService.java:135)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:115)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:74)
+	at io.grpc.stub.ServerCalls$StreamingServerCallHandler$StreamingServerCallListener.onMessage(ServerCalls.java:255)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailableInternal(ServerCallImpl.java:309)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailable(ServerCallImpl.java:292)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1MessagesAvailable.runInContext(ServerImpl.java:782)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 15:04:46,340 [grakn-core-service::0] [ERROR] grakn.core.server.TransactionService - [QRY16] Invalid Query Pattern: The pattern '{{ $include_cycle has $_0; $include_cycle isa include_cycle; 
+$_0 = "Mar_21"; $_0 isa cycle; }}' can never be satisfied the current schema, specifically due to '[{ $include_cycle has $_0; $include_cycle isa include_cycle; 
+$_0 = "Mar_21"; $_0 isa cycle; }]'.
+grakn.core.common.exception.GraknException: [QRY16] Invalid Query Pattern: The pattern '{{ $include_cycle has $_0; $include_cycle isa include_cycle; 
+$_0 = "Mar_21"; $_0 isa cycle; }}' can never be satisfied the current schema, specifically due to '[{ $include_cycle has $_0; $include_cycle isa include_cycle; 
+$_0 = "Mar_21"; $_0 isa cycle; }]'.
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.reasoner.Reasoner.execute(Reasoner.java:115)
+	at grakn.core.query.Matcher.execute(Matcher.java:125)
+	at grakn.core.query.Matcher.execute(Matcher.java:121)
+	at grakn.core.query.QueryManager.match(QueryManager.java:72)
+	at grakn.core.server.query.QueryService.match(QueryService.java:131)
+	at grakn.core.server.query.QueryService.execute(QueryService.java:84)
+	at grakn.core.server.TransactionService.executeRequest(TransactionService.java:159)
+	at grakn.core.server.TransactionService.execute(TransactionService.java:135)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:115)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:74)
+	at io.grpc.stub.ServerCalls$StreamingServerCallHandler$StreamingServerCallListener.onMessage(ServerCalls.java:255)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailableInternal(ServerCallImpl.java:309)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailable(ServerCallImpl.java:292)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1MessagesAvailable.runInContext(ServerImpl.java:782)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 15:06:54,656 [grakn-core-service::0] [ERROR] grakn.core.server.TransactionService - [TYR04] Invalid Type Read: There are no role types of label 'cycle_info' in the scope of 'include_cycle'
+grakn.core.common.exception.GraknException: [TYR04] Invalid Type Read: There are no role types of label 'cycle_info' in the scope of 'include_cycle'
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.logic.tool.TypeResolver.lambda$resolveVariableLabels$4(TypeResolver.java:110)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at grakn.core.logic.tool.TypeResolver.resolveVariableLabels(TypeResolver.java:105)
+	at grakn.core.logic.tool.TypeResolver.resolveVariables(TypeResolver.java:140)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:129)
+	at grakn.core.logic.tool.TypeResolver.lambda$resolve$5(TypeResolver.java:125)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:125)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:121)
+	at grakn.core.reasoner.Reasoner.execute(Reasoner.java:111)
+	at grakn.core.query.Matcher.execute(Matcher.java:125)
+	at grakn.core.query.Matcher.execute(Matcher.java:121)
+	at grakn.core.query.QueryManager.match(QueryManager.java:72)
+	at grakn.core.server.query.QueryService.match(QueryService.java:131)
+	at grakn.core.server.query.QueryService.execute(QueryService.java:84)
+	at grakn.core.server.TransactionService.executeRequest(TransactionService.java:159)
+	at grakn.core.server.TransactionService.execute(TransactionService.java:135)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:115)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:74)
+	at io.grpc.stub.ServerCalls$StreamingServerCallHandler$StreamingServerCallListener.onMessage(ServerCalls.java:255)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailableInternal(ServerCallImpl.java:309)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailable(ServerCallImpl.java:292)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1MessagesAvailable.runInContext(ServerImpl.java:782)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 15:19:09,834 [grakn-core-service::0] [ERROR] grakn.core.server.TransactionService - [QRY16] Invalid Query Pattern: The pattern '{{ $product has $_0; $product isa product; 
+$_0 = "Mar_21"; $_0 isa cycle; }}' can never be satisfied the current schema, specifically due to '[{ $product has $_0; $product isa product; 
+$_0 = "Mar_21"; $_0 isa cycle; }]'.
+grakn.core.common.exception.GraknException: [QRY16] Invalid Query Pattern: The pattern '{{ $product has $_0; $product isa product; 
+$_0 = "Mar_21"; $_0 isa cycle; }}' can never be satisfied the current schema, specifically due to '[{ $product has $_0; $product isa product; 
+$_0 = "Mar_21"; $_0 isa cycle; }]'.
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.reasoner.Reasoner.execute(Reasoner.java:115)
+	at grakn.core.query.Matcher.execute(Matcher.java:125)
+	at grakn.core.query.Matcher.execute(Matcher.java:121)
+	at grakn.core.query.QueryManager.match(QueryManager.java:72)
+	at grakn.core.server.query.QueryService.match(QueryService.java:131)
+	at grakn.core.server.query.QueryService.execute(QueryService.java:84)
+	at grakn.core.server.TransactionService.executeRequest(TransactionService.java:159)
+	at grakn.core.server.TransactionService.execute(TransactionService.java:135)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:115)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:74)
+	at io.grpc.stub.ServerCalls$StreamingServerCallHandler$StreamingServerCallListener.onMessage(ServerCalls.java:255)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailableInternal(ServerCallImpl.java:309)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailable(ServerCallImpl.java:292)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1MessagesAvailable.runInContext(ServerImpl.java:782)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+2021-05-24 16:12:41,833 [grakn-core-service::0] [ERROR] grakn.core.server.TransactionService - [TYR03] Invalid Type Read: The type 'proudct' does not exist.
+grakn.core.common.exception.GraknException: [TYR03] Invalid Type Read: The type 'proudct' does not exist.
+	at grakn.core.common.exception.GraknException.of(GraknException.java:55)
+	at grakn.core.logic.tool.TypeResolver.lambda$resolveVariableLabels$4(TypeResolver.java:114)
+	at java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+	at grakn.core.logic.tool.TypeResolver.resolveVariableLabels(TypeResolver.java:105)
+	at grakn.core.logic.tool.TypeResolver.resolveVariables(TypeResolver.java:140)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:129)
+	at grakn.core.logic.tool.TypeResolver.lambda$resolve$5(TypeResolver.java:125)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:125)
+	at grakn.core.logic.tool.TypeResolver.resolve(TypeResolver.java:121)
+	at grakn.core.reasoner.Reasoner.execute(Reasoner.java:111)
+	at grakn.core.query.Matcher.execute(Matcher.java:125)
+	at grakn.core.query.Matcher.execute(Matcher.java:121)
+	at grakn.core.query.QueryManager.match(QueryManager.java:72)
+	at grakn.core.server.query.QueryService.match(QueryService.java:131)
+	at grakn.core.server.query.QueryService.execute(QueryService.java:84)
+	at grakn.core.server.TransactionService.executeRequest(TransactionService.java:159)
+	at grakn.core.server.TransactionService.execute(TransactionService.java:135)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:115)
+	at grakn.core.server.TransactionService.onNext(TransactionService.java:74)
+	at io.grpc.stub.ServerCalls$StreamingServerCallHandler$StreamingServerCallListener.onMessage(ServerCalls.java:255)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailableInternal(ServerCallImpl.java:309)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.messagesAvailable(ServerCallImpl.java:292)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1MessagesAvailable.runInContext(ServerImpl.java:782)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)

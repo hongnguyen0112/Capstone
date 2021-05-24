@@ -15,6 +15,7 @@ class KnowledgeBase(object):
     ) -> List[Dict[Text, Any]]:
         raise NotImplementedError("Method is not implemented!")
 
+
     def get_attribute_of (
         self,
         object_type: Text,
@@ -23,6 +24,7 @@ class KnowledgeBase(object):
         attributes: Text
     ) -> List[Any]:
         raise NotImplementedError("Method is not implemented!")
+
 
     def validate_entity (
         self, object_type, entity, key_attribute, attributes
@@ -42,10 +44,11 @@ class GraphDatabase(KnowledgeBase):
     def __init__ (
         self, 
         uri: Text = "localhost:1729",
-        keyspace: Text = "capstone"
+        keyspace: Text = "product"
     ):
         self.uri = uri
         self.keyspace = keyspace
+
 
     def _thing_to_dict(self, thing, transaction):
         """
@@ -59,6 +62,7 @@ class GraphDatabase(KnowledgeBase):
 
         return entity
 
+
     def _execute_entity_query(self, query: Text) -> List[Dict[Text, Any]]:
         """
         Executes a query that returns a list of entities with all their attributes.
@@ -67,7 +71,7 @@ class GraphDatabase(KnowledgeBase):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
 
-                    logger.debug("Executing Graql query: " + query)
+                    logger.debug("Entity: Executing Graql query: " + query)
                     result_iter = tx.query().match(query)
                     answers = [ans.get("product") for ans in result_iter]
                     entities = []
@@ -76,6 +80,7 @@ class GraphDatabase(KnowledgeBase):
                         entities.append(self._thing_to_dict(c, tx))
 
                     return entities
+
 
     def _execute_attribute_query(self, query: Text) -> List[Any]:
         """
@@ -86,13 +91,14 @@ class GraphDatabase(KnowledgeBase):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
 
-                    print("Executing Graql Query: " + query)
+                    print("Attribute: Executing Graql Query: " + query)
                     query = "".join(query)
                     iterator = tx.query().match(query)   
                     answers = [ans.get('v') for ans in iterator]
                     result = [answer.get_value() for answer in answers]
 
                     return result
+
 
     def _execute_relation_query(
         self, 
@@ -107,7 +113,7 @@ class GraphDatabase(KnowledgeBase):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
 
-                    print("Executing Graql Query: " + query)
+                    print("Relation: Executing Graql Query: " + query)
                     result_iter = tx.query().match(query)
                     relations = []
 
@@ -122,6 +128,7 @@ class GraphDatabase(KnowledgeBase):
                         relations.append(relation)
 
                     return relations
+
 
     def _get_attribute_clause (
         self,
@@ -141,6 +148,7 @@ class GraphDatabase(KnowledgeBase):
 
         return clause
     
+
     def _get_attribute_of (
         self,
         object_type: Text,
@@ -166,6 +174,23 @@ class GraphDatabase(KnowledgeBase):
             """
         )
     
+
+    def _get_cycle_entities(
+        self, attributes: Optional[List[Dict[Text, Text]]] = None
+    ) -> List[Dict[Text, Any]]:
+
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get cycle")
+
+        return self._execute_relation_query (
+            f"match "
+            f"$include_cycle (product: $pr, cycle_info: $cyi) "
+            f"isa include_cycle{attributes_clause}; "
+            f"get $include_cycle;",
+            "include_cycle"
+        )
+
+
     def _get_product_entities (
         self,
         attributes: Optional[List[Dict[Text, Text]]] = None,
@@ -179,12 +204,13 @@ class GraphDatabase(KnowledgeBase):
         :return: list of products
         """
         attributes_clause = self._get_attribute_clause(attributes)
-
+        logger.debug("Get product entities")
         return self._execute_entity_query (
             f"match "
             f"$product isa product{attributes_clause}; "
             f"get $product;"
         )[:limit]
+
 
     def get_entities (
         self, 
@@ -202,6 +228,8 @@ class GraphDatabase(KnowledgeBase):
         """
         if object_type == "product":
             return self._get_product_entities(attributes, limit)
+        if object_type == "cycle_info":
+            return self._get_cycle_entities(attributes)
 
         attribute_clause = self._get_attribute_clause(attributes)
 
@@ -210,6 +238,7 @@ class GraphDatabase(KnowledgeBase):
             f"${object_type} isa {object_type}{attribute_clause};"
             f"get ${object_type};"
         )[:limit]
+
 
     def map (
         self, 
@@ -235,6 +264,7 @@ class GraphDatabase(KnowledgeBase):
         if value and len(value) == 1:
             return value[0]
     
+
     def validate_entity(
         self, object_type, entity, key_attribute, attributes
     ) -> Dict[Text, Any]:

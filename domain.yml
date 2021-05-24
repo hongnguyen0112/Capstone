@@ -14,7 +14,7 @@ intents:
 entities:
   - product
   - object_type
-  - cycle
+  - cycle_info
   - attribute
   - mention
   - iid
@@ -38,7 +38,7 @@ slots:
   object_type:
     type: text
     influence_conversation: false
-  cycle:
+  cycle_info:
     type: text
     influence_conversation: false
   attribute:

@@ -16,6 +16,34 @@ schema = {
             "comment"
         ],
         "key": "id",
-        "representation": ["Product_RMIT", "Phase"],
-    }
+        "representation": ["Product_RMIT"]
+    },
+
+    "cycle_info": {
+        "attributes": [
+            "iid",
+            "cycle"
+        ],
+        "key": "id",
+        "representation": ["cycle"]
+    },
+
+    "phase_info": {
+        "attributes": [
+            "iid",
+            "Phase"
+        ],
+        "key": "id",
+        "representation": ["Phase"]
+    },
+    
+    "comment_info": {
+        "attributes": [
+            "iid",
+            "WW",
+            "comment"
+        ],
+        "key": "id",
+        "representation": ["WW", "comment"]
+    },
 }
