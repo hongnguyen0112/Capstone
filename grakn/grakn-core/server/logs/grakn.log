@@ -259,3 +259,9 @@ grakn.core.common.exception.GraknException: [TYR03] Invalid Type Read: The type 
 2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - - data directory configured to: D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data
 2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - - bootup completed in: 2211 ms
 2021-05-24 17:05:34,692 [main] [INFO ] grakn.core.server.GraknServer - ...
+2021-05-24 21:25:54,821 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
+2021-05-24 21:31:58,278 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
+2021-05-24 21:32:14,016 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
+2021-05-24 21:38:11,006 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
+2021-05-25 08:49:47,160 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
+2021-05-25 10:44:15,858 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted

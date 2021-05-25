@@ -1,0 +1,105 @@
+2021/05/24-21:31:58.163108 96e8 RocksDB version: 6.15.2
+2021/05/24-21:31:58.163193 96e8 Git sha rocksdb_build_git_sha:@ca8082762f736a665b75fa1d39468856071bc3a9@
+2021/05/24-21:31:58.163285 96e8 Compile date Jan  4 2021
+2021/05/24-21:31:58.163394 96e8 DB SUMMARY
+2021/05/24-21:31:58.163481 96e8 DB Session ID:  IHHA1WOMXOCVZVRXF3EV
+2021/05/24-21:31:58.164199 96e8 CURRENT file:  CURRENT
+2021/05/24-21:31:58.164294 96e8 IDENTITY file:  IDENTITY
+2021/05/24-21:31:58.164518 96e8 MANIFEST file:  MANIFEST-000019 size: 123 Bytes
+2021/05/24-21:31:58.164739 96e8 MANIFEST file:  MANIFEST-000024 size: 123 Bytes
+2021/05/24-21:31:58.164827 96e8 SST files in D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data\product\schema dir, Total Num: 1, files: 000008.sst 
+2021/05/24-21:31:58.165548 96e8 Write Ahead Log file in D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data\product\schema: 000020.log size: 0 ; 000025.log size: 0 ; 
+2021/05/24-21:31:58.165631 96e8                         Options.error_if_exists: 0
+2021/05/24-21:31:58.165674 96e8                       Options.create_if_missing: 1
+2021/05/24-21:31:58.165715 96e8                         Options.paranoid_checks: 1
+2021/05/24-21:31:58.165758 96e8                               Options.track_and_verify_wals_in_manifest: 0
+2021/05/24-21:31:58.165800 96e8                                     Options.env: 00000201049CCFE0
+2021/05/24-21:31:58.165848 96e8                                      Options.fs: Legacy File System
+2021/05/24-21:31:58.165888 96e8                                Options.info_log: 0000020104B78F60
+2021/05/24-21:31:58.165933 96e8                Options.max_file_opening_threads: 16
+2021/05/24-21:31:58.165975 96e8                              Options.statistics: 0000000000000000
+2021/05/24-21:31:58.166016 96e8                               Options.use_fsync: 0
+2021/05/24-21:31:58.166057 96e8                       Options.max_log_file_size: 0
+2021/05/24-21:31:58.166098 96e8                  Options.max_manifest_file_size: 1073741824
+2021/05/24-21:31:58.166147 96e8                   Options.log_file_time_to_roll: 0
+2021/05/24-21:31:58.166188 96e8                       Options.keep_log_file_num: 1000
+2021/05/24-21:31:58.166229 96e8                    Options.recycle_log_file_num: 0
+2021/05/24-21:31:58.166271 96e8                         Options.allow_fallocate: 1
+2021/05/24-21:31:58.166312 96e8                        Options.allow_mmap_reads: 0
+2021/05/24-21:31:58.166354 96e8                       Options.allow_mmap_writes: 0
+2021/05/24-21:31:58.166396 96e8                        Options.use_direct_reads: 0
+2021/05/24-21:31:58.166437 96e8                        Options.use_direct_io_for_flush_and_compaction: 0
+2021/05/24-21:31:58.166478 96e8          Options.create_missing_column_families: 0
+2021/05/24-21:31:58.166532 96e8                              Options.db_log_dir: 
+2021/05/24-21:31:58.166572 96e8                                 Options.wal_dir: D:\University\Capstone Project\Capstone\grakn\grakn-core\server\data\product\schema
+2021/05/24-21:31:58.166613 96e8                Options.table_cache_numshardbits: 6
+2021/05/24-21:31:58.166655 96e8                         Options.WAL_ttl_seconds: 0
+2021/05/24-21:31:58.166697 96e8                       Options.WAL_size_limit_MB: 0
+2021/05/24-21:31:58.166739 96e8                        Options.max_write_batch_group_size_bytes: 1048576
+2021/05/24-21:31:58.166781 96e8             Options.manifest_preallocation_size: 4194304
+2021/05/24-21:31:58.166822 96e8                     Options.is_fd_close_on_exec: 1
+2021/05/24-21:31:58.166863 96e8                   Options.advise_random_on_open: 1
+2021/05/24-21:31:58.166906 96e8                    Options.db_write_buffer_size: 0
+2021/05/24-21:31:58.166949 96e8                    Options.write_buffer_manager: 0000020104BA1520
+2021/05/24-21:31:58.166989 96e8         Options.access_hint_on_compaction_start: 1
+2021/05/24-21:31:58.167031 96e8  Options.new_table_reader_for_compaction_inputs: 0
+2021/05/24-21:31:58.167072 96e8           Options.random_access_max_buffer_size: 1048576
+2021/05/24-21:31:58.167167 96e8                      Options.use_adaptive_mutex: 0
+2021/05/24-21:31:58.167212 96e8                            Options.rate_limiter: 0000000000000000
+2021/05/24-21:31:58.167253 96e8     Options.sst_file_manager.rate_bytes_per_sec: 0
+2021/05/24-21:31:58.167295 96e8                       Options.wal_recovery_mode: 2
+2021/05/24-21:31:58.167336 96e8                  Options.enable_thread_tracking: 0
+2021/05/24-21:31:58.167377 96e8                  Options.enable_pipelined_write: 0
+2021/05/24-21:31:58.167417 96e8                  Options.unordered_write: 1
+2021/05/24-21:31:58.167458 96e8         Options.allow_concurrent_memtable_write: 1
+2021/05/24-21:31:58.167499 96e8      Options.enable_write_thread_adaptive_yield: 1
+2021/05/24-21:31:58.167540 96e8             Options.write_thread_max_yield_usec: 100
+2021/05/24-21:31:58.167581 96e8            Options.write_thread_slow_yield_usec: 3
+2021/05/24-21:31:58.167621 96e8                               Options.row_cache: None
+2021/05/24-21:31:58.167662 96e8                              Options.wal_filter: None
+2021/05/24-21:31:58.167703 96e8             Options.avoid_flush_during_recovery: 0
+2021/05/24-21:31:58.167744 96e8             Options.allow_ingest_behind: 0
+2021/05/24-21:31:58.167785 96e8             Options.preserve_deletes: 0
+2021/05/24-21:31:58.167825 96e8             Options.two_write_queues: 0
+2021/05/24-21:31:58.167866 96e8             Options.manual_wal_flush: 0
+2021/05/24-21:31:58.167907 96e8             Options.atomic_flush: 0
+2021/05/24-21:31:58.167947 96e8             Options.avoid_unnecessary_blocking_io: 0
+2021/05/24-21:31:58.167988 96e8                 Options.persist_stats_to_disk: 0
+2021/05/24-21:31:58.168030 96e8                 Options.write_dbid_to_manifest: 0
+2021/05/24-21:31:58.168070 96e8                 Options.log_readahead_size: 0
+2021/05/24-21:31:58.168111 96e8                 Options.file_checksum_gen_factory: Unknown
+2021/05/24-21:31:58.168152 96e8                 Options.best_efforts_recovery: 0
+2021/05/24-21:31:58.168193 96e8                Options.max_bgerror_resume_count: 2147483647
+2021/05/24-21:31:58.168234 96e8            Options.bgerror_resume_retry_interval: 1000000
+2021/05/24-21:31:58.168276 96e8             Options.allow_data_in_errors: 0
+2021/05/24-21:31:58.168317 96e8             Options.db_host_id: __hostname__
+2021/05/24-21:31:58.168357 96e8             Options.max_background_jobs: 12
+2021/05/24-21:31:58.168398 96e8             Options.max_background_compactions: -1
+2021/05/24-21:31:58.168440 96e8             Options.max_subcompactions: 12
+2021/05/24-21:31:58.168481 96e8             Options.avoid_flush_during_shutdown: 0
+2021/05/24-21:31:58.168524 96e8           Options.writable_file_max_buffer_size: 1048576
+2021/05/24-21:31:58.168565 96e8             Options.delayed_write_rate : 16777216
+2021/05/24-21:31:58.168606 96e8             Options.max_total_wal_size: 0
+2021/05/24-21:31:58.168646 96e8             Options.delete_obsolete_files_period_micros: 21600000000
+2021/05/24-21:31:58.168687 96e8                   Options.stats_dump_period_sec: 600
+2021/05/24-21:31:58.168728 96e8                 Options.stats_persist_period_sec: 600
+2021/05/24-21:31:58.168768 96e8                 Options.stats_history_buffer_size: 1048576
+2021/05/24-21:31:58.168810 96e8                          Options.max_open_files: -1
+2021/05/24-21:31:58.168850 96e8                          Options.bytes_per_sync: 0
+2021/05/24-21:31:58.168891 96e8                      Options.wal_bytes_per_sync: 0
+2021/05/24-21:31:58.168932 96e8                   Options.strict_bytes_per_sync: 0
+2021/05/24-21:31:58.168972 96e8       Options.compaction_readahead_size: 0
+2021/05/24-21:31:58.169013 96e8                  Options.max_background_flushes: -1
+2021/05/24-21:31:58.169055 96e8 Compression algorithms supported:
+2021/05/24-21:31:58.169095 96e8 	kZSTD supported: 1
+2021/05/24-21:31:58.169137 96e8 	kSnappyCompression supported: 1
+2021/05/24-21:31:58.169177 96e8 	kBZip2Compression supported: 0
+2021/05/24-21:31:58.169218 96e8 	kZlibCompression supported: 1
+2021/05/24-21:31:58.169308 96e8 	kLZ4Compression supported: 1
+2021/05/24-21:31:58.169351 96e8 	kXpressCompression supported: 0
+2021/05/24-21:31:58.169392 96e8 	kLZ4HCCompression supported: 1
+2021/05/24-21:31:58.169433 96e8 	kZSTDNotFinalCompression supported: 1
+2021/05/24-21:31:58.169484 96e8 Fast CRC32 supported: Supported on x86
+2021/05/24-21:31:58.172409 96e8 [WARN] [db\db_impl\db_impl_open.cc:1787] Persisting Option File error: OK
+2021/05/24-21:31:58.172475 96e8 [db\db_impl\db_impl.cc:447] Shutdown: canceling all background work
+2021/05/24-21:31:58.172602 96e8 [db\db_impl\db_impl.cc:625] Shutdown complete

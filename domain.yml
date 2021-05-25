@@ -15,6 +15,7 @@ entities:
   - product
   - object_type
   - cycle_info
+  - cycle
   - attribute
   - mention
   - iid
@@ -39,6 +40,9 @@ slots:
     type: text
     influence_conversation: false
   cycle_info:
+    type: text
+    influence_conversation: false
+  cycle:
     type: text
     influence_conversation: false
   attribute:

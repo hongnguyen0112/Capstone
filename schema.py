@@ -46,4 +46,12 @@ schema = {
         "key": "id",
         "representation": ["WW", "comment"]
     },
+
+    "include_cycle": {
+        "attributes": [
+            "iid"
+        ],
+        "key": "id",
+        "representation": ["product.Product_RMIT", "cycle.cycle"]
+    }
 }

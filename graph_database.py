@@ -73,7 +73,7 @@ class GraphDatabase(KnowledgeBase):
 
                     logger.debug("Entity: Executing Graql query: " + query)
                     result_iter = tx.query().match(query)
-                    answers = [ans.get("product") for ans in result_iter]
+                    answers = [ans.get("include_cycle") for ans in result_iter]
                     entities = []
 
                     for c in answers:
@@ -119,12 +119,13 @@ class GraphDatabase(KnowledgeBase):
 
                     for concept in result_iter:
                         relation_entity = concept.map().get(relation_name)
-                        relation = self._thing_to_dict(relation_entity)
-
-                        for (role_entity, entity_set) in relation_entity.role_players_map().items():
-                            role_label = role_entity.label()
+                        print("Type: ", relation_entity.get_type())
+                        relation = self._thing_to_dict(relation_entity, tx)
+                       
+                        for (role_entity, entity_set) in relation_entity.as_remote(tx).get_players_by_role_type().items():
+                            role_label = role_entity.get_label().name()
                             thing = entity_set.pop()
-                            relation[role_label] = self._thing_to_dict(thing)
+                            relation[role_label] = self._thing_to_dict(thing, tx)
                         relations.append(relation)
 
                     return relations
@@ -184,7 +185,7 @@ class GraphDatabase(KnowledgeBase):
 
         return self._execute_relation_query (
             f"match "
-            f"$include_cycle (product: $pr, cycle_info: $cyi) "
+            f"$include_cycle (product: $product, cycle: $cycle_info) "
             f"isa include_cycle{attributes_clause}; "
             f"get $include_cycle;",
             "include_cycle"
@@ -226,9 +227,11 @@ class GraphDatabase(KnowledgeBase):
         :param limit: maximum number of entities to return
         :return: list of entities
         """
+        print("get_entities - object_type: ", object_type)
+        print("get_entities - attributes: ", attributes)
         if object_type == "product":
             return self._get_product_entities(attributes, limit)
-        if object_type == "cycle_info":
+        if object_type == "include_cycle":
             return self._get_cycle_entities(attributes)
 
         attribute_clause = self._get_attribute_clause(attributes)

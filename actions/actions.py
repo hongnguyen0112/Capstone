@@ -35,7 +35,7 @@ def get_object_type(tracker: Tracker) -> Text:
     """
     graph_database = GraphDatabase()
     object_type = tracker.get_slot("object_type")
-
+    print("get_object_type: ", object_type)
     return graph_database.map("object_type_mapping", object_type)
 
 
@@ -49,7 +49,6 @@ def get_attribute(tracker: Tracker) -> Text:
     """
     graph_database = GraphDatabase()
     attribute = tracker.get_slot("attribute")
-
     return graph_database.map("attribute_mapping", attribute)
 
 
@@ -93,7 +92,7 @@ def get_entity_name(tracker: Tracker, object_type: Text):
 
 
 def get_attributes_of_entity(object_type, tracker):
-    # check what attributes the NER found for entity type
+    # check what attributes the NER found for object type
     attributes = []
     if object_type in schema:
 
@@ -102,7 +101,7 @@ def get_attributes_of_entity(object_type, tracker):
 
             if attr_val is not None:
                 attributes.append({"key": attr, "value": attr_val})
-
+    print("get_attributes_of_entities: ", attributes)
     return attributes
 
 
@@ -116,7 +115,7 @@ def reset_attribute_slots(slots, object_type, tracker):
 
             if attr_val is not None:
                 slots.append(SlotSet(attr, None))
-
+    print("reset_attribute_slots: ", slots)
     return slots
 
 
@@ -135,10 +134,10 @@ def to_str(
         entity_keys = [entity_keys]
 
     v_list = []
+    print("Got following entities:")
     for key in entity_keys:
         _e = entity
-        print("Got following entities:")
-
+        
         for k in key.split("."):
             print(_e)
             _e = _e[k]
@@ -157,11 +156,13 @@ class ActionQueryEntities(Action):
     def name(self):
         return "action_query_entities"
 
+
     def run(self, dispatcher, tracker, domain):
         graph_database = GraphDatabase()
 
         # need to know the object_type we are looking for
         object_type = get_object_type(tracker)
+        print("actions_query_entity-object_type: ", object_type)
         
         # utter rephrase if found no object_type recognised
         if object_type is None:
@@ -170,10 +171,14 @@ class ActionQueryEntities(Action):
 
         # check what attributes the NER found for entity type
         attributes = get_attributes_of_entity(object_type, tracker)
-        
+        print("actions_query_entity-attributes: ", attributes)
+
         # query knowledge base
         entities = graph_database.get_entities(object_type, attributes)
-        
+
+        if object_type == "include_cycle":
+            cycle = tracker.get_slot("cycle")
+            entities = self._filter_cycle_entities(entities, cycle)
         # utter message if no instance is found with the object_type
         if not entities:
             dispatcher.utter_template(
@@ -213,6 +218,25 @@ class ActionQueryEntities(Action):
         reset_attribute_slots(slots, object_type, tracker)
         
         return slots   
+    
+
+    def _filter_cycle_entities (
+        self, entities: List[Dict[Text, Any]], cycle: Text
+    ) -> List[Dict[Text, Any]]:
+        """
+        Filter out all cycle that do not belong to the provided cycle.
+        :param entities: list of entities
+        :param account_number: provided cycle
+        :return: list of filtered entities with max. 20 entries
+        """
+        if cycle is not None:
+            filtered_entities = []
+            for entity in entities:
+                if entity["cycle"]["cycle"] == cycle:
+                    filtered_entities.append(entity)
+            return filtered_entities[:20]
+        
+        return entities[:20]
 
     
 class ActionQueryAttribute(Action):

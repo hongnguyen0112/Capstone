@@ -93,13 +93,13 @@ nlu:
 
 - intent: query_entities
   examples: |
-    - In [Apr_21]{"entity": "cycle_info"}, how many [products]{"entity": "object_type", "value": "product"} have been in the scope? 
-    - Count the [products]{"entity": "object_type", "value": "product"} in [Apr_21]{"entity": "cycle_info"}.
-    - Give me the number of [Mar_21]{"entity": "cycle_info"} [products]{"entity": "object_type", "value": "product"}.
-    - Get all [products]{"entity": "object_type", "value": "product"} in [Mar_21]{"entity": "cycle_info"}.
-    - List all [products]{"entity": "object_type", "value": "product"} in [Mar_21]{"entity": "cycle_info"}.
-    - List all [products]{"entity": "object_type", "value": "product"}.
-    - What are the [products]{"entity": "object_type", "value": "product"}.
-    - Get all [products]{"entity": "object_type", "value": "product"}
-# [products]{"entity": "object_type"}
+    - List all [products](object_type).
+    - What are the [products](object_type)?
+    - Get all [products](object_type).
+    - Show me all [products](object_type).
+    - In [cycle](object_type) [Apr_21](cycle), how many products have been in the scope? 
+    - Count the products in [cycle](object_type) [Apr_21](cycle).
+    - Give me the number of [cycle](object_type) [Mar_21](cycle) products.
+    - Get all products in [cycle](object_type) [Mar_21](cycle).
+    - List all products in [cycle](object_type) [Mar_21](cycle).
 
