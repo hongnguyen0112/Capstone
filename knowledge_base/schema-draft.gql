@@ -9,11 +9,11 @@ product sub entity,
     plays include_testerplatform:product,
     plays include_segment:product,
     plays include_division:product,
+    plays include_chip_attach:product,
+    plays include_package_tech:product,
     owns Product_RMIT,
     owns TCSS,
-    owns AT_Site,
-    owns Package_Tech,
-    owns Chip_Attach;
+    owns AT_Site;
 
 cycle_info sub entity,
     plays include_cycle:cycle,
@@ -37,6 +37,14 @@ testerplatform_info sub entity,
 segment_info sub entity,
     plays include_segment:Segment,
     owns Segment;
+
+package_tech_info sub entity,
+    plays include_package_tech:Package_Tech,
+    owns Package_Tech;
+
+chip_attach_info sub entity,
+    plays include_chip_attach:Chip_Attach,
+    owns Chip_Attach;
 
 division_info sub entity,
     plays include_division:Division,
@@ -67,6 +75,14 @@ include_segment sub relation,
 include_division sub relation,
     relates product,
     relates Division;
+
+include_package_tech sub relation,
+    relates product,
+    relates Package_Tech;
+
+include_chip_attach sub relation,
+    relates product,
+    relates Chip_Attach;
 
 mapping sub entity,
     owns mapping_key,

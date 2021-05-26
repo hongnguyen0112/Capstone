@@ -19,6 +19,8 @@ entities:
   - testerplatform_info
   - segment_info
   - division_info
+  - package_tech_info
+  - chip_attach_info
   - cycle
   - attribute
   - mention
@@ -67,6 +69,12 @@ slots:
   testerplatform_info:
     type: text
     influence_conversation: false
+  package_tech_info:
+    type: text
+    influence_conversation: false
+  chip_attach_info:
+    type: text
+    influence_conversation: false
   attribute:
     type: text
     influence_conversation: false
@@ -77,6 +85,12 @@ slots:
     type: text
     influence_conversation: false
   Product_RMIT:
+    type: text
+    influence_conversation: false
+  chip_attach:
+    type: text
+    influence_conversation: false
+  package_tech:
     type: text
     influence_conversation: false
   Segment:

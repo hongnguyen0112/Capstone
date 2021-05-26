@@ -25,9 +25,7 @@ def load_data_into_grakn(input, session):
 
 def product_template(product):
     graql_insert_query = 'insert $product isa product, has Product_RMIT "' + product["Product_RMIT"] + '"'
-    graql_insert_query += ', has AT_Site "' + product["AT_Site"] + '"'
-    graql_insert_query += ', has Package_Tech "' + product["Package_Tech"] + '"'
-    graql_insert_query += ', has Chip_Attach "' + product["Chip_Attach"] + '";'
+    graql_insert_query += ', has AT_Site "' + product["AT_Site"] + '";'
     return graql_insert_query
 
 
@@ -56,6 +54,14 @@ def segment_template(segment_info):
 
 def division_template(division_info):
     graql_insert_query = 'insert $division_info isa division_info, has Division "' + division_info["Division"] + '";'
+    return graql_insert_query
+
+def package_tech_template(package_tech_info):
+    graql_insert_query = 'insert $package_tech_info isa package_tech_info, has Package_Tech "' + package_tech_info["Package_Tech"] + '";'
+    return graql_insert_query
+
+def chip_attach_template(chip_attach_info):
+    graql_insert_query = 'insert $chip_attach_info isa chip_attach_info, has Chip_Attach "' + chip_attach_info["Chip_Attach"] + '";'
     return graql_insert_query
 
 def include_cycle_template(include_cycle):
@@ -98,6 +104,18 @@ def include_division_template(include_division):
     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_division["Product_RMIT"] + '";'
     graql_insert_query += ' $division_info isa division_info, has Division "' + include_division["Division"] + '";'
     graql_insert_query += " insert (product: $product, Division: $division_info) isa include_division;"
+    return graql_insert_query
+
+def include_package_tech_template(include_package_tech):
+    graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_package_tech["Product_RMIT"] + '";'
+    graql_insert_query += ' $package_tech_info isa package_tech_info, has Package_Tech "' + include_package_tech["Package_Tech"] + '";'
+    graql_insert_query += " insert (product: $product, Package_Tech: $package_tech_info) isa include_package_tech;"
+    return graql_insert_query
+
+def include_chip_attach_template(include_chip_attach):
+    graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_chip_attach["Product_RMIT"] + '";'
+    graql_insert_query += ' $chip_attach_info isa chip_attach_info, has Chip_Attach "' + include_chip_attach["Chip_Attach"] + '";'
+    graql_insert_query += " insert (product: $product, Chip_Attach: $chip_attach_info) isa include_chip_attach;"
     return graql_insert_query
 
 def mention_mapping_template(mapping):
@@ -179,6 +197,14 @@ inputs = [
         "template": segment_template
     },
     {
+        "data_path": "package_tech",
+        "template": package_tech_template
+    },
+    {
+        "data_path": "chip_attach",
+        "template": chip_attach_template
+    },
+    {
         "data_path": "include_comment",
         "template": include_comment_template
     },
@@ -201,6 +227,14 @@ inputs = [
     {
         "data_path": "include_division",
         "template": include_division_template
+    },
+    {
+        "data_path": "include_package_tech",
+        "template": include_package_tech_template
+    },
+    {
+        "data_path": "include_chip_attach",
+        "template": include_chip_attach_template
     },
     {
         "data_path": "attribute_mapping",

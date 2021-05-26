@@ -254,6 +254,33 @@ class GraphDatabase(KnowledgeBase):
             "include_division"
         )
 
+    def _get_package_tech_entities (
+        self,
+        attributes: Optional[List[Dict[Text, Text]]] = None,
+    ) -> List[Dict[Text, Any]]:
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get package_tech entities")
+        return self._execute_relation_query(
+            f"match "
+            f"$include_package_tech (product: $product, Package_Tech: $package_tech_info)"
+            f"isa include_package_tech{attributes_clause};"
+            f"get $include_package_tech;",
+            "include_package_tech"
+        )
+
+    def _get_chip_attach_entities (
+        self,
+        attributes: Optional[List[Dict[Text, Text]]] = None,
+    ) -> List[Dict[Text, Any]]:
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get chip_attach entities")
+        return self._execute_relation_query(
+            f"match "
+            f"$include_chip_attach (product: $product, Chip_Attach: $chip_attach_info)"
+            f"isa include_chip_attach{attributes_clause};"
+            f"get $include_chip_attach;",
+            "include_chip_attach"
+        )
 
     def get_entities (
         self, 
@@ -281,6 +308,10 @@ class GraphDatabase(KnowledgeBase):
             return self._get_segment_entities(attributes)
         if object_type == "include_division":
             return self._get_division_entities(attributes)
+        if object_type == "include_package_tech":
+            return self._get_package_tech_entities(attributes)
+        if object_type == "include_chip_attach":
+            return self._get_chip_attach_entities(attributes)
 
         attribute_clause = self._get_attribute_clause(attributes)
 

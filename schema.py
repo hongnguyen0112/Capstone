@@ -64,6 +64,24 @@ schema = {
         "representation": ["Tester_Platform"]
     },
 
+    "package_tech_info": {
+        "attributes": [
+            "iid",
+            "Package_Tech"
+        ],
+        "key": "id",
+        "representation": ["Package_Tech"]
+    },
+
+    "chip_attach_info": {
+        "attributes": [
+            "iid",
+            "Chip_Attach"
+        ],
+        "key": "id",
+        "representation": ["Chip_Attach"]
+    },
+
     "include_testerplatform": {
         "attributes": [
            "iid" 
@@ -104,5 +122,21 @@ schema = {
         ],
         "key": "id",
         "representation": ["product.Product_RMIT", "Division.Division"]
+    },
+
+    "include_package_tech": {
+        "attributes": [
+           "iid" 
+        ],
+        "key": "id",
+        "representation": ["product.Product_RMIT", "Package_Tech.Package_Tech"]
+    },
+
+    "include_chip_attach": {
+        "attributes": [
+           "iid" 
+        ],
+        "key": "id",
+        "representation": ["product.Product_RMIT", "Chip_Attach.Chip_Attach"]
     }
 }

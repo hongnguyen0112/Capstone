@@ -188,6 +188,12 @@ class ActionQueryEntities(Action):
         if object_type == "include_division":
             division = tracker.get_slot("division")
             entities = self._filter_division_entities(entities, division)
+        if object_type == "include_package_tech":
+            package_tech = tracker.get_slot("package_tech")
+            entities = self._filter_package_tech_entities(entities, package_tech)
+        if object_type == "include_chip_attach":
+            chip_attach = tracker.get_slot("chip_attach")
+            entities = self._filter_chip_attach_entities(entities, chip_attach)
             
         # utter message if no instance is found with the object_type
         if not entities:
@@ -277,6 +283,28 @@ class ActionQueryEntities(Action):
             filtered_entities = []
             for entity in entities:
                 if entity["Division"]["Division"] == division:
+                    filtered_entities.append(entity)
+            return filtered_entities[:20]
+        return entities[:20]
+
+    def _filter_package_tech_entities (
+        self, entities: List[Dict[Text, Any]], package_tech: Text
+    ) -> List[Dict[Text, Any]]:
+        if package_tech is not None:
+            filtered_entities = []
+            for entity in entities:
+                if entity["Package_Tech"]["Package_Tech"] == package_tech:
+                    filtered_entities.append(entity)
+            return filtered_entities[:20]
+        return entities[:20]
+
+    def _filter_chip_attach_entities (
+        self, entities: List[Dict[Text, Any]], chip_attach: Text
+    ) -> List[Dict[Text, Any]]:
+        if chip_attach is not None:
+            filtered_entities = []
+            for entity in entities:
+                if entity["Chip_Attach"]["Chip_Attach"] == chip_attach:
                     filtered_entities.append(entity)
             return filtered_entities[:20]
         return entities[:20]

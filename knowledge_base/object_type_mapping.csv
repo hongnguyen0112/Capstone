@@ -20,3 +20,15 @@ division,include_division
 divisions,include_division
 D-C,include_division
 D-I,include_division
+FCBGA,include_package_tech
+FCLGA,include_package_tech
+Package_Tech,include_package_tech
+package_tech,include_package_tech
+tech package,include_package_tech
+attached chip,include_chip_attach
+chip_attach,include_chip_attach
+Chip_Attach,include_chip_attach
+Attach_Chip,include_chip_attach
+Legacy-T,include_chip_attach
+New-H,include_chip_attach
+
