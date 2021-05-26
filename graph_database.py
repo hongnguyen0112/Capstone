@@ -225,6 +225,20 @@ class GraphDatabase(KnowledgeBase):
             f"get $include_testerplatform;",
             "include_testerplatform"
         )
+    
+    def _get_segment_entities (
+        self,
+        attributes: Optional[List[Dict[Text, Text]]] = None,
+    ) -> List[Dict[Text, Any]]:
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get segment entities")
+        return self._execute_relation_query(
+            f"match "
+            f"$include_segment (product: $product, Segment: $segment_info)"
+            f"isa include_segment{attributes_clause};"
+            f"get $include_segment;",
+            "include_segment"
+        )
 
 
     def get_entities (
@@ -249,6 +263,8 @@ class GraphDatabase(KnowledgeBase):
             return self._get_cycle_entities(attributes)
         if object_type == "include_testerplatform":
             return self._get_testerplatform_entities(attributes)
+        if object_type == "include_segment":
+            return self._get_segment_entities(attributes)
 
         attribute_clause = self._get_attribute_clause(attributes)
 

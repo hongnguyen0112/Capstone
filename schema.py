@@ -70,5 +70,22 @@ schema = {
         ],
         "key": "id",
         "representation": ["product.Product_RMIT", "Tester_Platform.Tester_Platform"]
+    },
+
+    "segment_info": {
+        "attributes": [
+            "iid",
+            "Segment"
+        ],
+        "key": "id",
+        "representation": ["Segment"]
+    },
+
+    "include_segment": {
+        "attributes": [
+           "iid" 
+        ],
+        "key": "id",
+        "representation": ["product.Product_RMIT", "Segment.Segment"]
     }
 }

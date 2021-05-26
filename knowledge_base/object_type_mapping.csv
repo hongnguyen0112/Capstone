@@ -9,3 +9,9 @@ Tester_Platform,include_testerplatform
 tester platform, include_testerplatform
 New-H,include_testerplatform
 Old-V,include_testerplatform
+Segment,include_segment
+segment,include_segment
+S-M,include_segment
+SOC,include_segment
+S-P,include_segment
+S-D,include_segment

@@ -7,8 +7,8 @@ product sub entity,
     plays include_phase:product,
     plays include_comment:product,
     plays include_testerplatform:product,
+    plays include_segment:product,
     owns Product_RMIT,
-    owns Segment,
     owns TCSS,
     owns AT_Site,
     owns Division,
@@ -34,6 +34,10 @@ testerplatform_info sub entity,
     plays include_testerplatform:Tester_Platform,
     owns Tester_Platform;
 
+segment_info sub entity,
+    plays include_segment:Segment,
+    owns Segment;
+
 include_cycle sub relation,
     relates product,
     relates cycle;
@@ -51,6 +55,10 @@ include_phase sub relation,
 include_testerplatform sub relation,
     relates product,
     relates Tester_Platform;
+
+include_segment sub relation,
+    relates product,
+    relates Segment;
 
 mapping sub entity,
     owns mapping_key,

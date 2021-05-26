@@ -105,4 +105,7 @@ nlu:
     - List all products that has [tester platform](object_type) of [New-H](testerplatform) 
     - Get all [tester platform](object_type) that are [Old-V](testerplatform)
     - Show me the products which [tester platform](object_type) is [New-H](testerplatform)
+    - List all products whose [segment](object_type) is [S-M](segment)
+    - Which products belongs to [segment](object_type) [S-D](segment)
+    - List all products in [segment](object_type) [S-P](segment) 
 

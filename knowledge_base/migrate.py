@@ -25,7 +25,6 @@ def load_data_into_grakn(input, session):
 
 def product_template(product):
     graql_insert_query = 'insert $product isa product, has Product_RMIT "' + product["Product_RMIT"] + '"'
-    graql_insert_query += ', has Segment "' + product["Segment"] + '"'
     graql_insert_query += ', has AT_Site "' + product["AT_Site"] + '"'
     graql_insert_query += ', has Division "' + product["Division"] + '"'
     graql_insert_query += ', has Package_Tech "' + product["Package_Tech"] + '"'
@@ -52,6 +51,9 @@ def testerplatform_template(testerplatform_info):
     graql_insert_query = 'insert $testerplatform_info isa testerplatform_info, has Tester_Platform "' + testerplatform_info["Tester_Platform"] + '";'
     return graql_insert_query
 
+def segment_template(segment_info):
+    graql_insert_query = 'insert $segment_info isa segment_info, has Segment "' + segment_info["Segment"] + '";'
+    return graql_insert_query
 
 def include_cycle_template(include_cycle):
     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_cycle["Product_RMIT"] + '";'
@@ -76,16 +78,17 @@ def include_phase_template(include_phase):
     graql_insert_query += " insert (product: $product, phase: $phase_info) isa include_phase;"
     return graql_insert_query
 
-# def include_testerplatform_template(include_testerplatform):
-#     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_testerplatform["Product_RMIT"] + '";'
-#     graql_insert_query += ' $testerplatform_info isa testerplatform_info, has Tester_Platform "' + include_testerplatform["Tester_Platform"] + '";'
-#     graql_insert_query += ' insert (product: $product, testerplatform: $testerplatform_info) isa include_testerplatform;'
-#     return graql_insert_query
 
 def include_testerplatform_template(include_testerplatform):
     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_testerplatform["Product_RMIT"] + '";'
     graql_insert_query += ' $testerplatform_info isa testerplatform_info, has Tester_Platform "' + include_testerplatform["Tester_Platform"] + '";'
     graql_insert_query += " insert (product: $product, Tester_Platform: $testerplatform_info) isa include_testerplatform;"
+    return graql_insert_query
+
+def include_segment_template(include_segment):
+    graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_segment["Product_RMIT"] + '";'
+    graql_insert_query += ' $segment_info isa segment_info, has Segment "' + include_segment["Segment"] + '";'
+    graql_insert_query += " insert (product: $product, Segment: $segment_info) isa include_segment;"
     return graql_insert_query
 
 def mention_mapping_template(mapping):
@@ -159,6 +162,10 @@ inputs = [
         "template": testerplatform_template
     },
     {
+        "data_path": "segment",
+        "template": segment_template
+    },
+    {
         "data_path": "include_comment",
         "template": include_comment_template
     },
@@ -173,6 +180,10 @@ inputs = [
     {
         "data_path": "include_testerplatform",
         "template": include_testerplatform_template
+    },
+    {
+        "data_path": "include_segment",
+        "template": include_segment_template
     },
     {
         "data_path": "attribute_mapping",

@@ -182,6 +182,9 @@ class ActionQueryEntities(Action):
         if object_type == "include_testerplatform":
             testerplatform = tracker.get_slot("testerplatform")
             entities = self._filter_testerplatform_entities(entities, testerplatform)
+        if object_type == "include_segment":
+            segment = tracker.get_slot("segment")
+            entities = self._filter_segment_entities(entities, segment)
         
         # utter message if no instance is found with the object_type
         if not entities:
@@ -249,6 +252,17 @@ class ActionQueryEntities(Action):
             filtered_entities = []
             for entity in entities:
                 if entity["Tester_Platform"]["Tester_Platform"] == testerplatform:
+                    filtered_entities.append(entity)
+            return filtered_entities[:20]
+        return entities[:20]
+
+    def _filter_segment_entities (
+        self, entities: List[Dict[Text, Any]], segment: Text
+    ) -> List[Dict[Text, Any]]:
+        if segment is not None:
+            filtered_entities = []
+            for entity in entities:
+                if entity["Segment"]["Segment"] == segment:
                     filtered_entities.append(entity)
             return filtered_entities[:20]
         return entities[:20]
