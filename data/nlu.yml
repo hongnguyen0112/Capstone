@@ -108,4 +108,6 @@ nlu:
     - List all products whose [segment](object_type) is [S-M](segment)
     - Which products belongs to [segment](object_type) [S-D](segment)
     - List all products in [segment](object_type) [S-P](segment) 
-
+    - List all products whose [division](object_type) is [D-C](division)
+    - Which products belongs to [division](object_type) [D-I](division)
+    - List all products in [division](object_type) [D-C](division)

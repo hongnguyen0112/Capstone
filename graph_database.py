@@ -240,6 +240,20 @@ class GraphDatabase(KnowledgeBase):
             "include_segment"
         )
 
+    def _get_division_entities (
+        self,
+        attributes: Optional[List[Dict[Text, Text]]] = None,
+    ) -> List[Dict[Text, Any]]:
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get division entities")
+        return self._execute_relation_query(
+            f"match "
+            f"$include_division (product: $product, Division: $division_info)"
+            f"isa include_division{attributes_clause};"
+            f"get $include_division;",
+            "include_division"
+        )
+
 
     def get_entities (
         self, 
@@ -265,6 +279,8 @@ class GraphDatabase(KnowledgeBase):
             return self._get_testerplatform_entities(attributes)
         if object_type == "include_segment":
             return self._get_segment_entities(attributes)
+        if object_type == "include_division":
+            return self._get_division_entities(attributes)
 
         attribute_clause = self._get_attribute_clause(attributes)
 

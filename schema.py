@@ -87,5 +87,22 @@ schema = {
         ],
         "key": "id",
         "representation": ["product.Product_RMIT", "Segment.Segment"]
+    },
+
+     "division_info": {
+        "attributes": [
+            "iid",
+            "Division"
+        ],
+        "key": "id",
+        "representation": ["Division"]
+    },
+
+    "include_division": {
+        "attributes": [
+           "iid" 
+        ],
+        "key": "id",
+        "representation": ["product.Product_RMIT", "Division.Division"]
     }
 }

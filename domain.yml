@@ -17,6 +17,7 @@ entities:
   - cycle_info
   - testerplatform_info
   - segment_info
+  - division_info
   - cycle
   - attribute
   - mention
@@ -47,6 +48,9 @@ slots:
   segment_info:
     type: text
     influence_conversation: false
+  division_info:
+    type: text
+    influence_conversation: false
   cycle:
     type: text
     influence_conversation: false
@@ -54,6 +58,9 @@ slots:
     type: text
     influence_conversation: false
   segment:
+    type: text
+    influence_conversation: false
+  division:
     type: text
     influence_conversation: false
   testerplatform_info:

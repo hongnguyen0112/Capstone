@@ -15,3 +15,8 @@ S-M,include_segment
 SOC,include_segment
 S-P,include_segment
 S-D,include_segment
+Division,include_division
+division,include_division
+divisions,include_division
+D-C,include_division
+D-I,include_division

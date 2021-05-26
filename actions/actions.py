@@ -185,7 +185,10 @@ class ActionQueryEntities(Action):
         if object_type == "include_segment":
             segment = tracker.get_slot("segment")
             entities = self._filter_segment_entities(entities, segment)
-        
+        if object_type == "include_division":
+            division = tracker.get_slot("division")
+            entities = self._filter_division_entities(entities, division)
+            
         # utter message if no instance is found with the object_type
         if not entities:
             dispatcher.utter_template(
@@ -267,7 +270,17 @@ class ActionQueryEntities(Action):
             return filtered_entities[:20]
         return entities[:20]
 
-    
+    def _filter_division_entities (
+        self, entities: List[Dict[Text, Any]], division: Text
+    ) -> List[Dict[Text, Any]]:
+        if division is not None:
+            filtered_entities = []
+            for entity in entities:
+                if entity["Division"]["Division"] == division:
+                    filtered_entities.append(entity)
+            return filtered_entities[:20]
+        return entities[:20]
+
 class ActionQueryAttribute(Action):
     """
     Action for querying a specific attribute of an entity.

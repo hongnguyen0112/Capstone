@@ -8,10 +8,10 @@ product sub entity,
     plays include_comment:product,
     plays include_testerplatform:product,
     plays include_segment:product,
+    plays include_division:product,
     owns Product_RMIT,
     owns TCSS,
     owns AT_Site,
-    owns Division,
     owns Package_Tech,
     owns Chip_Attach;
 
@@ -38,6 +38,10 @@ segment_info sub entity,
     plays include_segment:Segment,
     owns Segment;
 
+division_info sub entity,
+    plays include_division:Division,
+    owns Division;
+
 include_cycle sub relation,
     relates product,
     relates cycle;
@@ -59,6 +63,10 @@ include_testerplatform sub relation,
 include_segment sub relation,
     relates product,
     relates Segment;
+
+include_division sub relation,
+    relates product,
+    relates Division;
 
 mapping sub entity,
     owns mapping_key,
