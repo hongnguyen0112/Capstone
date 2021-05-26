@@ -36,3 +36,8 @@ stories:
   - intent: query_entities
   - action: action_query_entities
   - action: action_reset_slot
+  
+- story: master
+  steps:
+  - intent: master
+  - action: utter_master

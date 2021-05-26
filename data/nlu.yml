@@ -17,6 +17,12 @@ nlu:
     - goodevening
     - good afternoon
 
+- intent: master
+  examples: |
+    - Give me master table
+    - master csv
+    - Can you give me the master table?
+
 - intent: goodbye
   examples: |
     - good afternoon

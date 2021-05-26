@@ -10,6 +10,7 @@ intents:
   - bot_challenge
   - query_knowledge_base
   - query_entities
+  - master
 
 entities:
   - product
@@ -141,6 +142,9 @@ responses:
 
   utter_rephrase: 
   - text: "Sorry, I did not get that..."
+
+  utter_master:
+  - text: "https://drive.google.com/file/d/1up9siq-RRt9-MbCXD57oMUTQpgW2KZRI/view?usp=sharing"
 
 session_config:
   session_expiration_time: 60
