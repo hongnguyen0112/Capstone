@@ -212,6 +212,20 @@ class GraphDatabase(KnowledgeBase):
             "product"
         )[:limit]
 
+    def _get_testerplatform_entities (
+        self,
+        attributes: Optional[List[Dict[Text, Text]]] = None,
+    ) -> List[Dict[Text, Any]]:
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get tester platform entities")
+        return self._execute_relation_query(
+            f"match "
+            f"$include_testerplatform (product: $product, Tester_Platform: $testerplatform_info)"
+            f"isa include_testerplatform{attributes_clause};"
+            f"get $include_testerplatform;",
+            "include_testerplatform"
+        )
+
 
     def get_entities (
         self, 
@@ -233,6 +247,8 @@ class GraphDatabase(KnowledgeBase):
             return self._get_product_entities(attributes, limit)
         if object_type == "include_cycle":
             return self._get_cycle_entities(attributes)
+        if object_type == "include_testerplatform":
+            return self._get_testerplatform_entities(attributes)
 
         attribute_clause = self._get_attribute_clause(attributes)
 

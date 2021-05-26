@@ -2,6 +2,10 @@ mapping_key,mapping_value
 product,product
 products,product
 Mar_21,include_cycle
-Apr_21 ,include_cycle
+Apr_21,include_cycle
 cycle,include_cycle
 cycles,include_cycle
+Tester_Platform,include_testerplatform
+tester platform, include_testerplatform
+New-H,include_testerplatform
+Old-V,include_testerplatform

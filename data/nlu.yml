@@ -102,4 +102,7 @@ nlu:
     - Give me the number of [cycle](object_type) [Mar_21](cycle) products.
     - Get all products in [cycle](object_type) [Mar_21](cycle).
     - List all products in [cycle](object_type) [Mar_21](cycle).
+    - List all products that has [tester platform](object_type) of [New-H](testerplatform) 
+    - Get all [tester platform](object_type) that are [Old-V](testerplatform)
+    - Show me the products which [tester platform](object_type) is [New-H](testerplatform)
 

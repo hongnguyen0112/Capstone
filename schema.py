@@ -53,5 +53,22 @@ schema = {
         ],
         "key": "id",
         "representation": ["product.Product_RMIT", "cycle.cycle"]
+    },
+
+    "testerplatform_info": {
+        "attributes": [
+            "iid",
+            "Tester_Platform"
+        ],
+        "key": "id",
+        "representation": ["Tester_Platform"]
+    },
+
+    "include_testerplatform": {
+        "attributes": [
+           "iid" 
+        ],
+        "key": "id",
+        "representation": ["product.Product_RMIT", "Tester_Platform.Tester_Platform"]
     }
 }

@@ -179,6 +179,9 @@ class ActionQueryEntities(Action):
         if object_type == "include_cycle":
             cycle = tracker.get_slot("cycle")
             entities = self._filter_cycle_entities(entities, cycle)
+        if object_type == "include_testerplatform":
+            testerplatform = tracker.get_slot("testerplatform")
+            entities = self._filter_testerplatform_entities(entities, testerplatform)
         
         # utter message if no instance is found with the object_type
         if not entities:
@@ -237,6 +240,17 @@ class ActionQueryEntities(Action):
                     filtered_entities.append(entity)
             return filtered_entities[:20]
         
+        return entities[:20]
+    
+    def _filter_testerplatform_entities (
+        self, entities: List[Dict[Text, Any]], testerplatform: Text
+    ) -> List[Dict[Text, Any]]:
+        if testerplatform is not None:
+            filtered_entities = []
+            for entity in entities:
+                if entity["Tester_Platform"]["Tester_Platform"] == testerplatform:
+                    filtered_entities.append(entity)
+            return filtered_entities[:20]
         return entities[:20]
 
     

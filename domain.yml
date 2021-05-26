@@ -15,6 +15,7 @@ entities:
   - product
   - object_type
   - cycle_info
+  - testerplatform_info
   - cycle
   - attribute
   - mention
@@ -43,6 +44,12 @@ slots:
     type: text
     influence_conversation: false
   cycle:
+    type: text
+    influence_conversation: false
+  testerplatform:
+    type: text
+    influence_conversation: false
+  testerplatform_info:
     type: text
     influence_conversation: false
   attribute:

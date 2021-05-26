@@ -29,8 +29,7 @@ def product_template(product):
     graql_insert_query += ', has AT_Site "' + product["AT_Site"] + '"'
     graql_insert_query += ', has Division "' + product["Division"] + '"'
     graql_insert_query += ', has Package_Tech "' + product["Package_Tech"] + '"'
-    graql_insert_query += ', has Chip_Attach "' + product["Chip_Attach"] + '"'
-    graql_insert_query += ', has Tester_Platform "' + product["Tester_Platform"] + '";'
+    graql_insert_query += ', has Chip_Attach "' + product["Chip_Attach"] + '";'
     return graql_insert_query
 
 
@@ -47,6 +46,10 @@ def phase_template(phase_info):
 def comment_template(comment_info):
     graql_insert_query = 'insert $comment_info isa comment_info, has WW "' + comment_info["WW"] + '"'
     graql_insert_query += ', has comment "' + comment_info["comment"] + '";'
+    return graql_insert_query
+
+def testerplatform_template(testerplatform_info):
+    graql_insert_query = 'insert $testerplatform_info isa testerplatform_info, has Tester_Platform "' + testerplatform_info["Tester_Platform"] + '";'
     return graql_insert_query
 
 
@@ -73,6 +76,17 @@ def include_phase_template(include_phase):
     graql_insert_query += " insert (product: $product, phase: $phase_info) isa include_phase;"
     return graql_insert_query
 
+# def include_testerplatform_template(include_testerplatform):
+#     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_testerplatform["Product_RMIT"] + '";'
+#     graql_insert_query += ' $testerplatform_info isa testerplatform_info, has Tester_Platform "' + include_testerplatform["Tester_Platform"] + '";'
+#     graql_insert_query += ' insert (product: $product, testerplatform: $testerplatform_info) isa include_testerplatform;'
+#     return graql_insert_query
+
+def include_testerplatform_template(include_testerplatform):
+    graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_testerplatform["Product_RMIT"] + '";'
+    graql_insert_query += ' $testerplatform_info isa testerplatform_info, has Tester_Platform "' + include_testerplatform["Tester_Platform"] + '";'
+    graql_insert_query += " insert (product: $product, Tester_Platform: $testerplatform_info) isa include_testerplatform;"
+    return graql_insert_query
 
 def mention_mapping_template(mapping):
     graql_insert_query = 'insert $mapping isa mention_mapping, has mapping_key "' + mapping["mapping_key"] + '"'
@@ -141,6 +155,10 @@ inputs = [
         "template": comment_template
     },
     {
+        "data_path": "testerplatform",
+        "template": testerplatform_template
+    },
+    {
         "data_path": "include_comment",
         "template": include_comment_template
     },
@@ -151,6 +169,10 @@ inputs = [
     {
         "data_path": "include_phase",
         "template": include_phase_template
+    },
+    {
+        "data_path": "include_testerplatform",
+        "template": include_testerplatform_template
     },
     {
         "data_path": "attribute_mapping",

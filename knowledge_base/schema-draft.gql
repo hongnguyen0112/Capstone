@@ -6,14 +6,14 @@ product sub entity,
     plays include_cycle:product,
     plays include_phase:product,
     plays include_comment:product,
+    plays include_testerplatform:product,
     owns Product_RMIT,
     owns Segment,
     owns TCSS,
     owns AT_Site,
     owns Division,
     owns Package_Tech,
-    owns Chip_Attach,
-    owns Tester_Platform;
+    owns Chip_Attach;
 
 cycle_info sub entity,
     plays include_cycle:cycle,
@@ -30,6 +30,10 @@ comment_info sub entity,
     owns WW,
     owns comment;
 
+testerplatform_info sub entity,
+    plays include_testerplatform:Tester_Platform,
+    owns Tester_Platform;
+
 include_cycle sub relation,
     relates product,
     relates cycle;
@@ -43,6 +47,10 @@ include_comment sub relation,
 include_phase sub relation,
     relates product,
     relates phase;
+
+include_testerplatform sub relation,
+    relates product,
+    relates Tester_Platform;
 
 mapping sub entity,
     owns mapping_key,
