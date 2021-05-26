@@ -96,6 +96,7 @@ actions:
   - action_query_attribute
   - action_query_entities
   - action_resolve_entity
+  - action_reset_slot
   
 responses:
   utter_greet:

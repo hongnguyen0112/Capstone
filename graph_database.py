@@ -63,7 +63,7 @@ class GraphDatabase(KnowledgeBase):
         return entity
 
 
-    def _execute_entity_query(self, query: Text) -> List[Dict[Text, Any]]:
+    def _execute_entity_query(self, query: Text, object_type: Text) -> List[Dict[Text, Any]]:
         """
         Executes a query that returns a list of entities with all their attributes.
         """
@@ -73,9 +73,8 @@ class GraphDatabase(KnowledgeBase):
 
                     logger.debug("Entity: Executing Graql query: " + query)
                     result_iter = tx.query().match(query)
-                    answers = [ans.get("include_cycle") for ans in result_iter]
+                    answers = [ans.get(object_type) for ans in result_iter]
                     entities = []
-
                     for c in answers:
                         entities.append(self._thing_to_dict(c, tx))
 
@@ -209,7 +208,8 @@ class GraphDatabase(KnowledgeBase):
         return self._execute_entity_query (
             f"match "
             f"$product isa product{attributes_clause}; "
-            f"get $product;"
+            f"get $product;",
+            "product"
         )[:limit]
 
 
@@ -239,7 +239,8 @@ class GraphDatabase(KnowledgeBase):
         return self._execute_entity_query(
             f"match "
             f"${object_type} isa {object_type}{attribute_clause};"
-            f"get ${object_type};"
+            f"get ${object_type};",
+            object_type
         )[:limit]
 
 

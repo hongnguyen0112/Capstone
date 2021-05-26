@@ -16,3 +16,4 @@ rules:
   steps:
   - intent: query_entities
   - action: action_query_entities
+  - action: action_reset_slot

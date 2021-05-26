@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from typing import Text, Dict, Any, List, Union
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, AllSlotsReset
 from rasa_sdk import Action, Tracker
 from schema import schema
 from graph_database import GraphDatabase
@@ -179,6 +179,7 @@ class ActionQueryEntities(Action):
         if object_type == "include_cycle":
             cycle = tracker.get_slot("cycle")
             entities = self._filter_cycle_entities(entities, cycle)
+        
         # utter message if no instance is found with the object_type
         if not entities:
             dispatcher.utter_template(
@@ -323,3 +324,13 @@ class ActionResolveEntity(Action):
 
         dispatcher.utter_template("utter_rephrase", tracker)
         return [SlotSet(object_type, None), SlotSet("mention", None)]
+
+
+class ResetSlot(Action):
+
+    def name(self):
+        return "action_reset_slot"
+
+    def run(self, dispatcher, tracker, domain):
+        return [SlotSet("object_type", None),
+                SlotSet("cycle", None)]
