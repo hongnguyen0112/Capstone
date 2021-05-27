@@ -22,6 +22,9 @@ nlu:
     - Give me master table
     - master csv
     - Can you give me the master table?
+    - Get me a general report
+    - Give me the list of all products with all information.
+    - Show me all all products and information.
 
 - intent: goodbye
   examples: |
@@ -102,7 +105,13 @@ nlu:
     - List all [products](object_type).
     - What are the [products](object_type)?
     - Get all [products](object_type).
-    - Show me all [products](object_type).
+    - Show me all [TC/SS](object_type).
+    - What are the [cycles](object_type)?
+    - List all [comment](object_type).
+    - What [AT sites](object_type) are there?
+    - What are the [tester platforms](object_type)?
+    - List all existing [segments](object_type).
+    - What [division](object_type) are there?
     - Count the products [in cycle](object_type) [Apr_21](cycle).
     - Give me the number [of cycle](object_type) [Mar_21](cycle) products.
     - Get all products [in cycle](object_type) [Mar_21](cycle).
@@ -111,15 +120,21 @@ nlu:
     - List all products that [has tester platform](object_type) [New-H](testerplatform) 
     - Get all products [with tester platform](object_type) [Old-V](testerplatform)
     - Show me the products [whose tester platform](object_type) is [New-H](testerplatform)
-    - List all products [whose segment](object_type) is [S-M](segment)
+    - Get all products [whose segment](object_type) is [S-M](segment)
     - Which products [belongs to segment](object_type) [S-D](segment)
-    - List all products [in segment](object_type) [S-P](segment) 
-    - List all products [whose division](object_type) is [D-C](division)
+    - Get all products [in segment](object_type) [S-P](segment) 
+    - List  products [whose division](object_type) is [D-C](division)
     - Which products [belongs to division](object_type) [D-I](division)
     - List all products [in division](object_type) [D-C](division)
     - List all products [whose package_tech](object_type) is [FCBGA](package_tech)
     - Which products has [package_tech](object_type) [FCLGA](package_tech)
-    - List all products [with package_tech](object_type) [FCLGA](package_tech)
+    - Show me all products [with package_tech](object_type) [FCLGA](package_tech)
     - List all products [whose chip_attach](object_type) is [New-H](chip_attach)
     - Which products [has chip_attach](object_type) [Legacy-T](chip_attach)
     - List all products [with chip_attach](object_type) [Legacy-T](chip_attach)
+    - Which products [have at site](object_type) [VNAT](at_site)?
+    - What are the products [whose AT site](object_type) [VNAT](at_site)?
+    - Get products [with AT site](object_type) [VNAT](at_site).
+    - Which products [have TC/SS](object_type) [1-A](tcss)?
+    - What are the products [whose TCSS](object_type) [1-D](tcss)?
+    - Get products [with tcss](object_type) [3-A](tcss).

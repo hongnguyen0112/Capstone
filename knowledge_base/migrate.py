@@ -24,8 +24,17 @@ def load_data_into_grakn(input, session):
 
 
 def product_template(product):
-    graql_insert_query = 'insert $product isa product, has Product_RMIT "' + product["Product_RMIT"] + '"'
-    graql_insert_query += ', has AT_Site "' + product["AT_Site"] + '";'
+    graql_insert_query = 'insert $product isa product, has Product_RMIT "' + product["Product_RMIT"] + '";'
+    return graql_insert_query
+
+
+def tcss_template(tcss_info):
+    graql_insert_query = 'insert $tcss_info isa tcss_info, has TCSS "' + tcss_info["TCSS"] + '";'
+    return graql_insert_query
+
+
+def at_site_template(at_site_info):
+    graql_insert_query = 'insert $at_site_info isa at_site_info, has AT_Site "' + at_site_info["AT_Site"] + '";'
     return graql_insert_query
 
 
@@ -63,6 +72,21 @@ def package_tech_template(package_tech_info):
 def chip_attach_template(chip_attach_info):
     graql_insert_query = 'insert $chip_attach_info isa chip_attach_info, has Chip_Attach "' + chip_attach_info["Chip_Attach"] + '";'
     return graql_insert_query
+
+
+def include_tcss_template(include_tcss):
+    graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_tcss["Product_RMIT"] + '";'
+    graql_insert_query += ' $tcss_info isa tcss_info, has TCSS "' + include_tcss["TCSS"] + '";'
+    graql_insert_query += " insert (product: $product, tcss: $tcss_info) isa include_tcss;"
+    return graql_insert_query
+
+
+def include_at_site_template(include_at_site):
+    graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_at_site["Product_RMIT"] + '";'
+    graql_insert_query += ' $at_site_info isa at_site_info, has AT_Site "' + include_at_site["AT_Site"] + '";'
+    graql_insert_query += " insert (product: $product, at_site: $at_site_info) isa include_at_site;"
+    return graql_insert_query
+
 
 def include_cycle_template(include_cycle):
     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_cycle["Product_RMIT"] + '";'
@@ -173,6 +197,14 @@ inputs = [
         "template": product_template
     },
     {
+        "data_path": "./data/tcss",
+        "template": tcss_template
+    },
+    {
+        "data_path": "./data/at_site",
+        "template": at_site_template
+    },
+    {
         "data_path": "./data/cycle",
         "template": cycle_template
     },
@@ -207,6 +239,14 @@ inputs = [
     {
         "data_path": "./data/include_comment",
         "template": include_comment_template
+    },
+    {
+        "data_path": "./data/include_tcss",
+        "template": include_tcss_template
+    },
+    {
+        "data_path": "./data/include_at_site",
+        "template": include_at_site_template
     },
     {
         "data_path": "./data/include_cycle",

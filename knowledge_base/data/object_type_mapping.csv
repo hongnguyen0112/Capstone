@@ -1,18 +1,59 @@
 mapping_key,mapping_value
 product,product
 products,product
-cycle,cycle
-cycles,cycle
+TC/SS,tcss_info
+tcss,tcss_info
+at site,at_site_info
+AT site,at_site_info
+AT sites,at_site_info
+division,division_info
+divisions,division_info
+phase,phase_info
+phases,phase_info
+comment,comment_info
+comments,comment_info
+reason,comment_info
+reasons,comment_info
+why,comment_info
+tester platform,tester_platform_info
+tester platforms,tester_platform_info
+package tech,package_tech_info
+package techs,package_tech_info
+tech package,package_tech_info
+tech packages,package_tech_info
+segment,segment_info
+segments,segment_info
+segmentation,segment_info
+chip attach,chip_attach_info
+chip attachs,chip_attach_info
+chip attaches,chip_attach_info
+attached chip,chip_attach_info
+attached chips,chip_attach_info
+cycle,cycle_info
+cycles,cycle_info
 in cycle,include_cycle
 of cycle,include_cycle
 whose cycle,include_cycle
 with cycle,include_cycle
 belongs to cycle,include_cycle
 belong cycle,include_cycle
+in TC/SS,include_tcss
+has TC/SS,include_tcss
+whose TC/SS,include_tcss
+have TC/SS,include_tcss
+which TC/SS,include_tcss
+with TC/SS,include_tcss
+in AT site,include_at_site
+has AT site,include_at_site
+whose AT site,include_at_site
+have AT site,include_at_site
+which AT site,include_at_site
+with AT site,include_at_site
 has tester platform,include_testerplatform
 have tester platform,include_testerplatform
 whose tester platform,include_testerplatform
 which tester platform,include_testerplatform
+with tester platform,include_testerplatform
 in tester platform,include_testerplatform
 belongs to tester platform,include_testerplatform
 belong to tester platform,include_testerplatform
@@ -23,10 +64,12 @@ have segment,include_segment
 which segment,include_segment
 belongs to segment,include_segment
 belong to segment,include_segment
+with segment,include_segment
 has division,include_division
 have division,include_division
 whose division,include_division
 which division,include_division
+with division,include_division
 in division,include_division
 belongs to division,include_division
 belong to division,include_division
@@ -42,4 +85,3 @@ has chip attach,include_chip_attach
 have chip attach,include_chip_attach
 whose chip attach,include_chip_attach
 which chip attach,include_chip_attach
-

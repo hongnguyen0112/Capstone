@@ -3,6 +3,8 @@ define
 #entities 
 
 product sub entity,
+    plays include_tcss:product,
+    plays include_at_site:product,
     plays include_cycle:product,
     plays include_phase:product,
     plays include_comment:product,
@@ -11,8 +13,14 @@ product sub entity,
     plays include_division:product,
     plays include_chip_attach:product,
     plays include_package_tech:product,
-    owns Product_RMIT,
-    owns TCSS,
+    owns Product_RMIT;
+
+tcss_info sub entity,
+    plays include_tcss:tcss,
+    owns TCSS;
+
+at_site_info sub entity,
+    plays include_at_site:at_site,
     owns AT_Site;
 
 cycle_info sub entity,
@@ -50,6 +58,24 @@ division_info sub entity,
     plays include_division:Division,
     owns Division;
 
+mapping sub entity,
+    owns mapping_key,
+    owns mapping_value;
+
+mention_mapping sub mapping;
+object_type_mapping sub mapping;
+attribute_mapping sub mapping;
+
+# Relations
+
+include_tcss sub relation,
+    relates product,
+    relates tcss;
+
+include_at_site sub relation,
+    relates product,
+    relates at_site;
+
 include_cycle sub relation,
     relates product,
     relates cycle;
@@ -83,14 +109,6 @@ include_package_tech sub relation,
 include_chip_attach sub relation,
     relates product,
     relates Chip_Attach;
-
-mapping sub entity,
-    owns mapping_key,
-    owns mapping_value;
-
-mention_mapping sub mapping;
-object_type_mapping sub mapping;
-attribute_mapping sub mapping;
 
 #Attribute
 

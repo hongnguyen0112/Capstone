@@ -179,19 +179,25 @@ class ActionQueryEntities(Action):
         if object_type == "include_cycle":
             cycle = tracker.get_slot("cycle")
             entities = self._filter_cycle_entities(entities, cycle)
-        if object_type == "include_testerplatform":
+        elif object_type == "include_testerplatform":
             testerplatform = tracker.get_slot("testerplatform")
             entities = self._filter_testerplatform_entities(entities, testerplatform)
-        if object_type == "include_segment":
+        elif object_type == "include_segment":
             segment = tracker.get_slot("segment")
             entities = self._filter_segment_entities(entities, segment)
-        if object_type == "include_division":
+        elif object_type == "include_tcss":
+            tcss = tracker.get_slot("tcss")
+            entities = self._filter_tcss_entities(entities, tcss)
+        elif object_type == "include_at_site":
+            at_site = tracker.get_slot("at_site")
+            entities = self._filter_at_site_entities(entities, at_site)
+        elif object_type == "include_division":
             division = tracker.get_slot("division")
             entities = self._filter_division_entities(entities, division)
-        if object_type == "include_package_tech":
+        elif object_type == "include_package_tech":
             package_tech = tracker.get_slot("package_tech")
             entities = self._filter_package_tech_entities(entities, package_tech)
-        if object_type == "include_chip_attach":
+        elif object_type == "include_chip_attach":
             chip_attach = tracker.get_slot("chip_attach")
             entities = self._filter_chip_attach_entities(entities, chip_attach)
             
@@ -233,8 +239,47 @@ class ActionQueryEntities(Action):
 
         reset_attribute_slots(slots, object_type, tracker)
         
-        return slots   
+        return slots  
+
+
+    def _filter_tcss_entities (
+        self, entities: List[Dict[Text, Any]], tcss: Text
+    ) -> List[Dict[Text, Any]]:
+        """
+        Filter out all TCSS that do not belong to the provided TCSS.
+        :param entities: list of entities
+        :param account_number: provided TCSS
+        :return: list of filtered entities with max. 20 entries
+        """
+        if tcss is not None:
+            filtered_entities = []
+            for entity in entities:
+                entity["tcss"]["TCSS"]
+                if entity["tcss"]["TCSS"] == tcss:
+                    filtered_entities.append(entity)
+            return filtered_entities[:20]
+        
+        return entities[:20] 
     
+
+    def _filter_at_site_entities (
+        self, entities: List[Dict[Text, Any]], at_site: Text
+    ) -> List[Dict[Text, Any]]:
+        """
+        Filter out all AT_Site that do not belong to the provided AT_site.
+        :param entities: list of entities
+        :param account_number: provided AT_site
+        :return: list of filtered entities with max. 20 entries
+        """
+        if at_site is not None:
+            filtered_entities = []
+            for entity in entities:
+                if entity["at_site"]["AT_Site"] == at_site:
+                    filtered_entities.append(entity)
+            return filtered_entities[:20]
+        
+        return entities[:20]
+
 
     def _filter_cycle_entities (
         self, entities: List[Dict[Text, Any]], cycle: Text
@@ -254,9 +299,13 @@ class ActionQueryEntities(Action):
         
         return entities[:20]
     
+
     def _filter_testerplatform_entities (
         self, entities: List[Dict[Text, Any]], testerplatform: Text
     ) -> List[Dict[Text, Any]]:
+        """
+        Filter Tester_platform
+        """
         if testerplatform is not None:
             filtered_entities = []
             for entity in entities:
@@ -265,9 +314,13 @@ class ActionQueryEntities(Action):
             return filtered_entities[:20]
         return entities[:20]
 
+
     def _filter_segment_entities (
         self, entities: List[Dict[Text, Any]], segment: Text
     ) -> List[Dict[Text, Any]]:
+        """
+        Filter segment
+        """
         if segment is not None:
             filtered_entities = []
             for entity in entities:
@@ -276,9 +329,13 @@ class ActionQueryEntities(Action):
             return filtered_entities[:20]
         return entities[:20]
 
+
     def _filter_division_entities (
         self, entities: List[Dict[Text, Any]], division: Text
     ) -> List[Dict[Text, Any]]:
+        """
+        Filter division
+        """
         if division is not None:
             filtered_entities = []
             for entity in entities:
@@ -287,9 +344,13 @@ class ActionQueryEntities(Action):
             return filtered_entities[:20]
         return entities[:20]
 
+
     def _filter_package_tech_entities (
         self, entities: List[Dict[Text, Any]], package_tech: Text
     ) -> List[Dict[Text, Any]]:
+        """
+        Filter package_tech
+        """
         if package_tech is not None:
             filtered_entities = []
             for entity in entities:
@@ -298,9 +359,13 @@ class ActionQueryEntities(Action):
             return filtered_entities[:20]
         return entities[:20]
 
+
     def _filter_chip_attach_entities (
         self, entities: List[Dict[Text, Any]], chip_attach: Text
     ) -> List[Dict[Text, Any]]:
+        """
+        Filter chip_attach
+        """
         if chip_attach is not None:
             filtered_entities = []
             for entity in entities:
@@ -308,6 +373,7 @@ class ActionQueryEntities(Action):
                     filtered_entities.append(entity)
             return filtered_entities[:20]
         return entities[:20]
+
 
 class ActionQueryAttribute(Action):
     """

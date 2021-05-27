@@ -191,33 +191,12 @@ class GraphDatabase(KnowledgeBase):
         )
 
 
-    def _get_product_entities (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
-        limit: int = 20
-    ) -> List[Dict[Text, Any]]:
-        """
-        Query the graph database for product. Restrict the product
-        by the provided attributes, if any attributes are given.
-        :param attributes: list of attributes
-        :param limit: maximum number of products to return
-        :return: list of products
-        """
-        attributes_clause = self._get_attribute_clause(attributes)
-        logger.debug("Get product entities")
-        return self._execute_entity_query (
-            f"match "
-            f"$product isa product{attributes_clause}; "
-            f"get $product;",
-            "product"
-        )[:limit]
-
     def _get_testerplatform_entities (
         self,
         attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
-        logger.debug("Get tester platform entities")
+        logger.debug("Get tester platform relation")
         return self._execute_relation_query(
             f"match "
             f"$include_testerplatform (product: $product, Tester_Platform: $testerplatform_info)"
@@ -226,12 +205,13 @@ class GraphDatabase(KnowledgeBase):
             "include_testerplatform"
         )
     
+
     def _get_segment_entities (
         self,
         attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
-        logger.debug("Get segment entities")
+        logger.debug("Get segment relation")
         return self._execute_relation_query(
             f"match "
             f"$include_segment (product: $product, Segment: $segment_info)"
@@ -240,12 +220,13 @@ class GraphDatabase(KnowledgeBase):
             "include_segment"
         )
 
+
     def _get_division_entities (
         self,
         attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
-        logger.debug("Get division entities")
+        logger.debug("Get division relation")
         return self._execute_relation_query(
             f"match "
             f"$include_division (product: $product, Division: $division_info)"
@@ -254,12 +235,13 @@ class GraphDatabase(KnowledgeBase):
             "include_division"
         )
 
+
     def _get_package_tech_entities (
         self,
         attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
-        logger.debug("Get package_tech entities")
+        logger.debug("Get package_tech relation")
         return self._execute_relation_query(
             f"match "
             f"$include_package_tech (product: $product, Package_Tech: $package_tech_info)"
@@ -268,12 +250,13 @@ class GraphDatabase(KnowledgeBase):
             "include_package_tech"
         )
 
+
     def _get_chip_attach_entities (
         self,
         attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
-        logger.debug("Get chip_attach entities")
+        logger.debug("Get chip_attach relation")
         return self._execute_relation_query(
             f"match "
             f"$include_chip_attach (product: $product, Chip_Attach: $chip_attach_info)"
@@ -281,6 +264,59 @@ class GraphDatabase(KnowledgeBase):
             f"get $include_chip_attach;",
             "include_chip_attach"
         )
+
+    
+    def _get_at_site_entities (
+        self,
+        attributes: Optional[List[Dict[Text, Text]]] = None,
+    ) -> List[Dict[Text, Any]]:
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get AT_Site relation")
+        return self._execute_relation_query(
+            f"match "
+            f"$include_at_site (product: $product, at_site: $at_site_info)"
+            f"isa include_at_site{attributes_clause};"
+            f"get $include_at_site;",
+            "include_at_site"
+        )
+    
+
+    def _get_tcss_entities (
+        self,
+        attributes: Optional[List[Dict[Text, Text]]] = None,
+    ) -> List[Dict[Text, Any]]:
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get TC/SS entities")
+        return self._execute_relation_query(
+            f"match "
+            f"$include_tcss (product: $product, tcss: $tcss_info)"
+            f"isa include_tcss{attributes_clause};"
+            f"get $include_tcss;",
+            "include_tcss"
+        )
+    
+
+    def _get_comment_info (
+        self,
+        attributes: Optional[List[Dict[Text, Text]]] = None,
+        limit: int = 20
+    ) -> List[Dict[Text, Any]]:
+        """
+        Query the graph database for comments. Restrict the comment
+        by the provided attributes, if any attributes are given.
+        :param attributes: list of attributes
+        :param limit: maximum number of comments to return
+        :return: list of comments and date
+        """
+        attributes_clause = self._get_attribute_clause(attributes)
+        logger.debug("Get product entities")
+        return self._execute_entity_query (
+            f"match "
+            f"$comment_info isa comment_info, has comment != ''{attributes_clause}; "
+            f"get $comment_info;",
+            "comment_info"
+        )[:limit]
+
 
     def get_entities (
         self, 
@@ -298,20 +334,25 @@ class GraphDatabase(KnowledgeBase):
         """
         print("get_entities - object_type: ", object_type)
         print("get_entities - attributes: ", attributes)
-        if object_type == "product":
-            return self._get_product_entities(attributes, limit)
+        
         if object_type == "include_cycle":
             return self._get_cycle_entities(attributes)
-        if object_type == "include_testerplatform":
+        elif object_type == "include_testerplatform":
             return self._get_testerplatform_entities(attributes)
-        if object_type == "include_segment":
+        elif object_type == "include_segment":
             return self._get_segment_entities(attributes)
-        if object_type == "include_division":
+        elif object_type == "include_division":
             return self._get_division_entities(attributes)
-        if object_type == "include_package_tech":
+        elif object_type == "include_package_tech":
             return self._get_package_tech_entities(attributes)
-        if object_type == "include_chip_attach":
+        elif object_type == "include_chip_attach":
             return self._get_chip_attach_entities(attributes)
+        elif object_type == "include_tcss":
+            return self._get_tcss_entities(attributes)
+        elif object_type == "include_at_site":
+            return self._get_at_site_entities(attributes)
+        elif object_type == "comment_info":
+            return self._get_comment_info(attributes)
 
         attribute_clause = self._get_attribute_clause(attributes)
 

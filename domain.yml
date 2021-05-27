@@ -15,25 +15,29 @@ intents:
 entities:
   - product
   - object_type
+  - at_site_info
+  - tcss_info
   - cycle_info
   - testerplatform_info
   - segment_info
   - division_info
   - package_tech_info
   - chip_attach_info
+  - comment_info
+  - phase_info
   - cycle
   - attribute
   - mention
   - iid
   - Product_RMIT
-  - Segment
-  - TCSS
-  - AT_Site
-  - Division
-  - Package_Tech
-  - Chip_Attach
-  - Tester_Platform
-  - Phase
+  - segment
+  - tcss
+  - at_site
+  - division
+  - package_tech
+  - chip_attach
+  - tester_platform
+  - phase
   - WW
   - comment
   - listed_items
@@ -45,6 +49,12 @@ slots:
   object_type:
     type: text
     influence_conversation: false
+  tcss_info:
+    type: text
+    influence_conversation: false
+  at_site_info:
+    type: text
+    influence_conversation: false
   cycle_info:
     type: text
     influence_conversation: false
@@ -54,6 +64,15 @@ slots:
   division_info:
     type: text
     influence_conversation: false
+  comment_info:
+    type: text
+    influence_conversation: false
+  phase_info:
+    type: text
+    influence_conversation: false
+  at_site:
+    type: text
+    influence_conversation: false
   cycle:
     type: text
     influence_conversation: false
@@ -61,6 +80,9 @@ slots:
     type: text
     influence_conversation: false
   segment:
+    type: text
+    influence_conversation: false
+  tcss:
     type: text
     influence_conversation: false
   division:
@@ -93,28 +115,10 @@ slots:
   package_tech:
     type: text
     influence_conversation: false
-  Segment:
+  tester_platform:
     type: text
     influence_conversation: false
-  TCSS:
-    type: text
-    influence_conversation: false
-  AT_Site:
-    type: text
-    influence_conversation: false
-  Division:
-    type: text
-    influence_conversation: false
-  Package_Tech:
-    type: text
-    influence_conversation: false
-  Chip_Attach:
-    type: text
-    influence_conversation: false
-  Tester_Platform:
-    type: text
-    influence_conversation: false
-  Phase:
+  phase:
     type: text
     influence_conversation: false
   WW:
