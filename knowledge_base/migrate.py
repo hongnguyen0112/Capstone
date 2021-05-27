@@ -169,83 +169,83 @@ def build_product_graph(inputs):
 
 inputs = [
     {
-        "data_path": "product",
+        "data_path": "./data/product",
         "template": product_template
     },
     {
-        "data_path": "cycle",
+        "data_path": "./data/cycle",
         "template": cycle_template
     },
     {
-        "data_path": "Phase",
+        "data_path": "./data/Phase",
         "template": phase_template
     },
     {
-        "data_path": "comment",
+        "data_path": "./data/comment",
         "template": comment_template
     },
     {
-        "data_path": "testerplatform",
+        "data_path": "./data/testerplatform",
         "template": testerplatform_template
     },
     {
-        "data_path": "division",
+        "data_path": "./data/division",
         "template": division_template
     },
     {
-        "data_path": "segment",
+        "data_path": "./data/segment",
         "template": segment_template
     },
     {
-        "data_path": "package_tech",
+        "data_path": "./data/package_tech",
         "template": package_tech_template
     },
     {
-        "data_path": "chip_attach",
+        "data_path": "./data/chip_attach",
         "template": chip_attach_template
     },
     {
-        "data_path": "include_comment",
+        "data_path": "./data/include_comment",
         "template": include_comment_template
     },
     {
-        "data_path": "include_cycle",
+        "data_path": "./data/include_cycle",
         "template": include_cycle_template
     },
     {
-        "data_path": "include_phase",
+        "data_path": "./data/include_phase",
         "template": include_phase_template
     },
     {
-        "data_path": "include_testerplatform",
+        "data_path": "./data/include_testerplatform",
         "template": include_testerplatform_template
     },
     {
-        "data_path": "include_segment",
+        "data_path": "./data/include_segment",
         "template": include_segment_template
     },
     {
-        "data_path": "include_division",
+        "data_path": "./data/include_division",
         "template": include_division_template
     },
     {
-        "data_path": "include_package_tech",
+        "data_path": "./data/include_package_tech",
         "template": include_package_tech_template
     },
     {
-        "data_path": "include_chip_attach",
+        "data_path": "./data/include_chip_attach",
         "template": include_chip_attach_template
     },
     {
-        "data_path": "attribute_mapping",
+        "data_path": "./data/attribute_mapping",
         "template": attribute_mapping_template
     },
     {
-        "data_path": "mention_mapping",
+        "data_path": "./data/mention_mapping",
         "template": mention_mapping_template
     },
     {
-        "data_path": "object_type_mapping",
+        "data_path": "./data/object_type_mapping",
         "template": object_type_mapping_template
     }
 ]

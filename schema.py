@@ -52,7 +52,7 @@ schema = {
             "iid"
         ],
         "key": "id",
-        "representation": ["product.Product_RMIT", "cycle.cycle"]
+        "representation": ["product.Product_RMIT"]
     },
 
     "testerplatform_info": {
@@ -87,7 +87,7 @@ schema = {
            "iid" 
         ],
         "key": "id",
-        "representation": ["product.Product_RMIT", "Tester_Platform.Tester_Platform"]
+        "representation": ["product.Product_RMIT"]
     },
 
     "segment_info": {
@@ -104,7 +104,7 @@ schema = {
            "iid" 
         ],
         "key": "id",
-        "representation": ["product.Product_RMIT", "Segment.Segment"]
+        "representation": ["product.Product_RMIT"]
     },
 
      "division_info": {
@@ -121,7 +121,7 @@ schema = {
            "iid" 
         ],
         "key": "id",
-        "representation": ["product.Product_RMIT", "Division.Division"]
+        "representation": ["product.Product_RMIT"]
     },
 
     "include_package_tech": {
@@ -129,7 +129,7 @@ schema = {
            "iid" 
         ],
         "key": "id",
-        "representation": ["product.Product_RMIT", "Package_Tech.Package_Tech"]
+        "representation": ["product.Product_RMIT"]
     },
 
     "include_chip_attach": {
@@ -137,6 +137,6 @@ schema = {
            "iid" 
         ],
         "key": "id",
-        "representation": ["product.Product_RMIT", "Chip_Attach.Chip_Attach"]
+        "representation": ["product.Product_RMIT"]
     }
 }

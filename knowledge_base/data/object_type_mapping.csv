@@ -1,0 +1,45 @@
+mapping_key,mapping_value
+product,product
+products,product
+cycle,cycle
+cycles,cycle
+in cycle,include_cycle
+of cycle,include_cycle
+whose cycle,include_cycle
+with cycle,include_cycle
+belongs to cycle,include_cycle
+belong cycle,include_cycle
+has tester platform,include_testerplatform
+have tester platform,include_testerplatform
+whose tester platform,include_testerplatform
+which tester platform,include_testerplatform
+in tester platform,include_testerplatform
+belongs to tester platform,include_testerplatform
+belong to tester platform,include_testerplatform
+in Segment,include_segment
+has segment,include_segment
+whose segment,include_segment
+have segment,include_segment
+which segment,include_segment
+belongs to segment,include_segment
+belong to segment,include_segment
+has division,include_division
+have division,include_division
+whose division,include_division
+which division,include_division
+in division,include_division
+belongs to division,include_division
+belong to division,include_division
+has package tech,include_package_tech
+have package tech,include_package_tech
+whose package tech,include_package_tech
+which package tech,include_package_tech
+has attached chip,include_chip_attach
+have attached chip,include_chip_attach
+whose attached chip,include_chip_attach
+which attached chip,include_chip_attach
+has chip attach,include_chip_attach
+have chip attach,include_chip_attach
+whose chip attach,include_chip_attach
+which chip attach,include_chip_attach
+

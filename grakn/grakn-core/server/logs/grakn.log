@@ -266,3 +266,4 @@ grakn.core.common.exception.GraknException: [TYR03] Invalid Type Read: The type 
 2021-05-25 08:49:47,160 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
 2021-05-25 10:44:15,858 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
 2021-05-26 15:19:03,893 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
+2021-05-27 17:33:33,687 [main] [ERROR] grakn.core.server.GraknServer - org.rocksdb.RocksDBException: CURRENT file corrupted
