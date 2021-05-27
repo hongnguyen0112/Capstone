@@ -166,7 +166,7 @@ class ActionQueryEntities(Action):
         
         # utter rephrase if found no object_type recognised
         if object_type is None:
-            dispatcher.utter_template("utter_rephrase", tracker)
+            dispatcher.utter_message("utter_rephrase", tracker)
             return []
 
         # check what attributes the NER found for entity type
@@ -203,8 +203,8 @@ class ActionQueryEntities(Action):
             
         # utter message if no instance is found with the object_type
         if not entities:
-            dispatcher.utter_template(
-                "I could not find any entities for {}.".format(object_type), tracker
+            dispatcher.utter_message(
+                "I could not find anything satisfying to your query... Rephrase maybe?"
             )
             return []
         
@@ -215,7 +215,7 @@ class ActionQueryEntities(Action):
         entity_representation = schema[object_type]["representation"]
 
         dispatcher.utter_message(
-            "Found the following {} entities: ".format(object_type)
+            "I have found the following: "
         )
         
         sorted_entities = sorted([to_str(e, entity_representation) for e in entities])
