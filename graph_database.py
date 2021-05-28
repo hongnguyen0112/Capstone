@@ -383,9 +383,11 @@ class GraphDatabase(KnowledgeBase):
             f"get $v;"
         )
 
-        print("mapping_value: ", value[0])
-
+        
+        if len(value) == 0:
+            return
         if value and len(value) == 1:
+            print("mapping_value: ", value[0])
             return value[0]
     
 

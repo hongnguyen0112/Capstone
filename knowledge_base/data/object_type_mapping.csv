@@ -2,6 +2,7 @@ mapping_key,mapping_value
 product,product
 products,product
 TC/SS,tcss_info
+TCSS,tcss_info
 tcss,tcss_info
 at site,at_site_info
 AT site,at_site_info
@@ -57,7 +58,7 @@ with tester platform,include_testerplatform
 in tester platform,include_testerplatform
 belongs to tester platform,include_testerplatform
 belong to tester platform,include_testerplatform
-in Segment,include_segment
+in segment,include_segment
 has segment,include_segment
 whose segment,include_segment
 have segment,include_segment
@@ -77,11 +78,14 @@ has package tech,include_package_tech
 have package tech,include_package_tech
 whose package tech,include_package_tech
 which package tech,include_package_tech
+with package tech,include_package_tech
 has attached chip,include_chip_attach
 have attached chip,include_chip_attach
 whose attached chip,include_chip_attach
 which attached chip,include_chip_attach
+with attached chip,include_chip_attach
 has chip attach,include_chip_attach
 have chip attach,include_chip_attach
 whose chip attach,include_chip_attach
 which chip attach,include_chip_attach
+with chip attach,include_chip_attach

@@ -166,7 +166,7 @@ class ActionQueryEntities(Action):
         
         # utter rephrase if found no object_type recognised
         if object_type is None:
-            dispatcher.utter_message("utter_rephrase", tracker)
+            dispatcher.utter_message("Sorry, I did not get that...")
             return []
 
         # check what attributes the NER found for entity type
