@@ -1,4 +1,5 @@
 import logging
+from abc import ABC
 from typing import List, Dict, Any, Optional, Text
 from grakn.client import Grakn, SessionType, TransactionType
 
@@ -7,50 +8,48 @@ logger = logging.getLogger(__name__)
 
 class KnowledgeBase(object):
 
-    def get_entities (
-        self,
-        object_type: Text,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
-        limit: int = 20,
+    def get_entities(
+            self,
+            object_type: Text,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
+            limit: int = 20,
     ) -> List[Dict[Text, Any]]:
         raise NotImplementedError("Method is not implemented!")
 
-
-    def get_attribute_of (
-        self,
-        object_type: Text,
-        key_attribute: Text,
-        entity: Text,
-        attributes: Text
+    def get_attribute_of(
+            self,
+            object_type: Text,
+            key_attribute: Text,
+            entity: Text,
+            attributes: Text
     ) -> List[Any]:
         raise NotImplementedError("Method is not implemented!")
 
-
-    def validate_entity (
-        self, object_type, entity, key_attribute, attributes
+    def validate_entity(
+            self, object_type, entity, key_attribute, attributes
     ) -> Optional[Dict[Text, Any]]:
         raise NotImplementedError("Method is not implemented!")
-    
+
     def map(self, mapping_type: Text, mapping_key: Text) -> Text:
         raise NotImplementedError("Method is not implemented.")
-    
 
-class GraphDatabase(KnowledgeBase):
+
+class GraphDatabase(KnowledgeBase, ABC):
     """
     GraphDatabase uses a grakn graph database to encode domain knowledege. Make
     sure to have the graph database set up and the grakn server running.
     """
 
-    def __init__ (
-        self, 
-        uri: Text = "localhost:1729",
-        keyspace: Text = "product"
+    def __init__(
+            self,
+            uri: Text = "localhost:1729",
+            keyspace: Text = "product"
     ):
         self.uri = uri
         self.keyspace = keyspace
 
-
-    def _thing_to_dict(self, thing, transaction):
+    @staticmethod
+    def _thing_to_dict(thing, transaction):
         """
         Converts a thing (a grakn object) to a dict for easy retrieval of the thing's
         attributes.
@@ -62,7 +61,6 @@ class GraphDatabase(KnowledgeBase):
 
         return entity
 
-
     def _execute_entity_query(self, query: Text, object_type: Text) -> List[Dict[Text, Any]]:
         """
         Executes a query that returns a list of entities with all their attributes.
@@ -70,7 +68,6 @@ class GraphDatabase(KnowledgeBase):
         with Grakn.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
-
                     logger.debug("Entity: Executing Graql query: " + query)
                     result_iter = tx.query().match(query)
                     answers = [ans.get(object_type) for ans in result_iter]
@@ -80,7 +77,6 @@ class GraphDatabase(KnowledgeBase):
 
                     return entities
 
-
     def _execute_attribute_query(self, query: Text) -> List[Any]:
         """
         Executes a query that returns the value(s) an entity has for a specific
@@ -89,20 +85,18 @@ class GraphDatabase(KnowledgeBase):
         with Grakn.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
-
                     print("Attribute: Executing Graql Query: " + query)
                     query = "".join(query)
-                    iterator = tx.query().match(query)   
+                    iterator = tx.query().match(query)
                     answers = [ans.get('v') for ans in iterator]
                     result = [answer.get_value() for answer in answers]
 
                     return result
 
-
     def _execute_relation_query(
-        self, 
-        query: Text,
-        relation_name: Text
+            self,
+            query: Text,
+            relation_name: Text
     ) -> List[Dict[Text, Any]]:
         """
         Execute a query that queries for a relation. All attributes of the relation and
@@ -120,8 +114,9 @@ class GraphDatabase(KnowledgeBase):
                         relation_entity = concept.map().get(relation_name)
                         print("Type: ", relation_entity.get_type())
                         relation = self._thing_to_dict(relation_entity, tx)
-                       
-                        for (role_entity, entity_set) in relation_entity.as_remote(tx).get_players_by_role_type().items():
+
+                        for (role_entity, entity_set) in relation_entity.as_remote(
+                                tx).get_players_by_role_type().items():
                             role_label = role_entity.get_label().name()
                             thing = entity_set.pop()
                             relation[role_label] = self._thing_to_dict(thing, tx)
@@ -129,10 +124,9 @@ class GraphDatabase(KnowledgeBase):
 
                     return relations
 
-
-    def _get_attribute_clause (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None
+    @staticmethod
+    def _get_attribute_clause(
+            attributes: Optional[List[Dict[Text, Text]]] = None
     ) -> Text:
         """
         Construct the attribute clause.
@@ -144,27 +138,26 @@ class GraphDatabase(KnowledgeBase):
         if attributes:
             clause = ",".join([f"has {a['key']} '{a['value']}'" for a in attributes])
             clause = ", " + clause
-            #, has key 'value', 
+            # , has key 'value',
 
         return clause
-    
 
-    def _get_attribute_of (
-        self,
-        object_type: Text,
-        key_attribute: Text,
-        entity: Text,
-        attributes: Text
+    def _get_attribute_of(
+            self,
+            object_type: Text,
+            key_attribute: Text,
+            entity: Text,
+            attributes: Text
     ) -> List[Any]:
         """
         Get the value of the given attribute for the provided entity.
-        :param entity_type: entity type
+        :param object_type: entity type
         :param key_attribute: key attribute of entity
         :param entity: name of the entity
-        :param attribute: attribute of interest
+        :param attributes: attribute of interest
         :return: the value of the attribute
         """
-        return self._execute_attribute_query (
+        return self._execute_attribute_query(
             f"""
                 match
                     ${object_type} isa {object_type},
@@ -173,16 +166,15 @@ class GraphDatabase(KnowledgeBase):
                 get $a
             """
         )
-    
 
     def _get_cycle_entities(
-        self, attributes: Optional[List[Dict[Text, Text]]] = None
+            self, attributes: Optional[List[Dict[Text, Text]]] = None
     ) -> List[Dict[Text, Any]]:
 
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get cycle")
 
-        return self._execute_relation_query (
+        return self._execute_relation_query(
             f"match "
             f"$include_cycle (product: $product, cycle: $cycle_info) "
             f"isa include_cycle{attributes_clause}; "
@@ -190,10 +182,9 @@ class GraphDatabase(KnowledgeBase):
             "include_cycle"
         )
 
-
-    def _get_testerplatform_entities (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
+    def _get_testerplatform_entities(
+            self,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get tester platform relation")
@@ -204,11 +195,10 @@ class GraphDatabase(KnowledgeBase):
             f"get $include_testerplatform;",
             "include_testerplatform"
         )
-    
 
-    def _get_segment_entities (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
+    def _get_segment_entities(
+            self,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get segment relation")
@@ -220,10 +210,9 @@ class GraphDatabase(KnowledgeBase):
             "include_segment"
         )
 
-
-    def _get_division_entities (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
+    def _get_division_entities(
+            self,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get division relation")
@@ -235,10 +224,9 @@ class GraphDatabase(KnowledgeBase):
             "include_division"
         )
 
-
-    def _get_package_tech_entities (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
+    def _get_package_tech_entities(
+            self,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get package_tech relation")
@@ -250,10 +238,9 @@ class GraphDatabase(KnowledgeBase):
             "include_package_tech"
         )
 
-
-    def _get_chip_attach_entities (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
+    def _get_chip_attach_entities(
+            self,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get chip_attach relation")
@@ -265,10 +252,9 @@ class GraphDatabase(KnowledgeBase):
             "include_chip_attach"
         )
 
-    
-    def _get_at_site_entities (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
+    def _get_at_site_entities(
+            self,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get AT_Site relation")
@@ -279,11 +265,10 @@ class GraphDatabase(KnowledgeBase):
             f"get $include_at_site;",
             "include_at_site"
         )
-    
 
-    def _get_tcss_entities (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
+    def _get_tcss_entities(
+            self,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
     ) -> List[Dict[Text, Any]]:
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get TC/SS entities")
@@ -294,12 +279,11 @@ class GraphDatabase(KnowledgeBase):
             f"get $include_tcss;",
             "include_tcss"
         )
-    
 
-    def _get_comment_info (
-        self,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
-        limit: int = 20
+    def _get_comment_info(
+            self,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
+            limit: int = 20
     ) -> List[Dict[Text, Any]]:
         """
         Query the graph database for comments. Restrict the comment
@@ -310,31 +294,30 @@ class GraphDatabase(KnowledgeBase):
         """
         attributes_clause = self._get_attribute_clause(attributes)
         logger.debug("Get product entities")
-        return self._execute_entity_query (
+        return self._execute_entity_query(
             f"match "
             f"$comment_info isa comment_info, has comment != ''{attributes_clause}; "
             f"get $comment_info;",
             "comment_info"
         )[:limit]
 
-
-    def get_entities (
-        self, 
-        object_type: Text,
-        attributes: Optional[List[Dict[Text, Text]]] = None,
-        limit: int = 20
+    def get_entities(
+            self,
+            object_type: Text,
+            attributes: Optional[List[Dict[Text, Text]]] = None,
+            limit: int = 20
     ) -> List[Dict[Text, Any]]:
         """
         Query the graph database for entities of the given type. Restrict the entities
         by the provided attributes, if any attributes are given.
-        :param entity_type: the entity type
+        :param object_type: the entity type
         :param attributes: list of attributes
         :param limit: maximum number of entities to return
         :return: list of entities
         """
         print("get_entities - object_type: ", object_type)
         print("get_entities - attributes: ", attributes)
-        
+
         if object_type == "include_cycle":
             return self._get_cycle_entities(attributes)
         elif object_type == "include_testerplatform":
@@ -363,11 +346,10 @@ class GraphDatabase(KnowledgeBase):
             object_type
         )[:limit]
 
-
-    def map (
-        self, 
-        mapping_type: Text,
-        mapping_key: Text
+    def map(
+            self,
+            mapping_type: Text,
+            mapping_key: Text
     ) -> Text:
         """
         Query the given mapping table for the provided key.
@@ -383,20 +365,18 @@ class GraphDatabase(KnowledgeBase):
             f"get $v;"
         )
 
-        
         if len(value) == 0:
             return
         if value and len(value) == 1:
             print("mapping_value: ", value[0])
             return value[0]
-    
 
     def validate_entity(
-        self, object_type, entity, key_attribute, attributes
+            self, object_type, entity, key_attribute, attributes
     ) -> Dict[Text, Any]:
         """
         Validates if the given entity has all provided attribute values.
-        :param entity_type: entity type
+        :param object_type: entity type
         :param entity: name of the entity
         :param key_attribute: key attribute of entity
         :param attributes: attributes
@@ -408,9 +388,9 @@ class GraphDatabase(KnowledgeBase):
             f"match "
             f"${object_type} isa {object_type}{attribute_clause}, "
             f"has {key_attribute} '{entity}'; "
-            f"get ${object_type};"
+            f"get ${object_type};",
+            object_type
         )
-        
+
         if value and len(value) == 1:
             return value[0]
-    

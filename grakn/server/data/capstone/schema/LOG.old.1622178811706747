@@ -1,0 +1,104 @@
+2021/05/26-15:18:36.673504 1910 RocksDB version: 6.15.2
+2021/05/26-15:18:36.673587 1910 Git sha rocksdb_build_git_sha:@ca8082762f736a665b75fa1d39468856071bc3a9@
+2021/05/26-15:18:36.673609 1910 Compile date Jan  4 2021
+2021/05/26-15:18:36.673650 1910 DB SUMMARY
+2021/05/26-15:18:36.673674 1910 DB Session ID:  IRTVEUAQQNJJXSB2WGGB
+2021/05/26-15:18:36.705927 1910 CURRENT file:  CURRENT
+2021/05/26-15:18:36.705975 1910 IDENTITY file:  IDENTITY
+2021/05/26-15:18:36.706052 1910 MANIFEST file:  MANIFEST-000019 size: 123 Bytes
+2021/05/26-15:18:36.706068 1910 SST files in G:\RMIT\Capstone\Capstone\grakn\server\data\capstone\schema dir, Total Num: 1, files: 000008.sst 
+2021/05/26-15:18:36.706086 1910 Write Ahead Log file in G:\RMIT\Capstone\Capstone\grakn\server\data\capstone\schema: 000020.log size: 0 ; 
+2021/05/26-15:18:36.706486 1910                         Options.error_if_exists: 0
+2021/05/26-15:18:36.706515 1910                       Options.create_if_missing: 1
+2021/05/26-15:18:36.706520 1910                         Options.paranoid_checks: 1
+2021/05/26-15:18:36.706525 1910                               Options.track_and_verify_wals_in_manifest: 0
+2021/05/26-15:18:36.706530 1910                                     Options.env: 0000028032C873F0
+2021/05/26-15:18:36.706540 1910                                      Options.fs: Legacy File System
+2021/05/26-15:18:36.706545 1910                                Options.info_log: 0000028032FC9C30
+2021/05/26-15:18:36.706550 1910                Options.max_file_opening_threads: 16
+2021/05/26-15:18:36.706554 1910                              Options.statistics: 0000000000000000
+2021/05/26-15:18:36.706559 1910                               Options.use_fsync: 0
+2021/05/26-15:18:36.706563 1910                       Options.max_log_file_size: 0
+2021/05/26-15:18:36.706568 1910                  Options.max_manifest_file_size: 1073741824
+2021/05/26-15:18:36.706577 1910                   Options.log_file_time_to_roll: 0
+2021/05/26-15:18:36.706581 1910                       Options.keep_log_file_num: 1000
+2021/05/26-15:18:36.706586 1910                    Options.recycle_log_file_num: 0
+2021/05/26-15:18:36.706590 1910                         Options.allow_fallocate: 1
+2021/05/26-15:18:36.706595 1910                        Options.allow_mmap_reads: 0
+2021/05/26-15:18:36.706599 1910                       Options.allow_mmap_writes: 0
+2021/05/26-15:18:36.706604 1910                        Options.use_direct_reads: 0
+2021/05/26-15:18:36.706609 1910                        Options.use_direct_io_for_flush_and_compaction: 0
+2021/05/26-15:18:36.706613 1910          Options.create_missing_column_families: 0
+2021/05/26-15:18:36.706617 1910                              Options.db_log_dir: 
+2021/05/26-15:18:36.706622 1910                                 Options.wal_dir: G:\RMIT\Capstone\Capstone\grakn\server\data\capstone\schema
+2021/05/26-15:18:36.706627 1910                Options.table_cache_numshardbits: 6
+2021/05/26-15:18:36.706631 1910                         Options.WAL_ttl_seconds: 0
+2021/05/26-15:18:36.706635 1910                       Options.WAL_size_limit_MB: 0
+2021/05/26-15:18:36.706640 1910                        Options.max_write_batch_group_size_bytes: 1048576
+2021/05/26-15:18:36.706645 1910             Options.manifest_preallocation_size: 4194304
+2021/05/26-15:18:36.706649 1910                     Options.is_fd_close_on_exec: 1
+2021/05/26-15:18:36.706653 1910                   Options.advise_random_on_open: 1
+2021/05/26-15:18:36.706658 1910                    Options.db_write_buffer_size: 0
+2021/05/26-15:18:36.706662 1910                    Options.write_buffer_manager: 0000028032FE3410
+2021/05/26-15:18:36.706667 1910         Options.access_hint_on_compaction_start: 1
+2021/05/26-15:18:36.706671 1910  Options.new_table_reader_for_compaction_inputs: 0
+2021/05/26-15:18:36.706676 1910           Options.random_access_max_buffer_size: 1048576
+2021/05/26-15:18:36.706680 1910                      Options.use_adaptive_mutex: 0
+2021/05/26-15:18:36.706684 1910                            Options.rate_limiter: 0000000000000000
+2021/05/26-15:18:36.706726 1910     Options.sst_file_manager.rate_bytes_per_sec: 0
+2021/05/26-15:18:36.706734 1910                       Options.wal_recovery_mode: 2
+2021/05/26-15:18:36.706738 1910                  Options.enable_thread_tracking: 0
+2021/05/26-15:18:36.706743 1910                  Options.enable_pipelined_write: 0
+2021/05/26-15:18:36.706747 1910                  Options.unordered_write: 1
+2021/05/26-15:18:36.706752 1910         Options.allow_concurrent_memtable_write: 1
+2021/05/26-15:18:36.706756 1910      Options.enable_write_thread_adaptive_yield: 1
+2021/05/26-15:18:36.706761 1910             Options.write_thread_max_yield_usec: 100
+2021/05/26-15:18:36.706767 1910            Options.write_thread_slow_yield_usec: 3
+2021/05/26-15:18:36.706772 1910                               Options.row_cache: None
+2021/05/26-15:18:36.706777 1910                              Options.wal_filter: None
+2021/05/26-15:18:36.706782 1910             Options.avoid_flush_during_recovery: 0
+2021/05/26-15:18:36.706786 1910             Options.allow_ingest_behind: 0
+2021/05/26-15:18:36.706790 1910             Options.preserve_deletes: 0
+2021/05/26-15:18:36.706795 1910             Options.two_write_queues: 0
+2021/05/26-15:18:36.706799 1910             Options.manual_wal_flush: 0
+2021/05/26-15:18:36.706803 1910             Options.atomic_flush: 0
+2021/05/26-15:18:36.706808 1910             Options.avoid_unnecessary_blocking_io: 0
+2021/05/26-15:18:36.706812 1910                 Options.persist_stats_to_disk: 0
+2021/05/26-15:18:36.706817 1910                 Options.write_dbid_to_manifest: 0
+2021/05/26-15:18:36.706821 1910                 Options.log_readahead_size: 0
+2021/05/26-15:18:36.706825 1910                 Options.file_checksum_gen_factory: Unknown
+2021/05/26-15:18:36.706830 1910                 Options.best_efforts_recovery: 0
+2021/05/26-15:18:36.706834 1910                Options.max_bgerror_resume_count: 2147483647
+2021/05/26-15:18:36.706839 1910            Options.bgerror_resume_retry_interval: 1000000
+2021/05/26-15:18:36.706843 1910             Options.allow_data_in_errors: 0
+2021/05/26-15:18:36.706848 1910             Options.db_host_id: __hostname__
+2021/05/26-15:18:36.706852 1910             Options.max_background_jobs: 8
+2021/05/26-15:18:36.706856 1910             Options.max_background_compactions: -1
+2021/05/26-15:18:36.706861 1910             Options.max_subcompactions: 8
+2021/05/26-15:18:36.706865 1910             Options.avoid_flush_during_shutdown: 0
+2021/05/26-15:18:36.706870 1910           Options.writable_file_max_buffer_size: 1048576
+2021/05/26-15:18:36.706874 1910             Options.delayed_write_rate : 16777216
+2021/05/26-15:18:36.706879 1910             Options.max_total_wal_size: 0
+2021/05/26-15:18:36.706883 1910             Options.delete_obsolete_files_period_micros: 21600000000
+2021/05/26-15:18:36.706887 1910                   Options.stats_dump_period_sec: 600
+2021/05/26-15:18:36.706892 1910                 Options.stats_persist_period_sec: 600
+2021/05/26-15:18:36.706896 1910                 Options.stats_history_buffer_size: 1048576
+2021/05/26-15:18:36.706901 1910                          Options.max_open_files: -1
+2021/05/26-15:18:36.706905 1910                          Options.bytes_per_sync: 0
+2021/05/26-15:18:36.706909 1910                      Options.wal_bytes_per_sync: 0
+2021/05/26-15:18:36.706914 1910                   Options.strict_bytes_per_sync: 0
+2021/05/26-15:18:36.706918 1910       Options.compaction_readahead_size: 0
+2021/05/26-15:18:36.706922 1910                  Options.max_background_flushes: -1
+2021/05/26-15:18:36.706927 1910 Compression algorithms supported:
+2021/05/26-15:18:36.706932 1910 	kZSTD supported: 1
+2021/05/26-15:18:36.706937 1910 	kSnappyCompression supported: 1
+2021/05/26-15:18:36.706941 1910 	kBZip2Compression supported: 0
+2021/05/26-15:18:36.706946 1910 	kZlibCompression supported: 1
+2021/05/26-15:18:36.706950 1910 	kLZ4Compression supported: 1
+2021/05/26-15:18:36.706955 1910 	kXpressCompression supported: 0
+2021/05/26-15:18:36.706959 1910 	kLZ4HCCompression supported: 1
+2021/05/26-15:18:36.706987 1910 	kZSTDNotFinalCompression supported: 1
+2021/05/26-15:18:36.707004 1910 Fast CRC32 supported: Supported on x86
+2021/05/26-15:18:36.709041 1910 [WARN] [db\db_impl\db_impl_open.cc:1787] Persisting Option File error: OK
+2021/05/26-15:18:36.709065 1910 [db\db_impl\db_impl.cc:447] Shutdown: canceling all background work
+2021/05/26-15:18:36.709181 1910 [db\db_impl\db_impl.cc:625] Shutdown complete

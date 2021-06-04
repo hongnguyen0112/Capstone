@@ -1,11 +1,12 @@
 from grakn.client import Grakn, SessionType, TransactionType
 import csv
 
+
 def parse_data_to_dictionaries(input):
     items = []
     with open(input["data_path"] + ".csv") as data:
-        for row in csv.DictReader(data, skipinitialspace = True):
-            item = { key: value for key, value in row.items() }
+        for row in csv.DictReader(data, skipinitialspace=True):
+            item = {key: value for key, value in row.items()}
             items.append(item)
     return items
 
@@ -53,24 +54,32 @@ def comment_template(comment_info):
     graql_insert_query += ', has comment "' + comment_info["comment"] + '";'
     return graql_insert_query
 
+
 def testerplatform_template(testerplatform_info):
-    graql_insert_query = 'insert $testerplatform_info isa testerplatform_info, has Tester_Platform "' + testerplatform_info["Tester_Platform"] + '";'
+    graql_insert_query = 'insert $testerplatform_info isa testerplatform_info, has Tester_Platform "' + \
+                         testerplatform_info["Tester_Platform"] + '";'
     return graql_insert_query
+
 
 def segment_template(segment_info):
     graql_insert_query = 'insert $segment_info isa segment_info, has Segment "' + segment_info["Segment"] + '";'
     return graql_insert_query
 
+
 def division_template(division_info):
     graql_insert_query = 'insert $division_info isa division_info, has Division "' + division_info["Division"] + '";'
     return graql_insert_query
 
+
 def package_tech_template(package_tech_info):
-    graql_insert_query = 'insert $package_tech_info isa package_tech_info, has Package_Tech "' + package_tech_info["Package_Tech"] + '";'
+    graql_insert_query = 'insert $package_tech_info isa package_tech_info, has Package_Tech "' + package_tech_info[
+        "Package_Tech"] + '";'
     return graql_insert_query
 
+
 def chip_attach_template(chip_attach_info):
-    graql_insert_query = 'insert $chip_attach_info isa chip_attach_info, has Chip_Attach "' + chip_attach_info["Chip_Attach"] + '";'
+    graql_insert_query = 'insert $chip_attach_info isa chip_attach_info, has Chip_Attach "' + chip_attach_info[
+        "Chip_Attach"] + '";'
     return graql_insert_query
 
 
@@ -101,7 +110,8 @@ def include_comment_template(include_comment):
     graql_insert_query += ' $phase_info isa phase_info, has Phase "' + include_comment["Phase"] + '";'
     graql_insert_query += ' $comment_info isa comment_info, has WW "' + include_comment["WW"] + '"'
     graql_insert_query += ', has comment "' + include_comment["comment"] + '";'
-    graql_insert_query += " insert (product: $product, cycle: $cycle_info, phase: $phase_info, comment: $comment_info) isa include_comment;"
+    graql_insert_query += " insert (product: $product, cycle: $cycle_info, " \
+                          "phase: $phase_info, comment: $comment_info) isa include_comment;"
     return graql_insert_query
 
 
@@ -113,10 +123,14 @@ def include_phase_template(include_phase):
 
 
 def include_testerplatform_template(include_testerplatform):
-    graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_testerplatform["Product_RMIT"] + '";'
-    graql_insert_query += ' $testerplatform_info isa testerplatform_info, has Tester_Platform "' + include_testerplatform["Tester_Platform"] + '";'
-    graql_insert_query += " insert (product: $product, Tester_Platform: $testerplatform_info) isa include_testerplatform;"
+    graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_testerplatform[
+        "Product_RMIT"] + '";'
+    graql_insert_query += ' $testerplatform_info isa testerplatform_info, has Tester_Platform "' + \
+                          include_testerplatform["Tester_Platform"] + '";'
+    graql_insert_query += " insert (product: $product, " \
+                          "Tester_Platform: $testerplatform_info) isa include_testerplatform;"
     return graql_insert_query
+
 
 def include_segment_template(include_segment):
     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_segment["Product_RMIT"] + '";'
@@ -124,23 +138,29 @@ def include_segment_template(include_segment):
     graql_insert_query += " insert (product: $product, Segment: $segment_info) isa include_segment;"
     return graql_insert_query
 
+
 def include_division_template(include_division):
     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_division["Product_RMIT"] + '";'
     graql_insert_query += ' $division_info isa division_info, has Division "' + include_division["Division"] + '";'
     graql_insert_query += " insert (product: $product, Division: $division_info) isa include_division;"
     return graql_insert_query
 
+
 def include_package_tech_template(include_package_tech):
     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_package_tech["Product_RMIT"] + '";'
-    graql_insert_query += ' $package_tech_info isa package_tech_info, has Package_Tech "' + include_package_tech["Package_Tech"] + '";'
+    graql_insert_query += ' $package_tech_info isa package_tech_info, has Package_Tech "' + include_package_tech[
+        "Package_Tech"] + '";'
     graql_insert_query += " insert (product: $product, Package_Tech: $package_tech_info) isa include_package_tech;"
     return graql_insert_query
 
+
 def include_chip_attach_template(include_chip_attach):
     graql_insert_query = 'match $product isa product, has Product_RMIT "' + include_chip_attach["Product_RMIT"] + '";'
-    graql_insert_query += ' $chip_attach_info isa chip_attach_info, has Chip_Attach "' + include_chip_attach["Chip_Attach"] + '";'
+    graql_insert_query += ' $chip_attach_info isa chip_attach_info, has Chip_Attach "' + include_chip_attach[
+        "Chip_Attach"] + '";'
     graql_insert_query += " insert (product: $product, Chip_Attach: $chip_attach_info) isa include_chip_attach;"
     return graql_insert_query
+
 
 def mention_mapping_template(mapping):
     graql_insert_query = 'insert $mapping isa mention_mapping, has mapping_key "' + mapping["mapping_key"] + '"'
@@ -190,6 +210,7 @@ def build_product_graph(inputs):
             for input in inputs:
                 print("Loading from [" + input["data_path"] + "] into Grakn ...")
                 load_data_into_grakn(input, session)
+
 
 inputs = [
     {
