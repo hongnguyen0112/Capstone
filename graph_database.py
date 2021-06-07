@@ -1,7 +1,7 @@
 import logging
 from abc import ABC
 from typing import List, Dict, Any, Optional, Text
-from grakn.client import Grakn, SessionType, TransactionType
+from typedb.client import *
 
 logger = logging.getLogger(__name__)
 
@@ -65,10 +65,10 @@ class GraphDatabase(KnowledgeBase, ABC):
         """
         Executes a query that returns a list of entities with all their attributes.
         """
-        with Grakn.core_client(self.uri) as client:
+        with TypeDB.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
-                    logger.debug("Entity: Executing Graql query: " + query)
+                    logger.debug("Entity: Executing TypeQL query: " + query)
                     result_iter = tx.query().match(query)
                     answers = [ans.get(object_type) for ans in result_iter]
                     entities = []
@@ -82,10 +82,10 @@ class GraphDatabase(KnowledgeBase, ABC):
         Executes a query that returns the value(s) an entity has for a specific
         attribute.
         """
-        with Grakn.core_client(self.uri) as client:
+        with TypeDB.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
-                    print("Attribute: Executing Graql Query: " + query)
+                    print("Attribute: Executing TypeQL Query: " + query)
                     query = "".join(query)
                     iterator = tx.query().match(query)
                     answers = [ans.get('v') for ans in iterator]
@@ -102,11 +102,11 @@ class GraphDatabase(KnowledgeBase, ABC):
         Execute a query that queries for a relation. All attributes of the relation and
         all entities participating in the relation are part of the result.
         """
-        with Grakn.core_client(self.uri) as client:
+        with TypeDB.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
 
-                    print("Relation: Executing Graql Query: " + query)
+                    print("Relation: Executing TypeQL Query: " + query)
                     result_iter = tx.query().match(query)
                     relations = []
 
