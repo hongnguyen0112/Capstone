@@ -2,60 +2,52 @@ define
 
 #entities 
 
-product sub entity,
-    plays include_tcss:product,
-    plays include_at_site:product,
-    plays include_cycle:product,
-    plays include_phase:product,
-    plays include_comment:product,
-    plays include_testerplatform:product,
-    plays include_segment:product,
-    plays include_division:product,
-    plays include_chip_attach:product,
-    plays include_package_tech:product,
-    owns Product_RMIT;
+Product_info sub entity,
+    plays product_spec:Product,
+    plays product_division:Product,
+    plays production_log:Product,
+    plays product_cycle:Product,
+    owns Product;
 
-tcss_info sub entity,
-    plays include_tcss:tcss,
+TCSS_info sub entity,
+    plays product_spec:TCSS,
     owns TCSS;
 
-at_site_info sub entity,
-    plays include_at_site:at_site,
+AT_Site_info sub entity,
+    plays product_division:AT_Site,
     owns AT_Site;
 
-cycle_info sub entity,
-    plays include_cycle:cycle,
-    plays include_comment:cycle,
-    owns cycle;
+Cycle_info sub entity,
+    plays production_log:Cycle,
+    plays product_cycle:Cycle,
+    owns Cycle;
 
-phase_info sub entity,
-    plays include_phase:phase,
-    plays include_comment:phase,
+Phase_info sub entity,
+    plays production_log:Phase,
     owns Phase;
 
-comment_info sub entity,
-    plays include_comment:comment,
-    owns WW,
-    owns comment;
+Comment_info sub entity,
+    plays production_log:Comment,
+    owns Comment;
 
-testerplatform_info sub entity,
-    plays include_testerplatform:Tester_Platform,
+Tester_Platform_info sub entity,
+    plays product_spec:Tester_Platform,
     owns Tester_Platform;
 
-segment_info sub entity,
-    plays include_segment:Segment,
+Segment_info sub entity,
+    plays product_spec:Segment,
     owns Segment;
 
-package_tech_info sub entity,
-    plays include_package_tech:Package_Tech,
+Package_Tech_info sub entity,
+    plays product_spec:Package_Tech,
     owns Package_Tech;
 
-chip_attach_info sub entity,
-    plays include_chip_attach:Chip_Attach,
+Chip_Attach_info sub entity,
+    plays product_spec:Chip_Attach,
     owns Chip_Attach;
 
-division_info sub entity,
-    plays include_division:Division,
+Division_info sub entity,
+    plays product_division:Division,
     owns Division;
 
 mapping sub entity,
@@ -64,55 +56,38 @@ mapping sub entity,
 
 mention_mapping sub mapping;
 object_type_mapping sub mapping;
-attribute_mapping sub mapping;
+attribute_mapping sub mapping,
+    owns object_type;
 
 # Relations
 
-include_tcss sub relation,
-    relates product,
-    relates tcss;
-
-include_at_site sub relation,
-    relates product,
-    relates at_site;
-
-include_cycle sub relation,
-    relates product,
-    relates cycle;
-
-include_comment sub relation,
-    relates product,
-    relates cycle,
-    relates phase,
-    relates comment;
-
-include_phase sub relation,
-    relates product,
-    relates phase;
-
-include_testerplatform sub relation,
-    relates product,
+product_spec sub relation,
+    relates Product,
+    relates Segment,
+    relates TCSS,
+    relates Package_Tech,
+    relates Chip_Attach,
     relates Tester_Platform;
 
-include_segment sub relation,
-    relates product,
-    relates Segment;
-
-include_division sub relation,
-    relates product,
+product_division sub relation,
+    relates Product,
+    relates AT_Site,
     relates Division;
 
-include_package_tech sub relation,
-    relates product,
-    relates Package_Tech;
+production_log sub relation,
+    relates Product,
+    relates Cycle,
+    relates Phase,
+    relates Comment,
+    owns WW;
 
-include_chip_attach sub relation,
-    relates product,
-    relates Chip_Attach;
+product_cycle sub relation,
+    relates Product,
+    relates Cycle;
 
 #Attribute
 
-Product_RMIT sub attribute,
+Product sub attribute,
     value string;
 
 Segment sub attribute,
@@ -136,7 +111,7 @@ Chip_Attach sub attribute,
 Tester_Platform sub attribute,
     value string;
 
-cycle sub attribute,
+Cycle sub attribute,
     value string;
 
 Phase sub attribute,
@@ -145,11 +120,14 @@ Phase sub attribute,
 WW sub attribute,
     value string;
 
-comment sub attribute,
+Comment sub attribute,
     value string;
 
 mapping_key sub attribute,
     value string;
 
 mapping_value sub attribute,
+    value string;
+
+object_type sub attribute,
     value string;

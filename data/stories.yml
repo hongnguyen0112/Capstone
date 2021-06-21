@@ -29,14 +29,30 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-- story: greet and then query entities
+- story: greet and query entities
   steps:
   - intent: greet
   - action: utter_greet
   - intent: query_entities
   - action: action_query_entities
   - action: action_reset_slot
-  
+
+- story: greet and query attribute
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: query_attribute
+  - action: action_query_attribute
+  - action: action_reset_slot
+
+- story: greet and count entity
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: query_quantity
+  - action: action_count
+  - action: action_reset_slot
+
 - story: master
   steps:
   - intent: master

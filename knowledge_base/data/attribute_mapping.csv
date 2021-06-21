@@ -1,39 +1,80 @@
-mapping_key,mapping_value
-iid,iid
-RMIT Product,Product_RMIT
-RMIT-Product,Product_RMIT
-rmit-product,Product_RMIT
-rmit product,Product_RMIT
-product,Product_RMIT
-products,Product_RMIT
-RMIT Products,Product_RMIT
-segment,Segment
-segments,Segment
-TCSS,TCSS
-AT_Site,AT_Site
-AT sites,AT_Site
-AT site,AT_Site
-division,Division
-divisions,Division
-Package_Tech,Package_Tech
-package tech,Package_Tech
-tech packages,Package_Tech
-tech package,Package_Tech
-technology package,Package_Tech
-technology packages,Package_Tech
-Chip_Attach,Chip_Attach
-chip attach,Chip_Attach
-attached chip,Chip_Attach
-attached chips,Chip_Attach
-Tester_Platform,Tester_Platform
-tester platform,Tester_Platform
-tester platforms,Tester_Platform
-cycle,cycle
-cycles,cycle
-Phase,Phase
-phases,Phase
-phases,Phase
-WW,WW
-ww,WW
-comment,comment
-comments,comment
+mapping_key,mapping_value,object_type
+iid,iid,product
+RMIT Product,Product,product_spec
+Product_RMIT,Product,product_spec
+RMIT-Product,Product,product_spec
+rmit-product,Product,product_spec
+rmit product,Product,product_spec
+product,Product,product_spec
+Product,Product,product_spec
+Products,Product,product_spec
+products,Product,product_spec
+RMIT Products,Product,product_spec
+Segment,Segment,product_spec
+Segments,Segment,product_spec
+segment,Segment,product_spec
+segments,Segment,product_spec
+TCSS,TCSS,product_spec
+TC/SS,TCSS,product_spec
+tcss,TCSS,product_spec
+tc/ss,TCSS,product_spec
+AT_Site,AT_Site,product_division
+AT_Sites,AT_Site,product_division
+AT sites,AT_Site,product_division
+AT site,AT_Site,product_division
+AT Site,AT_Site,product_division
+AT Sites,AT_Site,product_division
+at site,AT_Site,product_division
+at sites,AT_Site,product_division
+at_site,AT_Site,product_division
+Division,Division,product_division
+division,Division,product_division
+Divisions,Division,product_division
+divisions,Division,product_division
+Package_Tech,Package_Tech,product_spec
+package tech,Package_Tech,product_spec
+package_tech,Package_Tech,product_spec
+Package tech,Package_Tech,product_spec
+Package Tech,Package_Tech,product_spec
+tech packages,Package_Tech,product_spec
+tech package,Package_Tech,product_spec
+Tech package,Package_Tech,product_spec
+Tech packages,Package_Tech,product_spec
+technology package,Package_Tech,product_spec
+Technology package,Package_Tech,product_spec
+technology packages,Package_Tech,product_spec
+Technology packages,Package_Tech,product_spec
+Chip_Attach,Chip_Attach,product_spec
+chip attach,Chip_Attach,product_spec
+Chip attach,Chip_Attach,product_spec
+Chip Attach,Chip_Attach,product_spec
+attached chip,Chip_Attach,product_spec
+attached chips,Chip_Attach,product_spec
+Tester_Platform,Tester_Platform,product_spec
+tester platform,Tester_Platform,product_spec
+Tester platform,Tester_Platform,product_spec
+tester platforms,Tester_Platform,product_spec
+Tester platforms,Tester_Platform,product_spec
+cycle,Cycle,production_log
+cycles,Cycle,production_log
+Cycle,Cycle,production_log
+Cycles,Cycle,production_log
+Phase,Phase,production_log
+phase,Phase,production_log
+phases,Phase,production_log
+Phases,Phase,production_log
+WW,WW,production_log
+ww,WW,production_log
+comment,Comment,production_log
+Comment,Comment,production_log
+comments,Comment,production_log
+Comments,Comment,production_log
+when,WW,production_log
+When,WW,production_log
+date,WW,production_log
+Why,Comment,production_log
+why,Comment,production_log
+reason,Comment,production_log
+reasons,Comment,production_log
+Reason,Comment,production_log
+Reasons,Comment,production_log

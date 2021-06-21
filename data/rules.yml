@@ -12,8 +12,20 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: query knowledge base on user's query
+- rule: query entities on user's query
   steps:
   - intent: query_entities
   - action: action_query_entities
+  - action: action_reset_slot
+
+- rule: query attribute on user's query
+  steps:
+  - intent: query_attribute
+  - action: action_query_attribute
+  - action: action_reset_slot
+
+- rule: query quantity on user's query
+  steps:
+  - intent: query_quantity
+  - action: action_count
   - action: action_reset_slot

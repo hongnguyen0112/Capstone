@@ -3,6 +3,9 @@ version: "2.0"
 nlu:
 - intent: greet
   examples: |
+    - hallo.
+    - Xin chào
+    - Chào
     - hey
     - hello
     - hi
@@ -25,6 +28,7 @@ nlu:
     - Get me a general report
     - Give me the list of all products with all information.
     - Show me all all products and information.
+    - Get master table
 
 - intent: goodbye
   examples: |
@@ -39,6 +43,7 @@ nlu:
     - see you around
     - bye bye
     - see you later
+    - see ya
 
 - intent: affirm
   examples: |
@@ -112,29 +117,92 @@ nlu:
     - What are the [tester platforms](object_type)?
     - List all existing [segments](object_type).
     - What [division](object_type) are there?
-    - Count the products [in cycle](object_type) [Apr_21](cycle).
-    - Give me the number [of cycle](object_type) [Mar_21](cycle) products.
-    - Get all products [in cycle](object_type) [Mar_21](cycle).
-    - List all products [in cycle](object_type) [Mar_21](cycle).
-    - Which products [have cycle](object_type) [Apr_21](cycle).
-    - List all products that [has tester platform](object_type) [New-H](testerplatform) 
-    - Get all products [with tester platform](object_type) [Old-V](testerplatform)
-    - Show me the products [whose tester platform](object_type) is [New-H](testerplatform)
-    - Get all products [whose segment](object_type) is [S-M](segment)
-    - Which products [belongs to segment](object_type) [S-D](segment)
-    - Get all products [in segment](object_type) [S-P](segment) 
-    - List  products [whose division](object_type) is [D-C](division)
-    - Which products [belongs to division](object_type) [D-I](division)
-    - List all products [in division](object_type) [D-C](division)
-    - List all products [whose package_tech](object_type) is [FCBGA](package_tech)
-    - Which products has [package_tech](object_type) [FCLGA](package_tech)
-    - Show me all products [with package_tech](object_type) [FCLGA](package_tech)
-    - List all products [whose chip_attach](object_type) is [New-H](chip_attach)
-    - Which products [has chip_attach](object_type) [Legacy-T](chip_attach)
-    - List all products [with chip_attach](object_type) [Legacy-T](chip_attach)
-    - Which products [have at site](object_type) [VNAT](at_site)?
-    - What are the products [whose AT site](object_type) [VNAT](at_site)?
-    - Get products [with AT site](object_type) [VNAT](at_site).
-    - Which products [have TC/SS](object_type) [1-A](tcss)?
-    - What are the products [whose TCSS](object_type) [1-D](tcss)?
-    - Get products [with tcss](object_type) [3-A](tcss).
+    - Count the products [in cycle](object_type) [Apr_21](Cycle).
+    - Give me the number [of cycle](object_type) [Mar_21](Cycle) products.
+    - Get all products [in cycle](object_type) [Mar_21](Cycle).
+    - List all products [in cycle](object_type) [Mar_21](Cycle).
+    - Which products [have cycle](object_type) [Apr_21](Cycle).
+    - List all products that [has tester platform](object_type) [New-H](Tester_Platform) 
+    - Get all products [with tester platform](object_type) [Old-V](Tester_Platform)
+    - Show me the products [whose tester platform](object_type) is [New-H](Tester_Platform)
+    - Get all products [whose segment](object_type) is [S-M](Segment)
+    - Which products [belongs to segment](object_type) [S-D](Segment)
+    - Products [with segment](object_type) [SOC](Segment)?
+    - Get all products [in segment](object_type) [S-P](Segment)
+    - List  products [whose division](object_type) is [D-C](Division)
+    - Which products [belongs to division](object_type) [D-I](Division)
+    - List all products [in division](object_type) [D-C](Division)
+    - List all products [whose package_tech](object_type) is [FCBGA](Package_Tech)
+    - Which products has [package tech](object_type) [FCLGA](Package_Tech)
+    - Show me all products [with package tech](object_type) [FCLGA](Package_Tech)
+    - List all products [whose chip_attach](object_type) is [New-H](Chip_Attach)
+    - Which products [has chip_attach](object_type) [Legacy-T](Chip_Attach)
+    - List all products [with chip_attach](object_type) [Legacy-T](Chip_Attach)
+    - Which products [have at site](object_type) [VNAT](AT_Site)?
+    - What are the products [whose AT site](object_type) [VNAT](AT_Site)?
+    - Get products [with AT site](object_type) [VNAT](AT_Site).
+    - Which products [have TC/SS](object_type) [1-A](TCSS)?
+    - What are the products [whose TCSS](object_type) [1-D](TCSS)?
+    - Get products [with tcss](object_type) [3-A](TCSS).
+
+- intent: query_attribute
+  examples: |
+    - What is the [segment](attribute) of [Product AONE](Product)?
+    - What is [Product A82M](Product)'s [segment](attribute)?
+    - Get [TC/SS](attribute) of [Product 81S](Product).
+    - [Package tech](attribute) of [Product A82PVN](Product)?
+    - Get [package tech] in [Product AONE](Product).
+    - What is the [package tech](attribute) used in [Product 81S](Product)?
+    - Get [Product A82PVN](Product)'s [chip attach](attribute).
+    - Get the [tester platform](attribute) that was used in [Product A01S].
+    - [Tester platform](attribute) of [Product A01S](Product)?
+    - What is the [AT site](attribute) of [Product AONE](Product)?
+    - Which [AT site](attribute) is [Product A01S](Product) produced in?
+    - Which [division](attribute) is assigned to [Product A82PVN](Product)?
+    - What is the [division](attribute) of [Product 81S](Product)?
+    - [When](attribute) is [Product 81S](Product) [PRQ](Phase) [Mar_21](Cycle)?
+    - What [comment](attribute) is given to [Product AONE](Product) [ES](Phase) [Mar_21](Cycle)?
+    - For [Product A01S](Product) [MapDay](Phase) [Apr_21](Cycle), what is the [comment](attribute)?
+    - What is the [date](attribute) of [Product A82PVN](Product) [PO](Phase) [Apr_21](Cycle)?
+    - What [comment](attribute) does [Product 81S](Product) [Mar_21](Cycle) [TFS](Phase)?
+    - What is the [comment](attribute) for [Product A82P](Product) [Apr_21](Cycle) [PRQ](Phase)?
+    - Get [comments](attribute) of [Product A82M](Product) [ES2](Phase) [Apr_21](Cycle)?
+    - Get [WW](attribute) of [Product A81N] [Apr_21](Cycle) [ES1](Phase).
+
+- intent: query_quantity
+  examples: |
+    - How many [products](object_type) are there?
+    - Get me the number of [products](object_type)?
+    - How many [products](object_type) are in the list?
+    - How many [divisions](object_type) are there?
+    - How many type of [tester platform] are there?
+    - Count the number of [TC/SS](object_type).
+    - Count the number of products that [have segment](object_type) [S-M](Segment).
+    - How many products [have segment](object_type) [SOC](Segment)?
+    - Get the number of products [with segment](object_type) [S-P](Segment).
+    - [In cycle](object_type) [Apr_21](Cycle), how many products have been in scope?
+    - Tell me how many products which [have TC/SS](object_type) [1-D](TCSS).
+    - The number of products [whose TC/SS](object_type) [Not yet define](TCSS)?
+    - How many products are there [with TC/SS](object_type) [1-D](TCSS)?
+    - Get the number of products that [have package tech](object_type) [FCBGA](Package_Tech).
+    - How many products are there [whose package tech](object_type) [FCLGA](Package_Tech)?
+    - Tell me the number of product [with package tech](object_type) [FCBGA](Package_Tech).
+    - How many products are there [with chip attach](object_type) [Legacy-T](Chip_Attach)?
+    - Get the number of products [with chip attach](object_type) [New-H](Chip_Attach).
+    - Count the number of products that [have chip attach](object_type) [Legacy-T](Chip_Attach).
+    - What is the number of products [with tester platform](object_type) [New-H](Tester_Platform)?
+    - How many products are there [with tester platform](object_type) [Old-V](Tester_Platform)?
+    - Get the number of products that [have tester platform](object_type) [New-H](Tester_Platform).
+    - How many products have been [in cycle](object_type) [Mar_21](Cycle) scope?
+    - What is the number of products [in cycle](object_type) [Apr_21](Cycle)?
+    - Get number of products [in cycle](object_type) [Mar_21](Cycle).
+    - How many products are produced [at AT site](object_type) [VNAT](AT_Site)?
+    - Get me the number of products assigned [at AT site](object_type) [VNAT](AT_Site).
+    - Count the number of products produced [at AT site](object_type) [VNAT](AT_Site).
+    - How many products are produced [by division](object_type) [D-C](Division)?
+    - Get me the number of products assigned [to division](object_type) [D-I](Division).
+    - Count the number of products produced [by division](object_type) [D-C](Division).
+    - [In cycle](object_type) [Apr_21](Cycle), how many products have been in scope?
+    - [With segment](object_type) [SOC](Segment), how many products are produced?
+    - [AT site](object_type) [VNAT](AT_Site), count the number of products.
+

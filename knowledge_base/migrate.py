@@ -4,7 +4,7 @@ import csv
 
 def build_product_graph(inputs):
     with TypeDB.core_client("localhost:1729") as client:
-        with client.session("product", SessionType.DATA) as session:
+        with client.session("local", SessionType.DATA) as session:
             for input in inputs:
                 print("Loading from [" + input["data_path"] + "] into TypeDB ...")
                 load_data_into_grakn(input, session)
@@ -23,131 +23,99 @@ def load_data_into_grakn(input, session):
     print("\nInserted " + str(len(items)) + " items from [ " + input["data_path"] + "] into TypeDB.\n")
 
 
-def product_template(product):
-    return 'insert $product isa product, has Product_RMIT "' + product["Product_RMIT"] + '";'
+def product_template(product_info):
+    return 'insert $Product_info isa Product_info, has Product "' + product_info["Product"] + '";'
 
 
 def tcss_template(tcss_info):
-    return 'insert $tcss_info isa tcss_info, has TCSS "' + tcss_info["TCSS"] + '";'
+    return 'insert $TCSS_info isa TCSS_info, has TCSS "' + tcss_info["TCSS"] + '";'
 
 
 def at_site_template(at_site_info):
-    return 'insert $at_site_info isa at_site_info, has AT_Site "' + at_site_info["AT_Site"] + '";'
+    return 'insert $AT_Site_info isa AT_Site_info, has AT_Site "' + at_site_info["AT_Site"] + '";'
 
 
 def cycle_template(cycle_info):
-    return 'insert $cycle_info isa cycle_info, has cycle "' + cycle_info["cycle"] + '";'
+    return 'insert $Cycle_info isa Cycle_info, has Cycle "' + cycle_info["Cycle"] + '";'
 
 
 def phase_template(phase_info):
-    return 'insert $phase_info isa phase_info, has Phase "' + phase_info["Phase"] + '";'
+    return 'insert $Phase_info isa Phase_info, has Phase "' + phase_info["Phase"] + '";'
 
 
 def comment_template(comment_info):
-    typeql_insert_query = 'insert $comment_info isa comment_info, has WW "' + comment_info["WW"] + '"'
-    typeql_insert_query += ', has comment "' + comment_info["comment"] + '";'
-    return typeql_insert_query
+    return 'insert $Comment_info isa Comment_info, has Comment "' + comment_info["Comment"] + '";'
 
 
 def testerplatform_template(testerplatform_info):
-    return 'insert $testerplatform_info isa testerplatform_info, has Tester_Platform "' + \
+    return 'insert $Tester_Platform_info isa Tester_Platform_info, has Tester_Platform "' + \
            testerplatform_info["Tester_Platform"] + '";'
 
 
 def segment_template(segment_info):
-    return 'insert $segment_info isa segment_info, has Segment "' + segment_info["Segment"] + '";'
+    return 'insert $Segment_info isa Segment_info, has Segment "' + segment_info["Segment"] + '";'
 
 
 def division_template(division_info):
-    return 'insert $division_info isa division_info, has Division "' + division_info["Division"] + '";'
+    return 'insert $Division_info isa Division_info, has Division "' + division_info["Division"] + '";'
 
 
 def package_tech_template(package_tech_info):
-    return 'insert $package_tech_info isa package_tech_info, has Package_Tech "' + package_tech_info[
+    return 'insert $Package_Tech_info isa Package_Tech_info, has Package_Tech "' + package_tech_info[
         "Package_Tech"] + '";'
 
 
 def chip_attach_template(chip_attach_info):
-    return 'insert $chip_attach_info isa chip_attach_info, has Chip_Attach "' + chip_attach_info[
+    return 'insert $Chip_Attach_info isa Chip_Attach_info, has Chip_Attach "' + chip_attach_info[
         "Chip_Attach"] + '";'
 
 
-def include_tcss_template(include_tcss):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_tcss["Product_RMIT"] + '";'
-    typeql_insert_query += ' $tcss_info isa tcss_info, has TCSS "' + include_tcss["TCSS"] + '";'
-    typeql_insert_query += " insert (product: $product, tcss: $tcss_info) isa include_tcss;"
+def product_spec_template(product_spec):
+    typeql_insert_query = 'match $Product_info isa Product_info,' \
+                          ' has Product "' + product_spec["Product"] + '";'
+    typeql_insert_query += ' $Segment_info isa Segment_info, has Segment "' + product_spec["Segment"] + '";'
+    typeql_insert_query += ' $TCSS_info isa TCSS_info, has TCSS "' + product_spec["TCSS"] + '";'
+    typeql_insert_query += ' $Package_Tech_info isa Package_Tech_info,' \
+                           ' has Package_Tech "' + product_spec["Package_Tech"] + '";'
+    typeql_insert_query += ' $Chip_Attach_info isa Chip_Attach_info,' \
+                           ' has Chip_Attach "' + product_spec["Chip_Attach"] + '";'
+    typeql_insert_query += ' $Tester_Platform_info isa Tester_Platform_info,' \
+                           ' has Tester_Platform "' + product_spec["Tester_Platform"] + '";'
+    typeql_insert_query += " insert" \
+                           " (Product: $Product_info," \
+                           " Segment: $Segment_info," \
+                           " TCSS: $TCSS_info," \
+                           " Package_Tech: $Package_Tech_info," \
+                           " Chip_Attach: $Chip_Attach_info," \
+                           " Tester_Platform: $Tester_Platform_info) isa product_spec;"
     return typeql_insert_query
 
 
-def include_at_site_template(include_at_site):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_at_site["Product_RMIT"] + '";'
-    typeql_insert_query += ' $at_site_info isa at_site_info, has AT_Site "' + include_at_site["AT_Site"] + '";'
-    typeql_insert_query += " insert (product: $product, at_site: $at_site_info) isa include_at_site;"
+def product_division_template(product_division):
+    typeql_insert_query = 'match $Product_info isa Product_info, has Product "' + product_division["Product"] + '";'
+    typeql_insert_query += ' $AT_Site_info isa AT_Site_info, has AT_Site "' + product_division["AT_Site"] + '";'
+    typeql_insert_query += ' $Division_info isa Division_info, has Division "' + product_division["Division"] + '";'
+    typeql_insert_query += " insert (Product: $Product_info, AT_Site: $AT_Site_info, Division: $Division_info)" \
+                           " isa product_division;"
     return typeql_insert_query
 
 
-def include_cycle_template(include_cycle):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_cycle["Product_RMIT"] + '";'
-    typeql_insert_query += ' $cycle_info isa cycle_info, has cycle "' + include_cycle["cycle"] + '";'
-    typeql_insert_query += " insert (product: $product, cycle: $cycle_info) isa include_cycle;"
+def production_log_template(production_log):
+    typeql_insert_query = 'match $Product_info isa Product_info, has Product "' + production_log["Product"] + '";'
+    typeql_insert_query += ' $Cycle_info isa Cycle_info, has Cycle "' + production_log["Cycle"] + '";'
+    typeql_insert_query += ' $Phase_info isa Phase_info, has Phase "' + production_log["Phase"] + '";'
+    typeql_insert_query += ' $Comment_info isa Comment_info, has Comment "' + production_log["Comment"] + '";'
+    typeql_insert_query += " insert (Product: $Product_info," \
+                           " Phase: $Phase_info," \
+                           " Cycle: $Cycle_info," \
+                           " Comment: $Comment_info) isa production_log, has WW '" + production_log["WW"] + "';"
     return typeql_insert_query
 
 
-def include_comment_template(include_comment):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_comment["Product_RMIT"] + '";'
-    typeql_insert_query += ' $cycle_info isa cycle_info, has cycle "' + include_comment["cycle"] + '";'
-    typeql_insert_query += ' $phase_info isa phase_info, has Phase "' + include_comment["Phase"] + '";'
-    typeql_insert_query += ' $comment_info isa comment_info, has WW "' + include_comment["WW"] + '"'
-    typeql_insert_query += ', has comment "' + include_comment["comment"] + '";'
-    typeql_insert_query += " insert (product: $product, cycle: $cycle_info, " \
-                           "phase: $phase_info, comment: $comment_info) isa include_comment;"
-    return typeql_insert_query
-
-
-def include_phase_template(include_phase):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_phase["Product_RMIT"] + '";'
-    typeql_insert_query += ' $phase_info isa phase_info, has Phase "' + include_phase["Phase"] + '";'
-    typeql_insert_query += " insert (product: $product, phase: $phase_info) isa include_phase;"
-    return typeql_insert_query
-
-
-def include_testerplatform_template(include_testerplatform):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_testerplatform[
-        "Product_RMIT"] + '";'
-    typeql_insert_query += ' $testerplatform_info isa testerplatform_info, has Tester_Platform "' + \
-                           include_testerplatform["Tester_Platform"] + '";'
-    typeql_insert_query += " insert (product: $product, " \
-                           "Tester_Platform: $testerplatform_info) isa include_testerplatform;"
-    return typeql_insert_query
-
-
-def include_segment_template(include_segment):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_segment["Product_RMIT"] + '";'
-    typeql_insert_query += ' $segment_info isa segment_info, has Segment "' + include_segment["Segment"] + '";'
-    typeql_insert_query += " insert (product: $product, Segment: $segment_info) isa include_segment;"
-    return typeql_insert_query
-
-
-def include_division_template(include_division):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_division["Product_RMIT"] + '";'
-    typeql_insert_query += ' $division_info isa division_info, has Division "' + include_division["Division"] + '";'
-    typeql_insert_query += " insert (product: $product, Division: $division_info) isa include_division;"
-    return typeql_insert_query
-
-
-def include_package_tech_template(include_package_tech):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_package_tech["Product_RMIT"] + '";'
-    typeql_insert_query += ' $package_tech_info isa package_tech_info, has Package_Tech "' + include_package_tech[
-        "Package_Tech"] + '";'
-    typeql_insert_query += " insert (product: $product, Package_Tech: $package_tech_info) isa include_package_tech;"
-    return typeql_insert_query
-
-
-def include_chip_attach_template(include_chip_attach):
-    typeql_insert_query = 'match $product isa product, has Product_RMIT "' + include_chip_attach["Product_RMIT"] + '";'
-    typeql_insert_query += ' $chip_attach_info isa chip_attach_info, has Chip_Attach "' + include_chip_attach[
-        "Chip_Attach"] + '";'
-    typeql_insert_query += " insert (product: $product, Chip_Attach: $chip_attach_info) isa include_chip_attach;"
+def product_cycle_template(product_cycle):
+    typeql_insert_query = 'match $Product_info isa Product_info, has Product "' + product_cycle["Product"] + '";'
+    typeql_insert_query += ' $Cycle_info isa Cycle_info, has Cycle "' + product_cycle["Cycle"] + '";'
+    typeql_insert_query += " insert (Product: $Product_info, Cycle: $Cycle_info) isa product_cycle;"
     return typeql_insert_query
 
 
@@ -159,7 +127,8 @@ def mention_mapping_template(mapping):
 
 def attribute_mapping_template(mapping):
     typeql_insert_query = 'insert $mapping isa attribute_mapping, has mapping_key "' + mapping["mapping_key"] + '"'
-    typeql_insert_query += ', has mapping_value "' + mapping["mapping_value"] + '";'
+    typeql_insert_query += ', has mapping_value "' + mapping["mapping_value"] + '"'
+    typeql_insert_query += ', has object_type "' + mapping["object_type"] + '";'
     return typeql_insert_query
 
 
@@ -196,7 +165,7 @@ inputs = [
         "template": cycle_template
     },
     {
-        "data_path": "./data/Phase",
+        "data_path": "./data/phase",
         "template": phase_template
     },
     {
@@ -224,44 +193,20 @@ inputs = [
         "template": chip_attach_template
     },
     {
-        "data_path": "./data/include_comment",
-        "template": include_comment_template
+        "data_path": "./data/product_spec",
+        "template": product_spec_template
     },
     {
-        "data_path": "./data/include_tcss",
-        "template": include_tcss_template
+        "data_path": "./data/product_division",
+        "template": product_division_template
     },
     {
-        "data_path": "./data/include_at_site",
-        "template": include_at_site_template
+        "data_path": "./data/production_log",
+        "template": production_log_template
     },
     {
-        "data_path": "./data/include_cycle",
-        "template": include_cycle_template
-    },
-    {
-        "data_path": "./data/include_phase",
-        "template": include_phase_template
-    },
-    {
-        "data_path": "./data/include_testerplatform",
-        "template": include_testerplatform_template
-    },
-    {
-        "data_path": "./data/include_segment",
-        "template": include_segment_template
-    },
-    {
-        "data_path": "./data/include_division",
-        "template": include_division_template
-    },
-    {
-        "data_path": "./data/include_package_tech",
-        "template": include_package_tech_template
-    },
-    {
-        "data_path": "./data/include_chip_attach",
-        "template": include_chip_attach_template
+        "data_path": "./data/product_cycle",
+        "template": product_cycle_template
     },
     {
         "data_path": "./data/attribute_mapping",
@@ -278,6 +223,8 @@ inputs = [
 ]
 
 build_product_graph(inputs)
+
+print("Migration complete.")
 
 # exmaple of entity template
 # def call_template(call):

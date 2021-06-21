@@ -1,184 +1,111 @@
 schema = {
-    "product": {
+    "Product_info": {
         "attributes": [
             "iid",
-            "Product_RMIT", 
-            "Segment", 
-            "TCSS", 
-            "AT_Site",
-            "Division",
-            "Package_Tech",
-            "Chip_Attach",
-            "Tester_Platform",
-            "cycle",
-            "Phase",
-            "WW",
-            "comment"
+            "Product",
         ],
-        "key": "id",
-        "representation": ["Product_RMIT"]
+        "key": "Product",
+        "representation": ["Product"]
     },
 
-    "tcss_info": {
+    "TCSS_info": {
         "attributes": [
             "iid",
             "TCSS"
         ],
-        "key": "id",
+        "key": "TCSS",
         "representation": ["TCSS"]
     },
 
-    "at_site_info": {
+    "AT_Site_info": {
         "attributes": [
             "iid",
             "AT_Site"
         ],
-        "key": "id",
+        "key": "AT_Site",
         "representation": ["AT_Site"]
     },
 
-    "cycle_info": {
+    "Cycle_info": {
         "attributes": [
             "iid",
-            "cycle"
+            "Cycle"
         ],
-        "key": "id",
-        "representation": ["cycle"]
+        "key": "Cycle",
+        "representation": ["Cycle"]
     },
 
-    "phase_info": {
+    "Phase_info": {
         "attributes": [
             "iid",
             "Phase"
         ],
-        "key": "id",
+        "key": "Phase",
         "representation": ["Phase"]
     },
     
-    "comment_info": {
+    "Comment_info": {
         "attributes": [
             "iid",
-            "WW",
-            "comment"
+            "Comment"
         ],
-        "key": "id",
-        "representation": ["WW", "comment"]
+        "key": "Comment",
+        "representation": ["Comment"]
     },
 
-    "include_tcss": {
-        "attributes": [
-            "iid"
-        ],
-        "key": "id",
-        "representation": ["product.Product_RMIT"]
-    },
-
-    "include_at_site": {
-        "attributes": [
-            "iid"
-        ],
-        "key": "id",
-        "representation": ["product.Product_RMIT"]
-    },
-
-    "include_cycle": {
-        "attributes": [
-            "iid"
-        ],
-        "key": "id",
-        "representation": ["product.Product_RMIT"]
-    },
-
-    "include_comment": {
-        "attributes": [
-            "idd"
-        ],
-        "key": "id",
-        "representation": ["product.Product_RMIT", "cycle.cycle", "phase.Phase", "comment.WW", "comment.comment"]
-    },
-
-    "testerplatform_info": {
-        "attributes": [
-            "iid",
+    "product_spec": {
+        "relates": [
+            "Product",
+            "Segment",
+            "TCSS",
+            "Package_Tech",
+            "Chip_Attach",
             "Tester_Platform"
         ],
-        "key": "id",
-        "representation": ["Tester_Platform"]
-    },
-
-    "package_tech_info": {
         "attributes": [
-            "iid",
-            "Package_Tech"
+            "iid"
         ],
-        "key": "id",
-        "representation": ["Package_Tech"]
+        "key": "Product",
+        "representation": ["Product.Product"]
     },
 
-    "chip_attach_info": {
-        "attributes": [
-            "iid",
-            "Chip_Attach"
-        ],
-        "key": "id",
-        "representation": ["Chip_Attach"]
-    },
-
-    "include_testerplatform": {
-        "attributes": [
-           "iid" 
-        ],
-        "key": "id",
-        "representation": ["product.Product_RMIT"]
-    },
-
-    "segment_info": {
-        "attributes": [
-            "iid",
-            "Segment"
-        ],
-        "key": "id",
-        "representation": ["Segment"]
-    },
-
-    "include_segment": {
-        "attributes": [
-           "iid" 
-        ],
-        "key": "id",
-        "representation": ["product.Product_RMIT"]
-    },
-
-    "division_info": {
-        "attributes": [
-            "iid",
+    "product_division": {
+        "relates": [
+            "Product",
+            "AT_Site",
             "Division"
         ],
-        "key": "id",
-        "representation": ["Division"]
+        "attributes": [
+            "iid"
+        ],
+        "key": "Product",
+        "representation": ["Product.Product"]
     },
 
-    "include_division": {
-        "attributes": [
-           "iid" 
+    "product_cycle": {
+        "relates": [
+            "Product",
+            "Cycle"
         ],
-        "key": "id",
-        "representation": ["product.Product_RMIT"]
+        "attributes": [
+            "iid"
+        ],
+        "key": "Product",
+        "representation": ["Product.Product"]
     },
 
-    "include_package_tech": {
-        "attributes": [
-           "iid" 
+    "production_log": {
+        "relates": [
+            "Product",
+            "Cycle",
+            "Phase",
+            "Comment"
         ],
-        "key": "id",
-        "representation": ["product.Product_RMIT"]
-    },
-
-    "include_chip_attach": {
         "attributes": [
-           "iid" 
+            "idd",
+            "WW"
         ],
-        "key": "id",
-        "representation": ["product.Product_RMIT"]
+        "key": "Product",
+        "representation": ["Product.Product"]
     }
 }

@@ -36,7 +36,7 @@ def get_object_type(tracker: Tracker) -> Text:
     """
     graph_database = GraphDatabase()
     object_type = tracker.get_slot("object_type")
-    print("get_object_type: ", object_type)
+    print("- Inputed object_type: ", object_type)
     return graph_database.map("object_type_mapping", object_type)
 
 
@@ -48,9 +48,15 @@ def get_attribute(tracker: Tracker) -> Text:
     :param tracker: tracker
     :return: attribute (same type as used in the knowledge base)
     """
+    print("\n- Get target attribute")
     graph_database = GraphDatabase()
     attribute = tracker.get_slot("attribute")
     return graph_database.map("attribute_mapping", attribute)
+
+
+def get_object_type_of_attribute(attribute) -> Text:
+    graph_database = GraphDatabase()
+    return graph_database.get_obj_of_attribute(attribute)
 
 
 def get_entity_name(tracker: Tracker, object_type: Text):
@@ -63,18 +69,24 @@ def get_entity_name(tracker: Tracker, object_type: Text):
     :param object_type: the object_type
     :return: the name of the actual entity (value of key attribute in the knowledge base)
     """
-    mention = tracker.get_slot("mention")
+    print("\n- Get entity name")
+    # mention = tracker.get_slot("mention")
 
-    if mention is not None:
-        return resolve_mention(tracker)
+    # if mention is not None:
+    #     return resolve_mention(tracker)
 
-    entity_name = tracker.get_slot(object_type)
-
-    if entity_name:
-        return entity_name
+    # entity_name = tracker.get_slot(object_type)
+    # if entity_name:
+    #     return entity_name
 
     listed_items = tracker.get_slot("listed_items")
     attributes = get_attributes_of_entity(object_type, tracker)
+    relates = get_relates_of_relations(object_type, tracker)
+
+    if relates:
+        entity_name = relates[0]['value']
+        print("\t- Entity name: ", entity_name)
+        return entity_name
 
     if listed_items and attributes:
         graph_database = GraphDatabase()
@@ -95,14 +107,24 @@ def get_attributes_of_entity(object_type, tracker):
     # check what attributes the NER found for object type
     attributes = []
     if object_type in schema:
-
         for attr in schema[object_type]["attributes"]:
             attr_val = tracker.get_slot(attr.replace("-", "_"))
-
             if attr_val is not None:
                 attributes.append({"key": attr, "value": attr_val})
-    print("get_attributes_of_entities: ", attributes)
+
     return attributes
+
+
+def get_relates_of_relations(object_type, tracker):
+    # Check available relates of a relation
+    relates = []
+    if object_type in schema:
+        for relate in schema[object_type]["relates"]:
+            relate_val = tracker.get_slot(relate.replace("-", "_"))
+            if relate_val is not None:
+                relates.append({"key": relate, "value": relate_val})
+
+    return relates
 
 
 def reset_attribute_slots(slots, object_type, tracker):
@@ -115,14 +137,11 @@ def reset_attribute_slots(slots, object_type, tracker):
 
             if attr_val is not None:
                 slots.append(SlotSet(attr, None))
-    print("reset_attribute_slots: ", slots)
+    print("\nreset_attribute_slots: ", slots)
     return slots
 
 
-def to_str(
-        entity: Dict[Text, Any],
-        entity_keys: Union[Text, List[Text]]
-) -> Text:
+def to_str(entity: Dict[Text, Any], entity_keys: Union[Text, List[Text]]) -> Text:
     """
     Converts an entity to a string by concatenating the values of the provided
     entity keys.
@@ -132,18 +151,13 @@ def to_str(
     """
     if isinstance(entity_keys, str):
         entity_keys = [entity_keys]
-
     v_list = []
-    print("Got following entities:")
     for key in entity_keys:
         _e = entity
-
         for k in key.split("."):
-            print(_e)
             _e = _e[k]
-
-        v_list.append(str(_e))
-
+        if _e not in v_list:
+            v_list.append(str(_e))
     return ", ".join(v_list)
 
 
@@ -157,51 +171,41 @@ class ActionQueryEntities(Action):
         return "action_query_entities"
 
     def run(self, dispatcher, tracker, domain):
+        print("\n* Action: Query Entities.\n")
         graph_database = GraphDatabase()
 
         # need to know the object_type we are looking for
         object_type = get_object_type(tracker)
-        print("actions_query_entity-object_type: ", object_type)
 
         # utter rephrase if found no object_type recognised
         if object_type is None:
-            dispatcher.utter_message("Sorry, I did not get that...")
+            dispatcher.utter_message(response="utter_rephrase")
             return []
 
         # check what attributes the NER found for entity type
         attributes = get_attributes_of_entity(object_type, tracker)
-        print("actions_query_entity-attributes: ", attributes)
 
         # query knowledge base
-        entities = graph_database.get_entities(object_type, attributes)
 
-        if object_type == "include_cycle":
-            cycle = tracker.get_slot("cycle")
-            entities = self._filter_cycle_entities(entities, cycle)
-        elif object_type == "include_testerplatform":
-            testerplatform = tracker.get_slot("testerplatform")
-            entities = self._filter_testerplatform_entities(entities, testerplatform)
-        elif object_type == "include_segment":
-            segment = tracker.get_slot("segment")
-            entities = self._filter_segment_entities(entities, segment)
-        elif object_type == "include_tcss":
-            tcss = tracker.get_slot("tcss")
-            entities = self._filter_tcss_entities(entities, tcss)
-        elif object_type == "include_at_site":
-            at_site = tracker.get_slot("at_site")
-            entities = self._filter_at_site_entities(entities, at_site)
-        elif object_type == "include_division":
-            division = tracker.get_slot("division")
-            entities = self._filter_division_entities(entities, division)
-        elif object_type == "include_package_tech":
-            package_tech = tracker.get_slot("package_tech")
-            entities = self._filter_package_tech_entities(entities, package_tech)
-        elif object_type == "include_chip_attach":
-            chip_attach = tracker.get_slot("chip_attach")
-            entities = self._filter_chip_attach_entities(entities, chip_attach)
+        print("\n- Classify object_type")
+        if "relates" in schema[object_type]:
+            print("\t- Type: Relation")
+            relates = get_relates_of_relations(object_type, tracker)
+            print("\n- Query", object_type, "entities.")
+            entities = graph_database.get_relations(object_type, relates, attributes)
+        else:
+            print("\t- Type: Entity")
+            print("\n- Query", object_type, "entities.")
+            entities = graph_database.get_entities(object_type, attributes)
+
+        if entities:
+            print("\nFound the follwing:")
+            for entity in entities:
+                print(entity, "\n")
 
         # utter message if no instance is found with the object_type
         if not entities:
+            print("\nNo entity satisfied criteria")
             dispatcher.utter_message(
                 "I could not find anything satisfying to your query... Rephrase maybe?"
             )
@@ -237,194 +241,129 @@ class ActionQueryEntities(Action):
             slots.append(SlotSet(object_type, to_str(entities[0], entity_key)))
 
         reset_attribute_slots(slots, object_type, tracker)
+        print("\nEntity query complete.\n")
 
         return slots
-
-    @staticmethod
-    def _filter_tcss_entities(
-            entities: List[Dict[Text, Any]], tcss: Text
-    ) -> List[Dict[Text, Any]]:
-        """
-        Filter out all TCSS that do not belong to the provided TCSS.
-        :param entities: list of entities
-        :param tcss: provided TCSS
-        :return: list of filtered entities with max. 20 entries
-        """
-        if tcss is not None:
-            filtered_entities = []
-            for entity in entities:
-                if entity["tcss"]["TCSS"] == tcss:
-                    filtered_entities.append(entity)
-            return filtered_entities[:20]
-
-        return entities[:20]
-
-    @staticmethod
-    def _filter_at_site_entities(
-            entities: List[Dict[Text, Any]], at_site: Text
-    ) -> List[Dict[Text, Any]]:
-        """
-        Filter out all AT_Site that do not belong to the provided AT_site.
-        :param entities: list of entities
-        :param at_site: provided AT_site
-        :return: list of filtered entities with max. 20 entries
-        """
-        if at_site is not None:
-            filtered_entities = []
-            for entity in entities:
-                if entity["at_site"]["AT_Site"] == at_site:
-                    filtered_entities.append(entity)
-            return filtered_entities[:20]
-
-        return entities[:20]
-
-    @staticmethod
-    def _filter_cycle_entities(
-            entities: List[Dict[Text, Any]], cycle: Text
-    ) -> List[Dict[Text, Any]]:
-        """
-        Filter out all cycle that do not belong to the provided cycle.
-        :param entities: list of entities
-        :param cycle: provided cycle
-        :return: list of filtered entities with max. 20 entries
-        """
-        if cycle is not None:
-            filtered_entities = []
-            for entity in entities:
-                if entity["cycle"]["cycle"] == cycle:
-                    filtered_entities.append(entity)
-            return filtered_entities[:20]
-
-        return entities[:20]
-
-    @staticmethod
-    def _filter_testerplatform_entities(
-            entities: List[Dict[Text, Any]], testerplatform: Text
-    ) -> List[Dict[Text, Any]]:
-        """
-        Filter Tester_platform
-        """
-        if testerplatform is not None:
-            filtered_entities = []
-            for entity in entities:
-                if entity["Tester_Platform"]["Tester_Platform"] == testerplatform:
-                    filtered_entities.append(entity)
-            return filtered_entities[:20]
-        return entities[:20]
-
-    @staticmethod
-    def _filter_segment_entities(
-            entities: List[Dict[Text, Any]], segment: Text
-    ) -> List[Dict[Text, Any]]:
-        """
-        Filter segment
-        """
-        if segment is not None:
-            filtered_entities = []
-            for entity in entities:
-                if entity["Segment"]["Segment"] == segment:
-                    filtered_entities.append(entity)
-            return filtered_entities[:20]
-        return entities[:20]
-
-    @staticmethod
-    def _filter_division_entities(
-            entities: List[Dict[Text, Any]], division: Text
-    ) -> List[Dict[Text, Any]]:
-        """
-        Filter division
-        """
-        if division is not None:
-            filtered_entities = []
-            for entity in entities:
-                if entity["Division"]["Division"] == division:
-                    filtered_entities.append(entity)
-            return filtered_entities[:20]
-        return entities[:20]
-
-    @staticmethod
-    def _filter_package_tech_entities(
-            entities: List[Dict[Text, Any]], package_tech: Text
-    ) -> List[Dict[Text, Any]]:
-        """
-        Filter package_tech
-        """
-        if package_tech is not None:
-            filtered_entities = []
-            for entity in entities:
-                if entity["Package_Tech"]["Package_Tech"] == package_tech:
-                    filtered_entities.append(entity)
-            return filtered_entities[:20]
-        return entities[:20]
-
-    @staticmethod
-    def _filter_chip_attach_entities(
-            entities: List[Dict[Text, Any]], chip_attach: Text
-    ) -> List[Dict[Text, Any]]:
-        """
-        Filter chip_attach
-        """
-        if chip_attach is not None:
-            filtered_entities = []
-            for entity in entities:
-                if entity["Chip_Attach"]["Chip_Attach"] == chip_attach:
-                    filtered_entities.append(entity)
-            return filtered_entities[:20]
-        return entities[:20]
 
 
 class ActionQueryAttribute(Action):
     """
     Action for querying a specific attribute of an entity.
     """
-
     def name(self):
         return "action_query_attribute"
 
     def run(self, dispatcher, tracker, domain):
         graph_database = GraphDatabase()
+        print("\n* Action Query Attribute")
 
-        # get entity type of entity
-        object_type = get_object_type(tracker)
+        # Get target attribute of interest
+        target = get_attribute(tracker)
+
+        # get object_type of target entity
+        print("- Get object_type")
+        object_type = get_object_type_of_attribute(target)
 
         # utter rephrase if no object_type found
         if object_type is None:
-            dispatcher.utter_template("utter_rephrase", tracker)
+            dispatcher.utter_message(response="utter_rephrase")
             return []
 
         # get name of entity and attribute of interest
-        name = get_object_type(tracker)
-        attribute = get_attribute(tracker)
+        name = get_entity_name(tracker, object_type)
 
         # utter rephrase if no name or attribute recognised
-        if name is None or attribute is None:
-            dispatcher.utter_template("utter_rephrase", tracker)
+        if name is None or target is None:
+            dispatcher.utter_message(response="utter_rephrase")
             slots = [SlotSet("mention", None)]
             reset_attribute_slots(slots, object_type, tracker)
             return slots
 
+        relates = get_relates_of_relations(object_type, tracker)
+        attributes = get_attributes_of_entity(object_type, tracker)
+        target_attribute = ""
+        target_relate = ""
+
+        if object_type in schema:
+            if target in schema[object_type]["relates"]:
+                target_relate = target
+            elif target in schema[object_type]["attributes"]:
+                target_attribute = target
+
+        print("\n- Object_type: ", object_type)
+        print("- Provided attribute: ", attributes)
+        print("- Provided relates: ", relates)
+        print("- Target attribute: ", target_attribute)
+        print("- Target relates: ", target_relate)
+
         # query knowledge base
-        key_attribute = schema[object_type]["key"]
+        print("\n- Query attribute:")
         value = graph_database.get_attribute_of(
-            object_type, key_attribute, name, attribute
+            object_type, target_attribute, target_relate, attributes, relates,
         )
 
         # utter response
         if value is not None and len(value) == 1:
             dispatcher.utter_message(
-                f"{name} has the value '{value[0]}' for attribute '{attribute}'."
+                f"Found {name} has {target}: {value[0]}."
             )
         else:
             dispatcher.utter_message(
-                f"Did not found a valid value for attribute {attribute} for entity'{name}'."
+                f"Oops! Did not found a valid {target} for {name}."
             )
 
         slots = [SlotSet("mention", None), SlotSet(object_type, name)]
         reset_attribute_slots(slots, object_type, tracker)
+
+        print("\nAttribute query complete\n")
         return slots
 
 
-# Action for resolving a mention
+class ActionCount(Action):
+    """
+    Action for counting entities
+    """
+    def name(self):
+        return "action_count"
+
+    def run(self, dispatcher, tracker, domain):
+        print("\n* Action: Count Entities.\n")
+        graph_database = GraphDatabase()
+
+        # Get object_type
+        object_type = get_object_type(tracker)
+
+        # Return if no object_type found
+        if object_type is None:
+            dispatcher.utter_message(response="utter_rephrase")
+            return []
+
+        # Get attributes
+        attributes = get_attributes_of_entity(object_type, tracker)
+
+        # Query knowledge base
+        print("- Classify object_type:")
+        if "relates" in schema[object_type]:
+            print("\t- Type: Relations")
+            relates = get_relates_of_relations(object_type, tracker)
+            print("\n- Counting...")
+            count = graph_database.count_relations(object_type, relates, attributes)
+        else:
+            print("\t- Type: Entities")
+            print("\n- Counting...")
+            count = graph_database.count_entities(object_type, attributes)
+
+        # Return results
+        if count > 0:
+            dispatcher.utter_message(
+                f"I count {count}."
+            )
+        else:
+            dispatcher.utter_message(
+                f"It seems there is none."
+            )
+
+
 class ActionResolveEntity(Action):
     """
     Action for resolving mention.
@@ -465,5 +404,16 @@ class ResetSlot(Action):
         return "action_reset_slot"
 
     def run(self, dispatcher, tracker, domain):
-        return [SlotSet("object_type", None),
-                SlotSet("cycle", None)]
+        print("Reset slots.\n")
+        return [SlotSet("Product", None),
+                SlotSet("Segment", None),
+                SlotSet("TCSS", None),
+                SlotSet("AT_Site", None),
+                SlotSet("Division", None),
+                SlotSet("Package_Tech", None),
+                SlotSet("Chip_Attach", None),
+                SlotSet("Tester_Platform", None),
+                SlotSet("Cycle", None),
+                SlotSet("Phase", None),
+                SlotSet("WW", None),
+                SlotSet("Comment", None)]

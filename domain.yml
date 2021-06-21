@@ -10,91 +10,95 @@ intents:
   - bot_challenge
   - query_knowledge_base
   - query_entities
+  - query_attribute
   - master
+  - query_quantity
 
 entities:
-  - product
   - object_type
-  - at_site_info
-  - tcss_info
-  - cycle_info
-  - testerplatform_info
-  - segment_info
-  - division_info
-  - package_tech_info
-  - chip_attach_info
-  - comment_info
-  - phase_info
-  - cycle
   - attribute
   - mention
   - iid
-  - Product_RMIT
-  - segment
-  - tcss
-  - at_site
-  - division
-  - package_tech
-  - chip_attach
-  - tester_platform
-  - phase
+  - Product_info
+  - AT_Site_info
+  - TCSS_info
+  - Cycle_info
+  - Tester_Platform_info
+  - Segment_info
+  - Division_info
+  - Package_Tech_info
+  - Chip_Attach_info
+  - Comment_info
+  - Phase_info
+  - Cycle
+  - Product
+  - Segment
+  - TCSS
+  - AT_Site
+  - Division
+  - Package_Tech
+  - Chip_Attach
+  - Tester_Platform
+  - Phase
   - WW
-  - comment
+  - Comment
+  - product_spec
+  - product_division
+  - product_cycle
+  - product_comment
+  - production_log
   - listed_items
   
 slots: 
-  product:
+  Product_info:
     type: text
     influence_conversation: false
   object_type:
     type: text
     influence_conversation: false
-  tcss_info:
+  TCSS_info:
     type: text
     influence_conversation: false
-  at_site_info:
+  AT_Site_info:
     type: text
     influence_conversation: false
-  cycle_info:
+  Cycle_info:
     type: text
     influence_conversation: false
-  segment_info:
+  Segment_info:
     type: text
     influence_conversation: false
-  division_info:
+  Division_info:
     type: text
     influence_conversation: false
-  comment_info:
+  Comment_info:
     type: text
     influence_conversation: false
-  phase_info:
+  Phase_info:
     type: text
     influence_conversation: false
-  at_site:
+  AT_Site:
     type: text
     influence_conversation: false
-  cycle:
+  Cycle:
     type: text
     influence_conversation: false
-  testerplatform:
+  Segment:
     type: text
     influence_conversation: false
-  segment:
+  TCSS:
     type: text
     influence_conversation: false
-  tcss:
+  Division:
     type: text
     influence_conversation: false
-  division:
+  Tester_Platform_info:
     type: text
     influence_conversation: false
-  testerplatform_info:
+  Package_Tech_info:
     type: text
     influence_conversation: false
-  package_tech_info:
-    type: text
-    influence_conversation: false
-  chip_attach_info:
+  Chip_Attach_info:
     type: text
     influence_conversation: false
   attribute:
@@ -106,25 +110,40 @@ slots:
   iid:
     type: text
     influence_conversation: false
-  Product_RMIT:
+  Product:
     type: text
     influence_conversation: false
-  chip_attach:
+  Chip_Attach:
     type: text
     influence_conversation: false
-  package_tech:
+  Package_Tech:
     type: text
     influence_conversation: false
-  tester_platform:
+  Tester_Platform:
     type: text
     influence_conversation: false
-  phase:
+  Phase:
     type: text
     influence_conversation: false
   WW:
     type: text
     influence_conversation: false
-  comment:
+  Comment:
+    type: text
+    influence_conversation: false
+  product_spec:
+    type: text
+    influence_conversation: false
+  product_division:
+    type: text
+    influence_conversation: false
+  product_cycle:
+    type: text
+    influence_conversation: false
+  product_comment:
+    type: text
+    influence_conversation: false
+  production_log:
     type: text
     influence_conversation: false
   listed_items:
@@ -137,6 +156,7 @@ actions:
   - action_query_entities
   - action_resolve_entity
   - action_reset_slot
+  - action_count
   
 responses:
   utter_greet:
@@ -155,15 +175,24 @@ responses:
 
   utter_goodbye:
   - text: "Bye bye"
+  - text: "Tạm biệt"
+  - text: "Byeeeee"
+  - text: "See ya soon!"
+  - text: "See you later!"
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
 
   utter_rephrase: 
-  - text: "Sorry, I did not get that..."
+  - text: "Sorry, I did not get that... Maybe check your spelling?"
+  - text: "Sorry, haven't got that yet. Please rephrase :)"
+  - text: "... Maybe you got a typo or wrong name somewhere? ^^'"
+  - text: "Don't panic! I did not get that... Just rephrase ;)"
 
   utter_master:
-  - text: "https://drive.google.com/file/d/1up9siq-RRt9-MbCXD57oMUTQpgW2KZRI/view?usp=sharing"
+  - text: "Here it is:
+           https://drive.google.com/file/d/1up9siq-RRt9-MbCXD57oMUTQpgW2KZRI/view?usp=sharing"
+
 
 session_config:
   session_expiration_time: 60

@@ -1,0 +1,8 @@
+Product,Segment,TCSS,Package_Tech,Chip_Attach,Tester_Platform
+Product A82M,S-M,1-D,FCBGA,Legacy-T,New-H
+Product A81N,SOC,Not yet define,FCBGA,New-H,Old-V
+Product A82P,S-M,1-A,FCBGA,Legacy-T,New-H
+Product A82PVN,S-M,1-D,FCBGA,Legacy-T,New-H
+Product AONE,S-P,1-A,FCBGA,New-H,Old-V
+Product A01S,S-D,3-A,FCLGA,Legacy-T,New-H
+Product 81S,S-D,1-D,FCLGA,Legacy-T,New-H
