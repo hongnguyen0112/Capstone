@@ -14,8 +14,8 @@
   base_background_compactions=-1
   writable_file_max_buffer_size=1048576
   max_background_compactions=-1
-  max_background_jobs=12
-  max_subcompactions=12
+  max_background_jobs=8
+  max_subcompactions=8
   avoid_flush_during_shutdown=false
   max_total_wal_size=0
   stats_dump_period_sec=600
@@ -68,7 +68,7 @@
   manifest_preallocation_size=4194304
   write_thread_slow_yield_usec=3
   unordered_write=true
-  wal_dir=D\:\\University\\Capstone Project\\Capstone\\typedb\\server\\data\\product\\schema
+  wal_dir=C\:\\Users\\Hong Nguyen\\Desktop\\Capstone\\typedb\\server\\data\\local\\data
   WAL_size_limit_MB=0
   persist_stats_to_disk=false
   allow_concurrent_memtable_write=true
@@ -91,7 +91,7 @@
 [CFOptions "default"]
   blob_compression_type=kNoCompression
   hard_pending_compaction_bytes_limit=274877906944
-  level0_file_num_compaction_trigger=48
+  level0_file_num_compaction_trigger=32
   max_bytes_for_level_base=268435456
   report_bg_io_stats=false
   max_bytes_for_level_multiplier=10.000000
@@ -104,9 +104,9 @@
   bottommost_compression_opts={enabled=false;max_dict_bytes=0;window_bits=-14;level=32767;parallel_threads=1;strategy=0;zstd_max_train_bytes=0;}
   max_compaction_bytes=1677721600
   max_sequential_skip_in_iterations=8
-  level0_slowdown_writes_trigger=48
-  level0_stop_writes_trigger=48
-  max_write_buffer_number=6
+  level0_slowdown_writes_trigger=32
+  level0_stop_writes_trigger=36
+  max_write_buffer_number=4
   target_file_size_multiplier=1
   prefix_extractor=nullptr
   arena_block_size=16777216

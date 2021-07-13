@@ -1,8 +1,8 @@
-2021-06-07 12:10:55,164 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - TypeDB Server is now running and will keep this process alive.
-2021-06-07 12:10:55,169 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - You can press CTRL+C to shutdown this server.
-2021-06-07 12:10:55,170 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - 
-2021-06-07 12:10:55,170 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - - version: 2.1.1
-2021-06-07 12:10:55,173 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - - listening to port: 1729
-2021-06-07 12:10:55,173 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - - data directory configured to: D:\University\Capstone Project\Capstone\typedb\server\data
-2021-06-07 12:10:55,174 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - - bootup completed in: 2674 ms
-2021-06-07 12:10:55,175 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - ...
+2021-07-13 10:59:20,518 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - TypeDB Server is now running and will keep this process alive.
+2021-07-13 10:59:20,519 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - You can press CTRL+C to shutdown this server.
+2021-07-13 10:59:20,519 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - 
+2021-07-13 10:59:20,519 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - - version: 2.2.0
+2021-07-13 10:59:20,522 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - - listening to port: 1729
+2021-07-13 10:59:20,523 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - - data directory configured to: C:\Users\Hong Nguyen\Desktop\Capstone\typedb\server\data
+2021-07-13 10:59:20,523 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - - bootup completed in: 1909 ms
+2021-07-13 10:59:20,524 [main] [INFO ] c.v.typedb.core.server.TypeDBServer - ...

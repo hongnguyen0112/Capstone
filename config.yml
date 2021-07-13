@@ -21,9 +21,9 @@ pipeline:
 #   - name: ResponseSelector
 #     epochs: 100
 #     constrain_similarities: true
-#   - name: FallbackClassifier
-#     threshold: 0.3
-#     ambiguity_threshold: 0.1
+    - name: FallbackClassifier
+      threshold: 0.3
+      ambiguity_threshold: 0.1
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
@@ -32,8 +32,9 @@ policies:
 # # If you'd like to customize them, uncomment and adjust the policies.
 # # See https://rasa.com/docs/rasa/policies for more information.
 #   - name: MemoizationPolicy
-#   - name: RulePolicy
+    - name: RulePolicy
 #   - name: TEDPolicy
 #     max_history: 5
 #     epochs: 100
 #     constrain_similarities: true
+

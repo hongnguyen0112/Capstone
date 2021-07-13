@@ -159,6 +159,12 @@ actions:
   - action_count
   
 responses:
+  utter_ask_rephrase:
+  - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+  
+  utter_default:
+  - text: I'm sorry, I can't help you.
+
   utter_greet:
   - text: "Hey! How can I help?"
   - text: "Xin chào! That's all in Vietnamese..."
