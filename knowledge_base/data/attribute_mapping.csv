@@ -1,64 +1,64 @@
 mapping_key,mapping_value,object_type
 iid,iid,product
-RMIT Product,Product,product_spec
-Product_RMIT,Product,product_spec
-RMIT-Product,Product,product_spec
-rmit-product,Product,product_spec
-rmit product,Product,product_spec
-product,Product,product_spec
-Product,Product,product_spec
-Products,Product,product_spec
-products,Product,product_spec
-RMIT Products,Product,product_spec
-Segment,Segment,product_spec
-Segments,Segment,product_spec
-segment,Segment,product_spec
-segments,Segment,product_spec
-TCSS,TCSS,product_spec
-TC/SS,TCSS,product_spec
-tcss,TCSS,product_spec
-tc/ss,TCSS,product_spec
-AT_Site,AT_Site,product_division
-AT_Sites,AT_Site,product_division
-AT sites,AT_Site,product_division
-AT site,AT_Site,product_division
-AT Site,AT_Site,product_division
-AT Sites,AT_Site,product_division
-at site,AT_Site,product_division
-at sites,AT_Site,product_division
-at_site,AT_Site,product_division
-Division,Division,product_division
-division,Division,product_division
-Divisions,Division,product_division
-divisions,Division,product_division
-Package_Tech,Package_Tech,product_spec
-package tech,Package_Tech,product_spec
-package_tech,Package_Tech,product_spec
-Package tech,Package_Tech,product_spec
-Package Tech,Package_Tech,product_spec
-tech packages,Package_Tech,product_spec
-tech package,Package_Tech,product_spec
-Tech package,Package_Tech,product_spec
-Tech packages,Package_Tech,product_spec
-technology package,Package_Tech,product_spec
-Technology package,Package_Tech,product_spec
-technology packages,Package_Tech,product_spec
-Technology packages,Package_Tech,product_spec
-Chip_Attach,Chip_Attach,product_spec
-chip attach,Chip_Attach,product_spec
-Chip attach,Chip_Attach,product_spec
-Chip Attach,Chip_Attach,product_spec
-attached chip,Chip_Attach,product_spec
-attached chips,Chip_Attach,product_spec
-Tester_Platform,Tester_Platform,product_spec
-tester platform,Tester_Platform,product_spec
-Tester platform,Tester_Platform,product_spec
-tester platforms,Tester_Platform,product_spec
-Tester platforms,Tester_Platform,product_spec
-cycle,Cycle,production_log
-cycles,Cycle,production_log
-Cycle,Cycle,production_log
-Cycles,Cycle,production_log
+RMIT Product,Product,product_details
+Product_RMIT,Product,product_details
+RMIT-Product,Product,product_details
+rmit-product,Product,product_details
+rmit product,Product,product_details
+product,Product,product_details
+Product,Product,product_details
+Products,Product,product_details
+products,Product,product_details
+RMIT Products,Product,product_details
+Segment,Segment,product_details
+Segments,Segment,product_details
+segment,Segment,product_details
+segments,Segment,product_details
+TCSS,TCSS,product_details
+TC/SS,TCSS,product_details
+tcss,TCSS,product_details
+tc/ss,TCSS,product_details
+AT_Site,AT_Site,product_details
+AT_Sites,AT_Site,product_details
+AT sites,AT_Site,product_details
+AT site,AT_Site,product_details
+AT Site,AT_Site,product_details
+AT Sites,AT_Site,product_details
+at site,AT_Site,product_details
+at sites,AT_Site,product_details
+at_site,AT_Site,product_details
+Division,Division,product_details
+division,Division,product_details
+Divisions,Division,product_details
+divisions,Division,product_details
+Package_Tech,Package_Tech,product_details
+package tech,Package_Tech,product_details
+package_tech,Package_Tech,product_details
+Package tech,Package_Tech,product_details
+Package Tech,Package_Tech,product_details
+tech packages,Package_Tech,product_details
+tech package,Package_Tech,product_details
+Tech package,Package_Tech,product_details
+Tech packages,Package_Tech,product_details
+technology package,Package_Tech,product_details
+Technology package,Package_Tech,product_details
+technology packages,Package_Tech,product_details
+Technology packages,Package_Tech,product_details
+Chip_Attach,Chip_Attach,product_details
+chip attach,Chip_Attach,product_details
+Chip attach,Chip_Attach,product_details
+Chip Attach,Chip_Attach,product_details
+attached chip,Chip_Attach,product_details
+attached chips,Chip_Attach,product_details
+Tester_Platform,Tester_Platform,product_details
+tester platform,Tester_Platform,product_details
+Tester platform,Tester_Platform,product_details
+tester platforms,Tester_Platform,product_details
+Tester platforms,Tester_Platform,product_details
+cycle,Cycle,product_cycle
+cycles,Cycle,product_cycle
+Cycle,Cycle,product_cycle
+Cycles,Cycle,product_cycle
 Phase,Phase,production_log
 phase,Phase,production_log
 phases,Phase,production_log

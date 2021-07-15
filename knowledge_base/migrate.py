@@ -70,33 +70,28 @@ def chip_attach_template(chip_attach_info):
         "Chip_Attach"] + '";'
 
 
-def product_spec_template(product_spec):
+def product_details_template(product_details):
     typeql_insert_query = 'match $Product_info isa Product_info,' \
-                          ' has Product "' + product_spec["Product"] + '";'
-    typeql_insert_query += ' $Segment_info isa Segment_info, has Segment "' + product_spec["Segment"] + '";'
-    typeql_insert_query += ' $TCSS_info isa TCSS_info, has TCSS "' + product_spec["TCSS"] + '";'
+                          ' has Product "' + product_details["Product"] + '";'
+    typeql_insert_query += ' $Segment_info isa Segment_info, has Segment "' + product_details["Segment"] + '";'
+    typeql_insert_query += ' $TCSS_info isa TCSS_info, has TCSS "' + product_details["TCSS"] + '";'
     typeql_insert_query += ' $Package_Tech_info isa Package_Tech_info,' \
-                           ' has Package_Tech "' + product_spec["Package_Tech"] + '";'
+                           ' has Package_Tech "' + product_details["Package_Tech"] + '";'
     typeql_insert_query += ' $Chip_Attach_info isa Chip_Attach_info,' \
-                           ' has Chip_Attach "' + product_spec["Chip_Attach"] + '";'
+                           ' has Chip_Attach "' + product_details["Chip_Attach"] + '";'
     typeql_insert_query += ' $Tester_Platform_info isa Tester_Platform_info,' \
-                           ' has Tester_Platform "' + product_spec["Tester_Platform"] + '";'
+                           ' has Tester_Platform "' + product_details["Tester_Platform"] + '";'
+    typeql_insert_query += ' $AT_Site_info isa AT_Site_info, has AT_Site "' + product_details["AT_Site"] + '";'
+    typeql_insert_query += ' $Division_info isa Division_info, has Division "' + product_details["Division"] + '";'
     typeql_insert_query += " insert" \
                            " (Product: $Product_info," \
                            " Segment: $Segment_info," \
                            " TCSS: $TCSS_info," \
                            " Package_Tech: $Package_Tech_info," \
                            " Chip_Attach: $Chip_Attach_info," \
-                           " Tester_Platform: $Tester_Platform_info) isa product_spec;"
-    return typeql_insert_query
-
-
-def product_division_template(product_division):
-    typeql_insert_query = 'match $Product_info isa Product_info, has Product "' + product_division["Product"] + '";'
-    typeql_insert_query += ' $AT_Site_info isa AT_Site_info, has AT_Site "' + product_division["AT_Site"] + '";'
-    typeql_insert_query += ' $Division_info isa Division_info, has Division "' + product_division["Division"] + '";'
-    typeql_insert_query += " insert (Product: $Product_info, AT_Site: $AT_Site_info, Division: $Division_info)" \
-                           " isa product_division;"
+                           " Tester_Platform: $Tester_Platform_info," \
+                           " AT_Site: $AT_Site_info," \
+                           " Division: $Division_info) isa product_details;"
     return typeql_insert_query
 
 
@@ -193,12 +188,8 @@ inputs = [
         "template": chip_attach_template
     },
     {
-        "data_path": "./data/product_spec",
-        "template": product_spec_template
-    },
-    {
-        "data_path": "./data/product_division",
-        "template": product_division_template
+        "data_path": "./data/product_details",
+        "template": product_details_template
     },
     {
         "data_path": "./data/production_log",

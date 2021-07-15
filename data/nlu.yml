@@ -1,5 +1,4 @@
 version: "2.0"
-
 nlu:
 - intent: greet
   examples: |
@@ -19,7 +18,6 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
-
 - intent: master
   examples: |
     - Give me master table
@@ -29,7 +27,6 @@ nlu:
     - Give me the list of all products with all information.
     - Show me all all products and information.
     - Get master table
-
 - intent: goodbye
   examples: |
     - good afternoon
@@ -44,7 +41,8 @@ nlu:
     - bye bye
     - see you later
     - see ya
-
+    - done
+    - I'm done
 - intent: affirm
   examples: |
     - yes
@@ -53,7 +51,16 @@ nlu:
     - of course
     - that sounds good
     - correct
-
+    - yup
+    - alright
+    - yeah
+    - affirmative
+    - affirm
+    - All good
+    - Looks good
+    - ok
+    - good
+    - yeup
 - intent: deny
   examples: |
     - no
@@ -63,7 +70,20 @@ nlu:
     - don't like that
     - no way
     - not really
-
+    - nah
+    - nope
+    - That is not correct
+    - incorrect
+    - no, thank you
+    - no, thanks
+- intent: out_of_scope
+  examples: |
+    - cancel
+    - scrap
+    - stop
+    - pause
+    - undo
+    - nevermind
 - intent: mood_great
   examples: |
     - perfect
@@ -80,7 +100,6 @@ nlu:
     - so so perfect
     - so good
     - so perfect
-
 - intent: mood_unhappy
   examples: |
     - my day was horrible
@@ -97,14 +116,12 @@ nlu:
     - extremly sad
     - so saad
     - so sad
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
-
 - intent: query_entities
   examples: |
     - List all [products](object_type).
@@ -122,7 +139,7 @@ nlu:
     - Get all products [in cycle](object_type) [Mar_21](Cycle).
     - List all products [in cycle](object_type) [Mar_21](Cycle).
     - Which products [have cycle](object_type) [Apr_21](Cycle).
-    - List all products that [has tester platform](object_type) [New-H](Tester_Platform) 
+    - List all products that [has tester platform](object_type) [New-H](Tester_Platform)
     - Get all products [with tester platform](object_type) [Old-V](Tester_Platform)
     - Show me the products [whose tester platform](object_type) is [New-H](Tester_Platform)
     - Get all products [whose segment](object_type) is [S-M](Segment)
@@ -144,7 +161,6 @@ nlu:
     - Which products [have TC/SS](object_type) [1-A](TCSS)?
     - What are the products [whose TCSS](object_type) [1-D](TCSS)?
     - Get products [with tcss](object_type) [3-A](TCSS).
-
 - intent: query_attribute
   examples: |
     - What is the [segment](attribute) of [Product AONE](Product)?
@@ -168,7 +184,6 @@ nlu:
     - What is the [comment](attribute) for [Product A82P](Product) [Apr_21](Cycle) [PRQ](Phase)?
     - Get [comments](attribute) of [Product A82M](Product) [ES2](Phase) [Apr_21](Cycle)?
     - Get [WW](attribute) of [Product A81N] [Apr_21](Cycle) [ES1](Phase).
-
 - intent: query_quantity
   examples: |
     - How many [products](object_type) are there?
@@ -202,7 +217,77 @@ nlu:
     - How many products are produced [by division](object_type) [D-C](Division)?
     - Get me the number of products assigned [to division](object_type) [D-I](Division).
     - Count the number of products produced [by division](object_type) [D-C](Division).
-    - [In cycle](object_type) [Apr_21](Cycle), how many products have been in scope?
     - [With segment](object_type) [SOC](Segment), how many products are produced?
     - [AT site](object_type) [VNAT](AT_Site), count the number of products.
-
+- intent: request_product_update
+  examples: |
+    - I want to update the info for [Product 81S](Product)
+    - I would like to update info for [Product AONE](Product)
+    - Change information of [Product A81PVN](Product)
+    - May I change [Product A82V](Product)'s info?
+    - Update information for [Product AONE](Product)
+    - Update product [Product ABCD](Product)
+    - update product information of [Product YZ56Z](Product)
+    - update [Product T67URG](Product)
+    - I want to update info of product
+    - Change information of product
+    - Update info of a product
+    - update product information for [Product ABCD](Product)
+    - update information for [Product AONE](Product)
+    - update information for [Product A82M](Product)
+    - update product information for [Product T67FLP](Product)
+    - update product information for [Product AONE](Product)
+    - update information for [Product A01S](Product)
+    - update information for [Product A82PVN](Product)
+    - update info of [Product 81S](Product)
+    - change info of [Product A8990G](Product)
+    - update info for [Product A82PVN](Product)
+    - update information for [Product ABCS](Product)
+- intent: inform
+  examples: |
+    - Product [name](target)
+    - [1](target)
+    - [2](target)
+    - I want to change number [3](target)
+    - I would like to update number [4](target)
+    - Update [5](target)
+    - Change [6](target)
+    - Change [7](target)
+    - I want to update [8](target)
+    - Product name is [Product ABCS](new_Product)
+    - [Product A900PS](new_Product)
+    - Change to [Product B67ZZ](new_Product)
+    - [S-M](new_Segment)
+    - Update to segment [S-D](new_Segment)
+    - Change to [SOC](new_Segment)
+    - Segment [S-P](new_Segment)
+    - [1-A](new_TCSS)
+    - Update to segment [1-D](new_TCSS)
+    - Change to [3-A](new_TCSS)
+    - It is [Not yet defined](new_TCSS)
+    - [VNAT](new_AT_Site)
+    - Update to segment [RUAT](new_AT_Site)
+    - Change to [KRAT](new_AT_Site)
+    - Segment [VNAT](new_AT_Site)
+    - [D-C](new_Division)
+    - Update to segment [D-Z](new_Division)
+    - Change to [D-1](new_Division)
+    - Segment [D-9](new_Division)
+    - [ABCDE](new_Package_Tech)
+    - Update to segment [FCBGA](new_Package_Tech)
+    - Change to [FCLGA](new_Package_Tech)
+    - Segment [AD4T5](new_Package_Tech)
+    - [Legacy-T](new_Chip_Attach)
+    - Update to segment [New-H](new_Chip_Attach)
+    - Change to [New-A](new_Chip_Attach)
+    - Segment [Old-B](new_Chip_Attach)
+    - [New-H](new_Tester_Platform)
+    - Update to segment [Old-V](new_Tester_Platform)
+    - Change to [New-Z](new_Tester_Platform)
+    - Segment [Old-G](new_Tester_Platform)
+    - [Product ABCS](new_Product)
+    - [Product AOST](Product)
+    - [3](target)
+    - [1-D](new_TCSS)
+    - [S-D](new_Segment)
+    - [3-A](new_TCSS)

@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 from typing import Text, Dict, Any, List, Union
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, AllSlotsReset
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.forms import FormValidationAction
 from rasa_sdk import Action, Tracker
+from rasa_sdk.types import DomainDict
+
 from schema import schema
 from graph_database import GraphDatabase
 
@@ -363,6 +367,8 @@ class ActionCount(Action):
                 f"It seems there is none."
             )
 
+        return
+
 
 class ActionResolveEntity(Action):
     """
@@ -399,21 +405,433 @@ class ActionResolveEntity(Action):
 
 
 class ResetSlot(Action):
-
+    """
+    Reset all slots
+    """
     def name(self):
         return "action_reset_slot"
 
     def run(self, dispatcher, tracker, domain):
         print("Reset slots.\n")
-        return [SlotSet("Product", None),
-                SlotSet("Segment", None),
-                SlotSet("TCSS", None),
-                SlotSet("AT_Site", None),
-                SlotSet("Division", None),
-                SlotSet("Package_Tech", None),
-                SlotSet("Chip_Attach", None),
-                SlotSet("Tester_Platform", None),
-                SlotSet("Cycle", None),
-                SlotSet("Phase", None),
-                SlotSet("WW", None),
-                SlotSet("Comment", None)]
+        return [AllSlotsReset()]
+
+
+class ActionGetTargetProduct(Action):
+    """
+    Get information related to the product of interest
+    """
+    def name(self) -> Text:
+        return "action_get_target_product"
+
+    def run(self, dispatcher, tracker, domain):
+        graph_database = GraphDatabase()
+        slots = []
+        print("\n* Action Get Target Product\n")
+
+        attributes = get_attributes_of_entity("product_details", tracker)
+        relates = get_relates_of_relations("product_details", tracker)
+        # Get existing data from database
+        entities = graph_database.get_relations("product_details", relates, attributes)
+
+        # Abort if target entity is not found
+        if len(entities) == 0:
+            dispatcher.utter_message(response="utter_not_found")
+            return [SlotSet("valid", False)]
+
+        # Set data into slots to display
+        for relate in schema["product_details"]["relates"]:
+            slots.append(SlotSet(relate, entities[0][relate][relate]))
+
+        slots.append(SlotSet("valid", True))
+        print("- Current slots:", slots)
+        return slots
+
+
+class ActionGetUpdateProduct(Action):
+    """
+    Get information related to the product of interest with new information
+    """
+    def name(self) -> Text:
+        return "action_get_update_product"
+
+    def run(self, dispatcher, tracker, domain):
+        print("\n* Action Get Update Product\n")
+        slots = []
+
+        # Copy unchanged information to new slots
+        for relate in schema["product_details"]["relates"]:
+            if tracker.get_slot("new_" + relate) is None:
+                slots.append(SlotSet("new_" + relate, tracker.get_slot(relate)))
+
+        print("- Updated slots:", slots)
+        return slots
+
+
+class ValidateUpdateProductForm(FormValidationAction):
+    """
+    Validate input from users to adjust form behaviours
+    """
+    def name(self):
+        return "validate_update_product_form"
+
+    async def required_slots(
+        self,
+        slots_mapped_in_domain: List[Text],
+        dispatcher: "CollectingDispatcher",
+        tracker: "Tracker",
+        domain: "DomainDict",
+    ) -> List[Text]:
+        """
+        Add slot as user's choice
+        """
+        print("* Validate Update Product Form")
+        option = tracker.get_slot("target")
+        print("- User option: ", option)
+
+        # Add new slots and questions according to user's choice
+        if option == "1":
+            print("- Add new_Product slot")
+            required_slots = slots_mapped_in_domain + ["new_Product"]
+            return required_slots
+        elif option == "2":
+            print("- Add new_Segment slot")
+            required_slots = slots_mapped_in_domain + ["new_Segment"]
+            return required_slots
+        elif option == "3":
+            print("- Add new_TCSS slot")
+            required_slots = slots_mapped_in_domain + ["new_TCSS"]
+            return required_slots
+        elif option == "4":
+            print("- Add new_package_tech slot")
+            required_slots = slots_mapped_in_domain + ["new_Package_Tech"]
+            return required_slots
+        elif option == "5":
+            print("- Add new_Chip_Attach slot")
+            required_slots = slots_mapped_in_domain + ["new_Chip_Attach"]
+            return required_slots
+        elif option == "6":
+            print("- Add new_Tester_Platform slot")
+            required_slots = slots_mapped_in_domain + ["new_Tester_Platform"]
+            return required_slots
+        elif option == "7":
+            print("- Add new_AT_Site slot")
+            required_slots = slots_mapped_in_domain + ["new_AT_Site"]
+            return required_slots
+        elif option == "8":
+            print("- Add new_Division slot")
+            required_slots = slots_mapped_in_domain + ["new_Division"]
+            return required_slots
+        else:
+            required_slots = slots_mapped_in_domain
+            return required_slots
+
+    # Functions to instruct how new slots can be extracted from user's message
+
+    @staticmethod
+    async def extract_new_Product(
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "Dict"
+    ) -> Dict[Text, Any]:
+        product = tracker.get_slot("new_Product")
+        print("\t- Extracted new product: ", product)
+        return {"new_Product": product}
+
+    @staticmethod
+    async def extract_new_Segment(
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "Dict"
+    ) -> Dict[Text, Any]:
+        segment = tracker.get_slot("new_Segment")
+        print("\t- Extracted new segment: ", segment)
+        return {"new_Segment": segment}
+
+    @staticmethod
+    async def extract_new_TCSS(
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "Dict"
+    ) -> Dict[Text, Any]:
+        tcss = tracker.get_slot("new_TCSS")
+        print("\t - Extracted new TC/SS: ", tcss)
+        return {"new_TCSS": tcss}
+
+    @staticmethod
+    async def extract_new_Package_Tech(
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "Dict"
+    ) -> Dict[Text, Any]:
+        package_tech = tracker.get_slot("new_Package_Tech")
+        print("\t- Extracted new package tech: ", package_tech)
+        return {"new_Package_Tech": package_tech}
+
+    @staticmethod
+    async def extract_new_Chip_Attach(
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "Dict"
+    ) -> Dict[Text, Any]:
+        chip_attach = tracker.get_slot("new_Chip_Attach")
+        print("\t- Extracted new chip attach: ", chip_attach)
+        return {"new_Chip_Attach": chip_attach}
+
+    @staticmethod
+    async def extract_new_Tester_Platform(
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "Dict"
+    ) -> Dict[Text, Any]:
+        tester_platform = tracker.get_slot("new_Tester_Platform")
+        print("\t- Extracted new tester platform: ", tester_platform)
+        return {"new_Tester_Platform": tester_platform}
+
+    @staticmethod
+    async def extract_new_AT_Site(
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "Dict"
+    ) -> Dict[Text, Any]:
+        at_site = tracker.get_slot("new_AT_Site")
+        print("\t- Extracted new AT site: ", at_site)
+        return {"new_AT_Site": at_site}
+
+    @staticmethod
+    async def extract_new_Division(
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "Dict"
+    ) -> Dict[Text, Any]:
+        division = tracker.get_slot("new_Division")
+        print("\t- Extracted new division: ", division)
+        return {"new_Division": division}
+
+    # Validation functions to validate user's input and adjust form behaviours
+
+    @staticmethod
+    def validate_target(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new target slot")
+        print("\t- slot value: ", slot_value)
+
+        intent = tracker.get_intent_of_latest_message()
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        if slot_value not in range(1, 10):
+            return {"target": None}
+
+        print("\t- fill slot new_Product")
+        return {"target": slot_value}
+
+    @staticmethod
+    def validate_new_Product(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new Product")
+        print("\t- slot value: ", slot_value)
+
+        intent = tracker.get_intent_of_latest_message()
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        print("\t- fill slot new_Product")
+        return {"new_Product": slot_value}
+
+    @staticmethod
+    def validate_new_Segment(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new Segment")
+        print("\t- slot value: ", slot_value)
+
+        intent = tracker.get_intent_of_latest_message()
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        print("\t- fill slot new_Segment")
+        return {"new_Segment": slot_value}
+
+    @staticmethod
+    def validate_new_TCSS(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new TC/SS")
+        print("\t- slot value: ", slot_value)
+        intent = tracker.get_intent_of_latest_message()
+
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        print("\t- fill slot new_TCSS")
+        return {"new_TCSS": slot_value}
+
+    @staticmethod
+    def validate_new_Package_Tech(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new Package_Tech")
+        print("\t- slot value: ", slot_value)
+
+        intent = tracker.get_intent_of_latest_message()
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        print("\t- fill slot new_Package_Tech")
+        return {"new_Package_Tech": slot_value}
+
+    @staticmethod
+    def validate_new_Chip_Attach(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new Chip_Attach")
+        print("\t- slot value: ", slot_value)
+
+        intent = tracker.get_intent_of_latest_message()
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        print("\t- fill slot new_Chip_Attach")
+        return {"new_Chip_Attach": slot_value}
+
+    @staticmethod
+    def validate_new_Tester_Platform(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new Tester_Platform")
+        print("\t- slot value: ", slot_value)
+
+        intent = tracker.get_intent_of_latest_message()
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        print("\t- fill slot new_Tester_Platform")
+        return {"new_Tester_Platform": slot_value}
+
+    @staticmethod
+    def validate_new_AT_Site(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new AT_Site")
+        print("\t- slot value: ", slot_value)
+
+        intent = tracker.get_intent_of_latest_message()
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        print("\t- fill slot new_AT_Site")
+        return {"new_AT_Site": slot_value}
+
+    @staticmethod
+    def validate_new_Division(
+            slot_value: Any,
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict"
+    ) -> Dict[Text, Any]:
+        print("- validate new Division")
+        print("\t- slot value: ", slot_value)
+
+        intent = tracker.get_intent_of_latest_message()
+        print("\t- intent: ", intent)
+        if intent == "out_of_scope":
+            print("\t- Stop asking for slots and cancel form")
+            return {"requested_slot": None, "cancel": True}
+
+        print("\t- fill slot new_Division")
+        return {"new_Division": slot_value}
+
+
+class ActionSubmitUpdateProduct(Action):
+    """
+    Action to submit the updated information to the database
+    """
+    def name(self) -> Text:
+        return "action_submit_update_product"
+
+    def run(self, dispatcher, tracker, domain):
+        print("\n* Submit Form\n")
+        graph_database = GraphDatabase()
+        object_type = "product_details"
+        target = None
+        new_data = None
+
+        # Extract the old and new information
+        for relate in schema[object_type]["relates"]:
+            current_value = tracker.get_slot(relate)
+            new_value = tracker.get_slot("new_" + relate)
+            print("\n- Current value: ", current_value)
+            print("- New value: ", new_value)
+            if current_value != new_value:
+                target = [{'key': relate, 'value': current_value}]
+                new_data = [{'key': relate, 'value': new_value}]
+
+        print("\n- target: ", target)
+        print("- new_data: ", new_data)
+
+        # Check if the new entitiy (information) already exists in database
+        attributes = [{'key': target[0]['key'], 'value': new_data[0]['value']}]
+        print("- attributes", attributes)
+        check_object_type = graph_database.map("object_type_mapping", target[0]['key'])
+        relate_entities = graph_database.get_entities(check_object_type, attributes)
+        print("- relate_entities: ", relate_entities)
+
+        print("\n- Updating...")
+        if len(relate_entities) != 0:
+            # Replace old data with new data if already exists
+            print("\t! New data already in database. Update entity")
+            graph_database.update_relations(object_type, target, new_data)
+        else:
+            # Add the new entity into database then update the old information with the new entity
+            print("\t- Insert new entity")
+            relate_object_type = graph_database.map("object_type_mapping", target[0]['key'])
+            graph_database.insert_entity(relate_object_type, new_data)
+            print("\t- Update information of target")
+            graph_database.update_relations(object_type, target, new_data)
+
+        dispatcher.utter_message(response="utter_submit")
+
+        print("\nSubmit Complete!")
+        return

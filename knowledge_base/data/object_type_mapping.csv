@@ -1,15 +1,20 @@
 mapping_key,mapping_value
 product,Product_info
 products,Product_info
+Product,Product_info
+Products,Product_info
 TC/SS,TCSS_info
 TCSS,TCSS_info
 tcss,TCSS_info
 at site,AT_Site_info
 AT site,AT_Site_info
 AT sites,At_Site_info
+AT_Site,At_Site_info
 division,Division_info
 divisions,Division_info
+Division,Division_info
 phase,Phase_info
+Phase,Phase_info
 phases,Phase_info
 comment,production_log
 comments,production_log
@@ -17,14 +22,19 @@ reason,production_log
 reasons,production_log
 why,Comment_info
 tester platform,Tester_Platform_info
+Tester_Platform,Tester_Platform_info
 tester platforms,Tester_Platform_info
 package tech,Package_Tech_info
+Package_Tech,Package_Tech_info
 package techs,Package_Tech_info
 tech package,Package_Tech_info
+Tech_Package,Package_Tech_info
 tech packages,Package_Tech_info
+Segment,Segment_info
 segment,Segment_info
 segments,Segment_info
 segmentation,Segment_info
+Chip_Attach,Chip_Attach_info
 chip attach,Chip_Attach_info
 chip attachs,Chip_Attach_info
 chip attaches,Chip_Attach_info
@@ -40,75 +50,75 @@ with cycle,product_cycle
 belongs to cycle,product_cycle
 belong cycle,product_cycle
 With cycle,product_cycle
-in TC/SS,product_spec
-has TC/SS,product_spec
-whose TC/SS,product_spec
-have TC/SS,product_spec
-which TC/SS,product_spec
-with TC/SS,product_spec
-With TC/SS,product_spec
-in AT site,product_division
-In AT site,product_division
-has AT site,product_division
-whose AT site,product_division
-have AT site,product_division
-which AT site,product_division
-with AT site,product_division
-at AT site,product_division
-At AT site,product_division
-With AT site,product_division
-has tester platform,product_spec
-have tester platform,product_spec
-whose tester platform,product_spec
-which tester platform,product_spec
-with tester platform,product_spec
-With tester platform,product_spec
-in tester platform,product_spec
-belongs to tester platform,product_spec
-belong to tester platform,product_spec
-in segment,product_spec
-has segment,product_spec
-whose segment,product_spec
-have segment,product_spec
-which segment,product_spec
-belongs to segment,product_spec
-belong to segment,product_spec
-with segment,product_spec
-With segment,product_spec
-to division,product_division
-has division,product_division
-have division,product_division
-whose division,product_division
-which division,product_division
-with division,product_division
-With division,product_division
-in division,product_division
-by division,product_division
-By division,product_division
-belongs to division,product_division
-belong to division,product_division
-For division,product_division
-for division,product_division
-has package tech,product_spec
-have package tech,product_spec
-whose package tech,product_spec
-which package tech,product_spec
-with package tech,product_spec
-With package tech,product_spec
-has attached chip,product_spec
-have attached chip,product_spec
-whose attached chip,product_spec
-which attached chip,product_spec
-with attached chip,product_spec
-With attached chip,product_spec
-has chip attach,product_spec
-have chip attach,product_spec
-whose chip attach,product_spec
-which chip attach,product_spec
-with chip attach,product_spec
-With chip attach,product_spec
-product_spec,product_spec
-product_division,product_division
+in TC/SS,product_details
+has TC/SS,product_details
+whose TC/SS,product_details
+have TC/SS,product_details
+which TC/SS,product_details
+with TC/SS,product_details
+With TC/SS,product_details
+in AT site,product_details
+In AT site,product_details
+has AT site,product_details
+whose AT site,product_details
+have AT site,product_details
+which AT site,product_details
+with AT site,product_details
+at AT site,product_details
+At AT site,product_details
+With AT site,product_details
+has tester platform,product_details
+have tester platform,product_details
+whose tester platform,product_details
+which tester platform,product_details
+with tester platform,product_details
+With tester platform,product_details
+in tester platform,product_details
+belongs to tester platform,product_details
+belong to tester platform,product_details
+in segment,product_details
+has segment,product_details
+whose segment,product_details
+have segment,product_details
+which segment,product_details
+belongs to segment,product_details
+belong to segment,product_details
+with segment,product_details
+With segment,product_details
+to division,product_details
+has division,product_details
+have division,product_details
+whose division,product_details
+which division,product_details
+with division,product_details
+With division,product_details
+in division,product_details
+by division,product_details
+By division,product_details
+belongs to division,product_details
+belong to division,product_details
+For division,product_details
+for division,product_details
+has package tech,product_details
+have package tech,product_details
+whose package tech,product_details
+which package tech,product_details
+with package tech,product_details
+With package tech,product_details
+has attached chip,product_details
+have attached chip,product_details
+whose attached chip,product_details
+which attached chip,product_details
+with attached chip,product_details
+With attached chip,product_details
+has chip attach,product_details
+have chip attach,product_details
+whose chip attach,product_details
+which chip attach,product_details
+with chip attach,product_details
+With chip attach,product_details
+product_details,product_details
+product_details,product_details
 production_log,production_log
 product_cycle,product_cycle
 has comment,production_log

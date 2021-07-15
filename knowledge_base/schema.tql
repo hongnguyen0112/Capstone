@@ -3,18 +3,17 @@ define
 #entities 
 
 Product_info sub entity,
-    plays product_spec:Product,
-    plays product_division:Product,
+    plays product_details:Product,
     plays production_log:Product,
     plays product_cycle:Product,
     owns Product;
 
 TCSS_info sub entity,
-    plays product_spec:TCSS,
+    plays product_details:TCSS,
     owns TCSS;
 
 AT_Site_info sub entity,
-    plays product_division:AT_Site,
+    plays product_details:AT_Site,
     owns AT_Site;
 
 Cycle_info sub entity,
@@ -31,23 +30,23 @@ Comment_info sub entity,
     owns Comment;
 
 Tester_Platform_info sub entity,
-    plays product_spec:Tester_Platform,
+    plays product_details:Tester_Platform,
     owns Tester_Platform;
 
 Segment_info sub entity,
-    plays product_spec:Segment,
+    plays product_details:Segment,
     owns Segment;
 
 Package_Tech_info sub entity,
-    plays product_spec:Package_Tech,
+    plays product_details:Package_Tech,
     owns Package_Tech;
 
 Chip_Attach_info sub entity,
-    plays product_spec:Chip_Attach,
+    plays product_details:Chip_Attach,
     owns Chip_Attach;
 
 Division_info sub entity,
-    plays product_division:Division,
+    plays product_details:Division,
     owns Division;
 
 mapping sub entity,
@@ -61,16 +60,13 @@ attribute_mapping sub mapping,
 
 # Relations
 
-product_spec sub relation,
+product_details sub relation,
     relates Product,
     relates Segment,
     relates TCSS,
     relates Package_Tech,
     relates Chip_Attach,
-    relates Tester_Platform;
-
-product_division sub relation,
-    relates Product,
+    relates Tester_Platform,
     relates AT_Site,
     relates Division;
 

@@ -17,6 +17,7 @@ rules:
   - intent: query_entities
   - action: action_query_entities
   - action: action_reset_slot
+  - action: utter_help
 
 - rule: query attribute on user's query
   steps:
@@ -35,3 +36,17 @@ rules:
   - intent: nlu_fallback
   - action: action_two_stage_fallback
   - active_loop: action_two_stage_fallback
+
+- rule: deactivate form
+  steps:
+  - slot_was_set:
+    - cancel: true
+  - active_loop: null
+  - action: utter_ask_quit
+
+- rule: reset conversation after form quit
+  steps:
+  - action: utter_ask_quit
+  - intent: affirm
+  - action: action_reset_slot
+  - action: utter_help

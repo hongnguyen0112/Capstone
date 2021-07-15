@@ -78,7 +78,7 @@ class GraphDatabase(KnowledgeBase, ABC):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     # Query entities from database
-                    print("\t- Executing TypeQL Entity query: " + query)
+                    print("\t- Executing Entity query: " + query)
                     result_iter = tx.query().match(query)
                     answers = [ans.get(object_type) for ans in result_iter]
                     entities = []
@@ -96,7 +96,7 @@ class GraphDatabase(KnowledgeBase, ABC):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     # Query attribute from database
-                    print("\t- Executing TypeQL Attribute query: " + query)
+                    print("\t- Executing Attribute query: " + query)
                     query = "".join(query)
                     iterator = tx.query().match(query)
                     # Get specific value of interest from results
@@ -112,7 +112,7 @@ class GraphDatabase(KnowledgeBase, ABC):
         with TypeDB.core_client(self.uri) as client:
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
-                    print("\t- Executing TypeQL Relation query: " + query)
+                    print("\t- Executing Relation query: " + query)
                     result_iter = tx.query().match(query)
                     relations = []
                     # Query knowledge base
@@ -136,11 +136,44 @@ class GraphDatabase(KnowledgeBase, ABC):
             with client.session(self.keyspace, SessionType.DATA) as session:
                 with session.transaction(TransactionType.READ) as tx:
                     # Execute aggregate match query
-                    print("\t- Executing TypeQL Count query: " + query)
+                    print("\t- Executing Count query: " + query)
                     result = tx.query().match_aggregate(query).get()        # match_aggregate "Count
                     count = result.as_int()
                     print(count)
                     return count
+
+    def _execute_insert_query(self, query: Text):
+        """
+        Execute a query to insert new data to the knowledge base
+        """
+        with TypeDB.core_client(self.uri) as client:
+            with client.session(self.keyspace, SessionType.DATA) as session:
+                with session.transaction(TransactionType.WRITE) as tx:
+                    print("Executing Insert query: " + query)
+                    tx.query().insert(query)
+                    tx.commit()
+
+    def _execute_delete_query(self, query: Text):
+        """
+        Execute a query to remove data from the knowledge base
+        """
+        with TypeDB.core_client(self.uri) as client:
+            with client.session(self.keyspace, SessionType.DATA) as session:
+                with session.transaction(TransactionType.WRITE) as tx:
+                    print("Executing Delete query: " + query)
+                    tx.query().delete(query)
+                    tx.commit()
+
+    def _execute_update_query(self, query: Text):
+        """
+        Execute update query to change data in knowledge base
+        """
+        with TypeDB.core_client(self.uri) as client:
+            with client.session(self.keyspace, SessionType.DATA) as session:
+                with session.transaction(TransactionType.WRITE) as tx:
+                    print("Executing Update query: " + query)
+                    tx.query().update(query)
+                    tx.commit()
 
     @staticmethod
     def _get_attribute_clause(attributes: Optional[List[Dict[Text, Text]]] = None) -> Text:
@@ -391,6 +424,59 @@ class GraphDatabase(KnowledgeBase, ABC):
             f"${object_type} ({match_relates}) "
             f"isa {object_type}{attribute_clause}; "
             f"get ${object_type}; count;"
+        )
+
+    def update_relations(
+            self,
+            object_type: Text,
+            relates: Optional[List[Dict[Text, Text]]] = None,
+            new_relates: Optional[List[Dict[Text, Text]]] = None
+    ):
+        """
+        Query the graph database to update relations.
+        :param object_type: the entity type
+        :param relates: list of old information
+        :param new_relates: list of new information
+        :return: insert of new data
+        """
+        relate_clause = self._get_relates_clause(relates)
+        match_relate = self._get_relates_match(relates)
+
+        new_relate_clause = self._get_relates_clause(new_relates)
+        new_relate_clause = new_relate_clause.replace("$", "$new_")
+        match_new_relate = self._get_relates_match(new_relates)
+        match_new_relate = match_new_relate.replace("$", "$new_")
+
+        return self._execute_update_query(
+            f"match "
+            f"{relate_clause} "
+            f"{new_relate_clause} "
+            f"${object_type} ({match_relate}) isa {object_type}; "
+            f"delete "
+            f"${object_type} ({match_relate}); "
+            f"insert "
+            f"${object_type} ({match_new_relate}); "
+        )
+
+    # f"match "
+    # f"$Product_info isa Product_info, has Product 'Product AONE'; "
+    # f"$new_Product_info isa Product_info, has Product 'Product ABCS'; "
+    # f"$product_details (Product: $Product_info) isa product_details; "
+    # f"delete "
+    # f"$product_details (Product: $Product_info); "
+    # f"insert "
+    # f"$product_details (Product: $new_Product_info); "
+
+    def insert_entity(self, object_type: Text, attributes: List[Dict[Text, Text]]):
+        """
+        Query the graph database to insert entities.
+        :param object_type: the entity type
+        :param attributes: list of attributes
+        :return: insert of new data
+        """
+        attribute_clause = self._get_attribute_clause(attributes)
+        return self._execute_insert_query(
+            f"insert ${object_type} isa {object_type}{attribute_clause}; "
         )
 
     def map(self, mapping_type: Text, mapping_key: Text) -> Text:

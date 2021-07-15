@@ -53,25 +53,14 @@ schema = {
         "representation": ["Comment"]
     },
 
-    "product_spec": {
+    "product_details": {
         "relates": [
             "Product",
             "Segment",
             "TCSS",
             "Package_Tech",
             "Chip_Attach",
-            "Tester_Platform"
-        ],
-        "attributes": [
-            "iid"
-        ],
-        "key": "Product",
-        "representation": ["Product.Product"]
-    },
-
-    "product_division": {
-        "relates": [
-            "Product",
+            "Tester_Platform",
             "AT_Site",
             "Division"
         ],

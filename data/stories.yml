@@ -36,6 +36,7 @@ stories:
   - intent: query_entities
   - action: action_query_entities
   - action: action_reset_slot
+  - action: utter_help
 
 - story: greet and query attribute
   steps:
@@ -57,3 +58,292 @@ stories:
   steps:
   - intent: master
   - action: utter_master
+  - action: utter_help
+
+- story: user update non-exist target
+  steps:
+  - intent: request_product_update
+    entities:
+    - Product: Product A8990G
+  - slot_was_set:
+    - Product: Product A8990G
+  - action: action_get_target_product
+  - slot_was_set:
+    - valid: false
+
+- story: form happy path
+  steps:
+  - intent: request_product_update
+    entities:
+    - Product: Product AONE
+  - slot_was_set:
+    - Product: Product AONE
+  - action: action_get_target_product
+  - slot_was_set:
+    - Product: Product AONE
+  - slot_was_set:
+    - Segment: S-P
+  - slot_was_set:
+    - TCSS: 1-A
+  - slot_was_set:
+    - Package_Tech: FCBGA
+  - slot_was_set:
+    - Chip_Attach: New-H
+  - slot_was_set:
+    - Tester_Platform: Old-V
+  - slot_was_set:
+    - AT_Site: VNAT
+  - slot_was_set:
+    - Division: D-C
+  - slot_was_set:
+    - valid: true
+  - action: utter_target_product
+  - action: update_product_form
+  - active_loop: update_product_form
+  - slot_was_set:
+    - requested_slot: target
+  - slot_was_set:
+    - target: '2'
+  - slot_was_set:
+    - new_Segment: null
+  - slot_was_set:
+    - target: '2'
+  - slot_was_set:
+    - requested_slot: new_Segment
+  - slot_was_set:
+    - new_Segment: S-D
+  - slot_was_set:
+    - new_Segment: S-D
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_update_product
+  - slot_was_set:
+    - new_Product: Product AONE
+  - slot_was_set:
+    - new_TCSS: 1-A
+  - slot_was_set:
+    - new_Package_Tech: FCBGA
+  - slot_was_set:
+    - new_Chip_Attach: New-H
+  - slot_was_set:
+    - new_Tester_Platform: Old-V
+  - slot_was_set:
+    - new_AT_Site: VNAT
+  - slot_was_set:
+    - new_Division: D-C
+  - action: update_confirmation
+  - active_loop: update_confirmation
+  - slot_was_set:
+    - requested_slot: update_confirm
+  - slot_was_set:
+    - update_confirm: true
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_submit_update_product
+  - action: action_reset_slot
+  - action: utter_help
+
+- story: user interrupt form
+  steps:
+  - intent: request_product_update
+    entities:
+    - Product: Product A82PVN
+  - slot_was_set:
+    - Product: Product A82PVN
+  - action: action_get_target_product
+  - slot_was_set:
+    - Product: Product A82PVN
+  - slot_was_set:
+    - Segment: S-M
+  - slot_was_set:
+    - TCSS: 1-D
+  - slot_was_set:
+    - Package_Tech: FCBGA
+  - slot_was_set:
+    - Chip_Attach: Legacy-T
+  - slot_was_set:
+    - Tester_Platform: New-H
+  - slot_was_set:
+    - AT_Site: VNAT
+  - slot_was_set:
+    - Division: D-C
+  - slot_was_set:
+    - valid: true
+  - action: utter_target_product
+  - action: update_product_form
+  - active_loop: update_product_form
+  - slot_was_set:
+    - requested_slot: target
+  - slot_was_set:
+    - target: '2'
+  - slot_was_set:
+    - new_Segment: null
+  - slot_was_set:
+    - target: '2'
+  - slot_was_set:
+    - requested_slot: new_Segment
+  - slot_was_set:
+    - new_Segment: null
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - cancel: true
+  - slot_was_set:
+    - requested_slot: new_Segment
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_ask_quit
+  - intent: affirm
+  - action: action_reset_slot
+  - action: utter_help
+
+- story: user interrupt form but continue
+  steps:
+  - intent: request_product_update
+    entities:
+    - Product: Product AONE
+  - slot_was_set:
+    - Product: Product AONE
+  - action: action_get_target_product
+  - slot_was_set:
+    - Product: Product AONE
+  - slot_was_set:
+    - Segment: S-P
+  - slot_was_set:
+    - TCSS: 1-A
+  - slot_was_set:
+    - Package_Tech: FCBGA
+  - slot_was_set:
+    - Chip_Attach: New-H
+  - slot_was_set:
+    - Tester_Platform: Old-V
+  - slot_was_set:
+    - AT_Site: VNAT
+  - slot_was_set:
+    - Division: D-C
+  - slot_was_set:
+    - valid: true
+  - action: utter_target_product
+  - action: update_product_form
+  - active_loop: update_product_form
+  - slot_was_set:
+    - requested_slot: target
+  - slot_was_set:
+    - target: '3'
+  - slot_was_set:
+    - new_TCSS: null
+  - slot_was_set:
+    - target: '3'
+  - slot_was_set:
+    - requested_slot: new_TCSS
+  - slot_was_set:
+    - new_TCSS: null
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - cancel: true
+  - slot_was_set:
+    - requested_slot: new_TCSS
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_ask_quit
+  - intent: deny
+  - action: update_product_form
+  - active_loop: update_product_form
+  - slot_was_set:
+    - new_TCSS: null
+  - slot_was_set:
+    - target: '3'
+  - slot_was_set:
+    - requested_slot: new_TCSS
+  - slot_was_set:
+    - new_TCSS: null
+  - slot_was_set:
+    - requested_slot: new_TCSS
+  - slot_was_set:
+    - new_TCSS: 3-A
+  - slot_was_set:
+    - new_TCSS: 3-A
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_update_product
+  - slot_was_set:
+    - new_Product: Product AONE
+  - slot_was_set:
+    - new_Segment: S-P
+  - slot_was_set:
+    - new_Package_Tech: FCBGA
+  - slot_was_set:
+    - new_Chip_Attach: New-H
+  - slot_was_set:
+    - new_Tester_Platform: Old-V
+  - slot_was_set:
+    - new_AT_Site: VNAT
+  - slot_was_set:
+    - new_Division: D-C
+  - action: update_confirmation
+  - active_loop: update_confirmation
+  - slot_was_set:
+    - requested_slot: update_confirm
+  - slot_was_set:
+    - update_confirm: true
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_submit_update_product
+  - action: action_reset_slot
+  - action: utter_help
+
+- story: user interrupt form at target requirement step
+  steps:
+  - intent: request_product_update
+    entities:
+    - Product: Product ABCS
+  - slot_was_set:
+    - Product: Product ABCS
+  - action: action_get_target_product
+  - slot_was_set:
+    - Product: Product ABCS
+  - slot_was_set:
+    - Segment: S-P
+  - slot_was_set:
+    - TCSS: 3-A
+  - slot_was_set:
+    - Package_Tech: FCBGA
+  - slot_was_set:
+    - Chip_Attach: New-H
+  - slot_was_set:
+    - Tester_Platform: Old-V
+  - slot_was_set:
+    - AT_Site: VNAT
+  - slot_was_set:
+    - Division: D-C
+  - slot_was_set:
+    - valid: true
+  - action: utter_target_product
+  - action: update_product_form
+  - active_loop: update_product_form
+  - slot_was_set:
+    - requested_slot: target
+  - slot_was_set:
+    - target: stop
+  - slot_was_set:
+    - requested_slot: null
+  - slot_was_set:
+    - cancel: true
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_ask_quit
+  - intent: affirm
+  - action: action_reset_slot
+  - action: utter_help
