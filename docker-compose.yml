@@ -7,11 +7,9 @@ services:
     volumes: 
         - ./:/app
     command: 
-        - run 
+        - shell
   action-server:
-    image: rasa/rasa-sdk:2.7.0
-    volumes: 
-        - ./actions:/app/actions
+    build: .
     ports: 
         - 5055:5055
   typeDB:
