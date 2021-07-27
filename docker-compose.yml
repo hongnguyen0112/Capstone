@@ -11,13 +11,17 @@ services:
         - shell
   action-server:
     container_name: action_server
-    build: .
+    build: ./actions
     ports: 
         - 5055:5055
-  typeDB:
+  typedb-server:
     image: vaticle/typedb:latest
-    container_name: typedb
-    volumes: 
-        - ./typedb:/app/typedb
+    container_name: typedb-server
     ports:
-        - 5000:5000
+        - 5000:5005
+ 
+
+
+ 
+   
+

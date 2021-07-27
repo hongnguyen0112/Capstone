@@ -2,11 +2,11 @@ FROM rasa/rasa-sdk:2.7.0
 
 WORKDIR /app
 
-COPY actions/requirements.txt ./
+COPY ./requirements.txt ./
 
 USER root
 
-COPY ./actions /app/actions
+COPY ./ /app/actions
 
 RUN pip3 install -r requirements.txt
 
