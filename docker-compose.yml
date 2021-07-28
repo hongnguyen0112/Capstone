@@ -1,24 +1,25 @@
 version: '3.8'
 services: 
   rasa:
-    image: rasa/rasa:2.7.1-full
+    build: .
     container_name: rasa
     ports: 
         - 5005:5005
     volumes: 
         - ./:/app
-    command: 
-        - shell
   action-server:
     container_name: action_server
     build: ./actions
     ports: 
         - 5055:5055
   typedb-server:
-    image: vaticle/typedb:latest
+    build: ./typedb
     container_name: typedb-server
+    volumes: 
+      - ./typedb:/app
     ports:
-        - 5000:5005
+      - 1729:1729
+  
  
 
 
