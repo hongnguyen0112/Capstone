@@ -12,6 +12,8 @@
 
 action_endpoint:
   url: "http://action-server:5055/webhook"
+typedb_endpoint:
+  url: "http://typedb-server:1729/webhook"
 
 # Tracker store which is used to store the conversations.
 # By default the conversations are stored in memory.
