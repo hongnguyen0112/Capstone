@@ -429,12 +429,14 @@ class GraphDatabase(KnowledgeBase, ABC):
     def update_relations(
             self,
             object_type: Text,
+            target_product: Text,
             relates: Optional[List[Dict[Text, Text]]] = None,
             new_relates: Optional[List[Dict[Text, Text]]] = None
     ):
         """
         Query the graph database to update relations.
         :param object_type: the entity type
+        :param target_product: product of the target info
         :param relates: list of old information
         :param new_relates: list of new information
         :return: insert of new data
@@ -447,25 +449,39 @@ class GraphDatabase(KnowledgeBase, ABC):
         match_new_relate = self._get_relates_match(new_relates)
         match_new_relate = match_new_relate.replace("$", "$new_")
 
+        if relates[0]['key'] == "Product":
+            return self._execute_update_query(
+                f"match "
+                f"{relate_clause} "
+                f"{new_relate_clause} "
+                f"${object_type} ({match_relate}) isa {object_type}; "
+                f"delete "
+                f"${object_type} ({match_relate}); "
+                f"insert "
+                f"${object_type} ({match_new_relate}); "
+            )
+
         return self._execute_update_query(
             f"match "
+            f"$Product_info isa Product_info, has Product '{target_product}';"
             f"{relate_clause} "
             f"{new_relate_clause} "
-            f"${object_type} ({match_relate}) isa {object_type}; "
+            f"${object_type} (Product: $Product_info, {match_relate}) isa {object_type}; "
             f"delete "
             f"${object_type} ({match_relate}); "
             f"insert "
             f"${object_type} ({match_new_relate}); "
         )
-
-    # f"match "
-    # f"$Product_info isa Product_info, has Product 'Product AONE'; "
-    # f"$new_Product_info isa Product_info, has Product 'Product ABCS'; "
-    # f"$product_details (Product: $Product_info) isa product_details; "
-    # f"delete "
-    # f"$product_details (Product: $Product_info); "
-    # f"insert "
-    # f"$product_details (Product: $new_Product_info); "
+    # Example query for the above structure:
+    # match
+    # $Product_info isa Product_info, has Product "Product AONE";
+    # $TCSS_info isa TCSS_info, has TCSS "3-A";
+    # $new_TCSS_info isa TCSS_info, has TCSS "1-D";
+    # $product_details(Product: $Product_info, TCSS: $TCSS_info) isa product_details;
+    # delete
+    # $product_details(TCSS: $TCSS_info);
+    # insert
+    # $product_details(TCSS: $new_TCSS_info);
 
     def insert_entity(self, object_type: Text, attributes: List[Dict[Text, Text]]):
         """

@@ -2,8 +2,9 @@ version: '2.0'
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
 intents:
-- request_product_update
+- request_product_details_update
 - affirm
 - out_of_scope
 - deny
@@ -19,6 +20,7 @@ intents:
 - master
 - query_quantity
 - out-of-scope
+
 entities:
 - AT_Site
 - AT_Site_info
@@ -61,6 +63,7 @@ entities:
 - product_details
 - production_log
 - target
+
 slots:
   Product_info:
     type: text
@@ -149,9 +152,6 @@ slots:
   product_cycle:
     type: text
     influence_conversation: false
-  product_comment:
-    type: text
-    influence_conversation: false
   production_log:
     type: text
     influence_conversation: false
@@ -185,7 +185,7 @@ slots:
   new_Division:
     type: text
     influence_conversation: false
-  update_confirm:
+  update_product_details_confirm:
     type: bool
     influence_conversation: true
   valid:
@@ -195,48 +195,60 @@ slots:
     type: bool
     initial_value: false
     influence_conversation: true
+
 responses:
   utter_ask_rephrase:
   - text: I'm sorry, I didn't quite get that. Could you rephrase? :)
+
   utter_default:
   - text: |-
       I'm sorry, I may not be able to help you with that :(
       You want to seek support from a fellow human.
+
   utter_greet:
   - text: Hey! How can I help?
   - text: Hi! How may I help you?
   - text: Hello! Need some help?
   - text: Hola! What can I do for you?
+
   utter_help:
   - text: What else can I do for you?
   - text: Do you need help with anything else?
   - text: Do you still need support?
   - text: How may I help you now?
+
   utter_cheer_up:
   - text: 'Here is something to cheer you up:'
     image: https://i.imgur.com/nGF1K8f.jpg
+
   utter_did_that_help:
   - text: Did that help you?
+
   utter_happy:
   - text: Great, carry on!
+
   utter_goodbye:
   - text: Bye bye
   - text: Tạm biệt
   - text: Byeeeee
   - text: See ya soon!
   - text: See you later!
+
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
+
   utter_rephrase:
   - text: Sorry, I did not get that... Maybe check your spelling?
   - text: Sorry, haven't got that yet. Please rephrase :)
   - text: "... Maybe you got a typo or wrong name somewhere? ^^'"
   - text: Don't panic! I did not get that... Just rephrase ;)
+
   utter_master:
   - text: |-
       Here it is:
        https://drive.google.com/file/d/1up9siq-RRt9-MbCXD57oMUTQpgW2KZRI/view?usp=sharing
-  utter_target_product:
+
+  utter_target_product_details:
   - text: |
       Which info would you like to change?
        	1. Product name: {Product}
@@ -247,25 +259,35 @@ responses:
        	6. Tester platform: {Tester_Platform}
        	7. AT site: {AT_Site}
        	8. Division: {Division}
+
   utter_ask_target:
   - text: Please pick a number from the above info list.
+
   utter_ask_new_Product:
   - text: What is the new name of the product?
+
   utter_ask_new_Segment:
   - text: What is the new segment?
+
   utter_ask_new_TCSS:
   - text: What is the new TC/SS?
+
   utter_ask_new_Package_Tech:
   - text: Please enter the new package tech
+
   utter_ask_new_Chip_Attach:
   - text: What is the new chip attach of this product?
+
   utter_ask_new_Tester_Platform:
   - text: What is the product's new tester platform?
+
   utter_ask_new_AT_Site:
   - text: Which is the new AT site that this product is assigned to?
+
   utter_ask_new_Division:
   - text: Which is the new division that thus product is assigned to?
-  utter_ask_update_confirm:
+
+  utter_ask_update_product_details_confirm:
   - text: |-
       Here is the updated product information:
        - Product name: {new_Product}
@@ -277,38 +299,44 @@ responses:
        - AT site: {new_AT_Site}
        - Division: {new_Division}
        Is all ok?
+
   utter_submit:
   - text: |-
       New information has been submitted!
+
   utter_not_found:
   - text: Product not found! Maybe check your product name?
+
   utter_ask_quit:
   - text: |-
       All changes will be ignored.
       Are you sure you want to stop updating?
+
 actions:
 - action_compare_entities
 - action_count
-- action_get_target_product
-- action_get_update_product
+- action_get_target_product_details
+- action_get_update_product_details
 - action_query_attribute
 - action_query_entities
 - action_reset_slot
 - action_resolve_entity
-- action_submit_update_product
+- action_submit_update_product_details
 - utter_ask_quit
-- utter_ask_update_confirm
+- utter_ask_update_product_details_confirm
 - utter_help
-- utter_target_product
-- validate_update_product_form
+- utter_target_product_details
+- validate_update_product_details_form
+
 forms:
-  update_product_form:
+  update_product_details_form:
     required_slots:
       target:
       - type: from_text
-  update_confirmation:
+
+  update_product_details_confirmation:
     required_slots:
-      update_confirm:
+      update_product_details_confirm:
       - type: from_intent
         value: true
         intent: affirm

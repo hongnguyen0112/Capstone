@@ -43,10 +43,6 @@ def phase_template(phase_info):
     return 'insert $Phase_info isa Phase_info, has Phase "' + phase_info["Phase"] + '";'
 
 
-def comment_template(comment_info):
-    return 'insert $Comment_info isa Comment_info, has Comment "' + comment_info["Comment"] + '";'
-
-
 def testerplatform_template(testerplatform_info):
     return 'insert $Tester_Platform_info isa Tester_Platform_info, has Tester_Platform "' + \
            testerplatform_info["Tester_Platform"] + '";'
@@ -99,11 +95,12 @@ def production_log_template(production_log):
     typeql_insert_query = 'match $Product_info isa Product_info, has Product "' + production_log["Product"] + '";'
     typeql_insert_query += ' $Cycle_info isa Cycle_info, has Cycle "' + production_log["Cycle"] + '";'
     typeql_insert_query += ' $Phase_info isa Phase_info, has Phase "' + production_log["Phase"] + '";'
-    typeql_insert_query += ' $Comment_info isa Comment_info, has Comment "' + production_log["Comment"] + '";'
     typeql_insert_query += " insert (Product: $Product_info," \
                            " Phase: $Phase_info," \
-                           " Cycle: $Cycle_info," \
-                           " Comment: $Comment_info) isa production_log, has WW '" + production_log["WW"] + "';"
+                           " Cycle: $Cycle_info) isa production_log," \
+                           " has Comment '" + production_log["Comment"] + "'," +  \
+                           " has WW '" + production_log["WW"] + "';"
+
     return typeql_insert_query
 
 
@@ -162,10 +159,6 @@ inputs = [
     {
         "data_path": "./data/phase",
         "template": phase_template
-    },
-    {
-        "data_path": "./data/comment",
-        "template": comment_template
     },
     {
         "data_path": "./data/testerplatform",

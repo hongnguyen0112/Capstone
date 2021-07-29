@@ -18,6 +18,7 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
+
 - intent: master
   examples: |
     - Give me master table
@@ -27,6 +28,7 @@ nlu:
     - Give me the list of all products with all information.
     - Show me all all products and information.
     - Get master table
+
 - intent: goodbye
   examples: |
     - good afternoon
@@ -43,6 +45,7 @@ nlu:
     - see ya
     - done
     - I'm done
+
 - intent: affirm
   examples: |
     - yes
@@ -61,6 +64,7 @@ nlu:
     - ok
     - good
     - yeup
+
 - intent: deny
   examples: |
     - no
@@ -76,6 +80,7 @@ nlu:
     - incorrect
     - no, thank you
     - no, thanks
+
 - intent: out_of_scope
   examples: |
     - cancel
@@ -84,6 +89,7 @@ nlu:
     - pause
     - undo
     - nevermind
+
 - intent: mood_great
   examples: |
     - perfect
@@ -100,6 +106,7 @@ nlu:
     - so so perfect
     - so good
     - so perfect
+
 - intent: mood_unhappy
   examples: |
     - my day was horrible
@@ -116,12 +123,14 @@ nlu:
     - extremly sad
     - so saad
     - so sad
+
 - intent: bot_challenge
   examples: |
     - are you a bot?
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+
 - intent: query_entities
   examples: |
     - List all [products](object_type).
@@ -161,6 +170,7 @@ nlu:
     - Which products [have TC/SS](object_type) [1-A](TCSS)?
     - What are the products [whose TCSS](object_type) [1-D](TCSS)?
     - Get products [with tcss](object_type) [3-A](TCSS).
+
 - intent: query_attribute
   examples: |
     - What is the [segment](attribute) of [Product AONE](Product)?
@@ -184,6 +194,7 @@ nlu:
     - What is the [comment](attribute) for [Product A82P](Product) [Apr_21](Cycle) [PRQ](Phase)?
     - Get [comments](attribute) of [Product A82M](Product) [ES2](Phase) [Apr_21](Cycle)?
     - Get [WW](attribute) of [Product A81N] [Apr_21](Cycle) [ES1](Phase).
+
 - intent: query_quantity
   examples: |
     - How many [products](object_type) are there?
@@ -219,7 +230,8 @@ nlu:
     - Count the number of products produced [by division](object_type) [D-C](Division).
     - [With segment](object_type) [SOC](Segment), how many products are produced?
     - [AT site](object_type) [VNAT](AT_Site), count the number of products.
-- intent: request_product_update
+
+- intent: request_product_details_update
   examples: |
     - I want to update the info for [Product 81S](Product)
     - I would like to update info for [Product AONE](Product)
@@ -243,6 +255,7 @@ nlu:
     - change info of [Product A8990G](Product)
     - update info for [Product A82PVN](Product)
     - update information for [Product ABCS](Product)
+
 - intent: inform
   examples: |
     - Product [name](target)

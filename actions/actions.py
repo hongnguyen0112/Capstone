@@ -421,7 +421,7 @@ class ActionGetTargetProduct(Action):
     Get information related to the product of interest
     """
     def name(self) -> Text:
-        return "action_get_target_product"
+        return "action_get_target_product_details"
 
     def run(self, dispatcher, tracker, domain):
         graph_database = GraphDatabase()
@@ -452,7 +452,7 @@ class ActionGetUpdateProduct(Action):
     Get information related to the product of interest with new information
     """
     def name(self) -> Text:
-        return "action_get_update_product"
+        return "action_get_update_product_details"
 
     def run(self, dispatcher, tracker, domain):
         print("\n* Action Get Update Product\n")
@@ -472,7 +472,7 @@ class ValidateUpdateProductForm(FormValidationAction):
     Validate input from users to adjust form behaviours
     """
     def name(self):
-        return "validate_update_product_form"
+        return "validate_update_product_details_form"
 
     async def required_slots(
         self,
@@ -625,8 +625,8 @@ class ValidateUpdateProductForm(FormValidationAction):
             print("\t- Stop asking for slots and cancel form")
             return {"requested_slot": None, "cancel": True}
 
-        if slot_value not in range(1, 10):
-            return {"target": None}
+        # if slot_value not in range(1, 10):
+        #     return {"target": None}
 
         print("\t- fill slot new_Product")
         return {"target": slot_value}
@@ -789,7 +789,7 @@ class ActionSubmitUpdateProduct(Action):
     Action to submit the updated information to the database
     """
     def name(self) -> Text:
-        return "action_submit_update_product"
+        return "action_submit_update_product_details"
 
     def run(self, dispatcher, tracker, domain):
         print("\n* Submit Form\n")
@@ -797,6 +797,7 @@ class ActionSubmitUpdateProduct(Action):
         object_type = "product_details"
         target = None
         new_data = None
+        target_product = tracker.get_slot("Product")
 
         # Extract the old and new information
         for relate in schema[object_type]["relates"]:
@@ -822,14 +823,16 @@ class ActionSubmitUpdateProduct(Action):
         if len(relate_entities) != 0:
             # Replace old data with new data if already exists
             print("\t! New data already in database. Update entity")
-            graph_database.update_relations(object_type, target, new_data)
+            graph_database.update_relations(object_type, target_product, target, new_data)
+            # update_relations(object_type, target_product, relates, new_relates
         else:
             # Add the new entity into database then update the old information with the new entity
             print("\t- Insert new entity")
             relate_object_type = graph_database.map("object_type_mapping", target[0]['key'])
             graph_database.insert_entity(relate_object_type, new_data)
             print("\t- Update information of target")
-            graph_database.update_relations(object_type, target, new_data)
+            graph_database.update_relations(object_type, target_product, target, new_data)
+            # update_relations(object_type, target_product, relates, new_relates
 
         dispatcher.utter_message(response="utter_submit")
 

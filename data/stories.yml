@@ -62,23 +62,23 @@ stories:
 
 - story: user update non-exist target
   steps:
-  - intent: request_product_update
+  - intent: request_product_details_update
     entities:
     - Product: Product A8990G
   - slot_was_set:
     - Product: Product A8990G
-  - action: action_get_target_product
+  - action: action_get_target_product_details
   - slot_was_set:
     - valid: false
 
 - story: form happy path
   steps:
-  - intent: request_product_update
+  - intent: request_product_details_update
     entities:
     - Product: Product AONE
   - slot_was_set:
     - Product: Product AONE
-  - action: action_get_target_product
+  - action: action_get_target_product_details
   - slot_was_set:
     - Product: Product AONE
   - slot_was_set:
@@ -97,9 +97,9 @@ stories:
     - Division: D-C
   - slot_was_set:
     - valid: true
-  - action: utter_target_product
-  - action: update_product_form
-  - active_loop: update_product_form
+  - action: utter_target_product_details
+  - action: update_product_details_form
+  - active_loop: update_product_details_form
   - slot_was_set:
     - requested_slot: target
   - slot_was_set:
@@ -119,7 +119,7 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: action_get_update_product
+  - action: action_get_update_product_details
   - slot_was_set:
     - new_Product: Product AONE
   - slot_was_set:
@@ -134,27 +134,27 @@ stories:
     - new_AT_Site: VNAT
   - slot_was_set:
     - new_Division: D-C
-  - action: update_confirmation
-  - active_loop: update_confirmation
+  - action: update_product_details_confirmation
+  - active_loop: update_product_details_confirmation
   - slot_was_set:
-    - requested_slot: update_confirm
+    - requested_slot: update_product_details_confirm
   - slot_was_set:
-    - update_confirm: true
+    - update_product_details_confirm: true
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: action_submit_update_product
+  - action: action_submit_update_product_details
   - action: action_reset_slot
   - action: utter_help
 
 - story: user interrupt form
   steps:
-  - intent: request_product_update
+  - intent: request_product_details_update
     entities:
     - Product: Product A82PVN
   - slot_was_set:
     - Product: Product A82PVN
-  - action: action_get_target_product
+  - action: action_get_target_product_details
   - slot_was_set:
     - Product: Product A82PVN
   - slot_was_set:
@@ -173,9 +173,9 @@ stories:
     - Division: D-C
   - slot_was_set:
     - valid: true
-  - action: utter_target_product
-  - action: update_product_form
-  - active_loop: update_product_form
+  - action: utter_target_product_details
+  - action: update_product_details_form
+  - active_loop: update_product_details_form
   - slot_was_set:
     - requested_slot: target
   - slot_was_set:
@@ -204,12 +204,12 @@ stories:
 
 - story: user interrupt form but continue
   steps:
-  - intent: request_product_update
+  - intent: request_product_details_update
     entities:
     - Product: Product AONE
   - slot_was_set:
     - Product: Product AONE
-  - action: action_get_target_product
+  - action: action_get_target_product_details
   - slot_was_set:
     - Product: Product AONE
   - slot_was_set:
@@ -228,9 +228,9 @@ stories:
     - Division: D-C
   - slot_was_set:
     - valid: true
-  - action: utter_target_product
-  - action: update_product_form
-  - active_loop: update_product_form
+  - action: utter_target_product_details
+  - action: update_product_details_form
+  - active_loop: update_product_details_form
   - slot_was_set:
     - requested_slot: target
   - slot_was_set:
@@ -254,8 +254,8 @@ stories:
   - active_loop: null
   - action: utter_ask_quit
   - intent: deny
-  - action: update_product_form
-  - active_loop: update_product_form
+  - action: update_product_details_form
+  - active_loop: update_product_details_form
   - slot_was_set:
     - new_TCSS: null
   - slot_was_set:
@@ -275,7 +275,7 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: action_get_update_product
+  - action: action_get_update_product_details
   - slot_was_set:
     - new_Product: Product AONE
   - slot_was_set:
@@ -290,27 +290,27 @@ stories:
     - new_AT_Site: VNAT
   - slot_was_set:
     - new_Division: D-C
-  - action: update_confirmation
-  - active_loop: update_confirmation
+  - action: update_product_details_confirmation
+  - active_loop: update_product_details_confirmation
   - slot_was_set:
-    - requested_slot: update_confirm
+    - requested_slot: update_product_details_confirm
   - slot_was_set:
-    - update_confirm: true
+    - update_product_details_confirm: true
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: action_submit_update_product
+  - action: action_submit_update_product_details
   - action: action_reset_slot
   - action: utter_help
 
 - story: user interrupt form at target requirement step
   steps:
-  - intent: request_product_update
+  - intent: request_product_details_update
     entities:
     - Product: Product ABCS
   - slot_was_set:
     - Product: Product ABCS
-  - action: action_get_target_product
+  - action: action_get_target_product_details
   - slot_was_set:
     - Product: Product ABCS
   - slot_was_set:
@@ -329,9 +329,9 @@ stories:
     - Division: D-C
   - slot_was_set:
     - valid: true
-  - action: utter_target_product
-  - action: update_product_form
-  - active_loop: update_product_form
+  - action: utter_target_product_details
+  - action: update_product_details_form
+  - active_loop: update_product_details_form
   - slot_was_set:
     - requested_slot: target
   - slot_was_set:
