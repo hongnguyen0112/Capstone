@@ -1,12 +1,16 @@
-FROM rasa/rasa-sdk:2.7.0
+FROM rasa/rasa-sdk:latest
 
 WORKDIR /app
 
 COPY ./requirements.txt ./
 
+COPY ./schema.py ./
+
+COPY ./graph_database.py ./
+
 USER root
 
-COPY ./ /app/actions
+COPY ./actions /app/actions
 
 RUN pip3 install -r requirements.txt
 

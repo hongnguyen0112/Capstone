@@ -9,11 +9,15 @@ services:
         - ./:/app
   action-server:
     container_name: action_server
-    build: ./actions
+    build: 
+      context: .
+      dockerfile: ./actions/Dockerfile
     ports: 
         - 5055:5055
   typedb-server:
-    build: ./typedb
+    build: 
+      context: .
+      dockerfile: ./typedb/Dockerfile
     container_name: typedb-server
     volumes: 
       - ./typedb:/app
