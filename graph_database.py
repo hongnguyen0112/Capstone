@@ -53,7 +53,7 @@ class GraphDatabase(KnowledgeBase, ABC):
 
     def __init__(
             self,
-            uri: Text = "localhost:1729",   # Local uri of the local server
+            uri: Text = "typedb-server:1729",   # Local uri of the local server
             keyspace: Text = "local"        # Name of the database stored in the server
     ):
         self.uri = uri
