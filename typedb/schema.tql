@@ -1,0 +1,125 @@
+define 
+
+#entities 
+
+Product_info sub entity,
+    plays product_details:Product,
+    plays production_log:Product,
+    plays product_cycle:Product,
+    owns Product;
+
+TCSS_info sub entity,
+    plays product_details:TCSS,
+    owns TCSS;
+
+AT_Site_info sub entity,
+    plays product_details:AT_Site,
+    owns AT_Site;
+
+Cycle_info sub entity,
+    plays production_log:Cycle,
+    plays product_cycle:Cycle,
+    owns Cycle;
+
+Phase_info sub entity,
+    plays production_log:Phase,
+    owns Phase;
+
+Tester_Platform_info sub entity,
+    plays product_details:Tester_Platform,
+    owns Tester_Platform;
+
+Segment_info sub entity,
+    plays product_details:Segment,
+    owns Segment;
+
+Package_Tech_info sub entity,
+    plays product_details:Package_Tech,
+    owns Package_Tech;
+
+Chip_Attach_info sub entity,
+    plays product_details:Chip_Attach,
+    owns Chip_Attach;
+
+Division_info sub entity,
+    plays product_details:Division,
+    owns Division;
+
+mapping sub entity,
+    owns mapping_key,
+    owns mapping_value;
+
+mention_mapping sub mapping;
+object_type_mapping sub mapping;
+attribute_mapping sub mapping,
+    owns object_type;
+
+# Relations
+
+product_details sub relation,
+    relates Product,
+    relates Segment,
+    relates TCSS,
+    relates Package_Tech,
+    relates Chip_Attach,
+    relates Tester_Platform,
+    relates AT_Site,
+    relates Division;
+
+production_log sub relation,
+    relates Product,
+    relates Cycle,
+    relates Phase,
+    owns Comment,
+    owns WW;
+
+product_cycle sub relation,
+    relates Product,
+    relates Cycle;
+
+#Attribute
+
+Product sub attribute,
+    value string;
+
+Segment sub attribute,
+    value string;
+
+TCSS sub attribute,
+    value string;
+
+AT_Site sub attribute,
+    value string;
+
+Division sub attribute,
+    value string;
+
+Package_Tech sub attribute,
+    value string;
+
+Chip_Attach sub attribute,
+    value string;
+
+Tester_Platform sub attribute,
+    value string;
+
+Cycle sub attribute,
+    value string;
+
+Phase sub attribute,
+    value string;
+
+WW sub attribute,
+    value string;
+
+Comment sub attribute,
+    value string;
+
+mapping_key sub attribute,
+    value string;
+
+mapping_value sub attribute,
+    value string;
+
+object_type sub attribute,
+    value string;
