@@ -3,7 +3,7 @@ import csv
 
 
 def build_product_graph(inputs):
-    with TypeDB.core_client("localhost:1729") as client:
+    with TypeDB.core_client("typedb-server:1729") as client:
         with client.session("local", SessionType.DATA) as session:
             for input in inputs:
                 print("Loading from [" + input["data_path"] + "] into TypeDB ...")

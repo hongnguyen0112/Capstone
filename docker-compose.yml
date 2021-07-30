@@ -1,0 +1,26 @@
+version: '3.8'
+services: 
+  rasa:
+    build: .
+    container_name: rasa
+    ports: 
+        - 5005:5005
+    volumes: 
+        - ./:/app
+  action-server:
+    container_name: action_server
+    build: 
+      context: .
+      dockerfile: ./actions/Dockerfile
+    ports: 
+        - 5055:5055
+  typedb-server:
+    build: 
+      context: .
+      dockerfile: ./typedb/Dockerfile
+    container_name: typedb-server
+    volumes: 
+      - ./typedb:/app
+    ports:
+      - 1729:1729
+  
