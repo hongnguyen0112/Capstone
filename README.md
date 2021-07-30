@@ -31,4 +31,5 @@ open the new terminal
 rasa run actions
 
 6. Run rasa console
-open new ter
+open new terminal
+rasa shell
