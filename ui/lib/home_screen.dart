@@ -33,40 +33,63 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         backgroundColor: Colors.blue[800],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          AnimatedList(
+          Expanded(
+            child:Container( 
+           padding: EdgeInsets.all(10),
+            child: AnimatedList(
+              physics: BouncingScrollPhysics(),
+              controller: _scrollController,
               key: _listKey,
               initialItemCount: _data.length,
               itemBuilder: (BuildContext context, int index,
                   Animation<double> animation) {
                 return buildItem(_data[index], animation, index);
-              }),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: ColorFiltered(
-                  colorFilter: ColorFilter.linearToSrgbGamma(),
-                  child: Container(
-                    color: Colors.white,
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20),
-                        child: TextField(
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            icon: Icon(
-                              Icons.message,
-                              color: Colors.blue[800],
-                            ),
-                            hintText: "Say Hi!",
-                            fillColor: Colors.white12,
-                          ),
-                          controller: queryController,
-                          textInputAction: TextInputAction.send,
-                          onSubmitted: (msg) {
-                            this.getResponse();
-                          },
-                        )),
-                  )))
+              }
+              )
+              )),
+        Row(
+           children: [
+       Expanded(
+         child: Container(
+           padding: EdgeInsets.all(10),
+           child: TextField(
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                filled: true,
+                hintText: "Say Hi!",
+                fillColor: Colors.grey[100],
+                border:OutlineInputBorder(
+                  borderSide: BorderSide(width:0),
+                  gapPadding: 10,
+                  borderRadius:BorderRadius.circular(25) )
+              ),
+              
+              controller: queryController,
+              textInputAction: TextInputAction.send,
+              onSubmitted: (msg) {
+                this.getResponse();
+              },
+            )
+            )
+            ),
+           SizedBox(width: 5,),
+           Padding(padding: EdgeInsets.only(right: 10),
+           child:GestureDetector(
+          onTap: () => {this.getResponse()},
+           child: Container(
+             padding: EdgeInsets.all(7),
+             decoration: BoxDecoration(
+               shape: BoxShape.circle,
+               color: Colors.blue
+             ),
+             child: Icon(Icons.send,color: Colors.white),
+           )
+           ) )
+           ]
+             ),
+          
         ],
       ),
     );
@@ -104,6 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
         client.close();
         queryController.clear();
       }
+      _scrollController.animateTo(
+    _scrollController.position.maxScrollExtent, curve: Curves.easeInOut,duration: Duration(milliseconds: 200));
     }
   }
 
