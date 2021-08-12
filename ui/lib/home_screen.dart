@@ -15,7 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
   static const String BOT_URL = "http://localhost:5005/webhooks/rest/webhook";
   TextEditingController queryController = TextEditingController();
   Map<String, String> requestHeaders = {
-    "Content-type": "application/json",
+    "Access-Control-Allow-Origin" : "*",
+    "Access-Control-Allow-Methods" : "POST",
+    "Content-type" : "application/json",
   };
   ScrollController _scrollController = new ScrollController();
 
