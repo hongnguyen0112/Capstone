@@ -1,0 +1,39 @@
+intent,button,entities
+request_product_details_update,Updating information for {Product},Product
+affirm,Yes,
+deny,No,
+inform,Choosing number {target},target
+inform,The new product name is {new_Product},new_Product
+inform,The new segment is {new_Segment},new_Segment
+inform,The new TC/SS is {new_TCSS},new_TCSS
+inform,The new AT site is {new_AT_Site},new_AT_Site
+inform,The new division is {new_Division},new_Division
+inform,The new package tech  is {new_Package_Tech},new_Package_Tech
+inform,The new chip attach is {new_Chip_Attach},new_Chip_Attach
+inform,The new tester platform is {new_Tester_Platform},new_Tester_Platform
+greet,Hello,
+goodbye,Bye bye,
+mood_great,Feeling great today,
+mood_unhappy,Not having a good day,
+bot_challenge,You want to challenge me,
+query_entities,List all {object_type},object_type
+query_entities,List all products in cycle {Cycle},Cycle
+query_entities,Get all products with tester platform {Tester_Platform},Tester_Platform
+query_entities,Get all products with segment {Segment},Segment
+query_entities,Get all products with division {Division},Division
+query_entities,Get all products with package tech {Package_Tech},Package_Tech
+query_entities,Get all products with chip attach {Chip_Attach},Chip_Attach
+query_entities,Get all products with TC/SS {TCSS},TCSS
+query_entities,Get all products at AT site {AT_Site},AT_Site
+query_attribute,Get an attribute of {Product},Product
+master,Get the master table,
+query_quantity,How many {object_type} are there,object_type
+query_quantity,How many products have segment {Segment},Segment
+query_quantity,How many products have TCSS {TCSS},TCSS
+query_quantity,How many products have tester platform {Tester_Platform},Tester_Platform
+query_quantity,How many products have chip attach {Chip_Attach},Chip_Attach
+query_quantity,How many products have package tech {Package_Tech},Package_Tech
+query_quantity,How many products have AT site {AT_Site},AT_Site
+query_quantity,How many products in division {Division},Division
+query_quantity,How many products in cycle {Cycle},Cycle
+out-of-scope,Stop,

@@ -327,6 +327,7 @@ actions:
 - utter_help
 - utter_target_product_details
 - validate_update_product_details_form
+- action_default_ask_affirmation
 
 forms:
   update_product_details_form:

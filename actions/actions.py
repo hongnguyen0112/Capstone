@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
+import json
 from typing import Text, Dict, Any, List, Union
-from rasa_sdk.events import SlotSet, AllSlotsReset
+from rasa_sdk.events import SlotSet, AllSlotsReset, EventType
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk import Action, Tracker
 from rasa_sdk.types import DomainDict
-
 from schema import schema
 from graph_database import GraphDatabase
 
@@ -838,3 +838,113 @@ class ActionSubmitUpdateProduct(Action):
 
         print("\nSubmit Complete!")
         return
+
+
+class ActionDefaultAskAffirmation(Action):
+    """
+    Ask for affirmation of the intent if the NLU threshold is not met
+    """
+    def name(self) -> Text:
+        return "action_default_ask_affirmation"
+
+    def __init__(self):
+        import pandas as pd
+
+        # Extract intent and button mapping from csv file
+        self.intent_mappings = pd.read_csv("knowledge_base/data/intent_mapping.csv")
+        self.intent_mappings.fillna("", inplace=True)
+        self.intent_mappings.entities = self.intent_mappings.entities.map(
+            lambda entities: {e.strip() for e in entities.split(",")}
+        )
+
+    def run(
+        self,
+        dispatcher: "CollectingDispatcher",
+        tracker: Tracker,
+        domain: "DomainDict",
+    ) -> List[EventType]:
+
+        # Include both first and second most likely intent if the confidence values are almost the same
+        intent_ranking = tracker.latest_message.get("intent_ranking", [])
+        if len(intent_ranking) > 1:
+            diff_intent_confidence = intent_ranking[0].get("confidence") - intent_ranking[1].get("confidence")
+            if diff_intent_confidence < 0.2:
+                intent_ranking = intent_ranking[:2]
+            else:
+                intent_ranking = intent_ranking[:1]
+
+        first_intent_names = [
+            intent.get("name", "")
+            if intent.get("name", "") not in ["faq", "chitchat"]
+            else tracker.latest_message.get("response_selector")
+            .get(intent.get("name", ""))
+            .get("ranking")
+            .get("intent_response_key")
+            for intent in intent_ranking
+        ]
+
+        # Ignore some intents if they come on top
+        if "nlu_fallback" in first_intent_names:
+            first_intent_names.remove("nlu_fallback")
+        if "/out_of_scope" in first_intent_names:
+            first_intent_names.remove("/out_of_scope")
+        if "out_of_scope" in first_intent_names:
+            first_intent_names.remove("out_of_scope")
+
+        if len(first_intent_names) > 0:
+            messsage_title = (
+                "Sorry, I'm not sure I've understood you correctly 🤔 Do you mean..."
+            )
+
+            # Get the entities
+            entities = tracker.latest_message.get("entities", [])
+            entities = {e["entity"]: e["value"] for e in entities}
+
+            entities_json = json.dumps(entities)
+
+            # Set up buttons
+            buttons = []
+            for intent in first_intent_names:
+                button_title = self.get_button_title(intent, entities)
+                if "/" in intent:
+                    buttons.append(
+                        {
+                            "title": button_title,
+                            "payload": button_title
+                        }
+                    )
+                else:
+                    buttons.append(
+                        {
+                            "title": button_title,
+                            "payload": f"/{intent}{entities_json}"
+                        }
+                    )
+            buttons.append(
+                {
+                    "title": "Something else",
+                    "payload": "/out_of_scope"
+                }
+            )
+            dispatcher.utter_message(text=messsage_title, buttons=buttons)
+        else:
+            message_title = (
+                "Sorry, I'm not sure I've understood "
+                "you correctly 🤔 Can you please rephrase?"
+            )
+            dispatcher.utter_message(text=message_title)
+
+        return []
+
+    def get_button_title(self, intent: Text, entities: Dict[Text, Text]) -> Text:
+        default_utterance_query = self.intent_mappings.intent == intent
+        utterance_query = (self.intent_mappings.entities == entities.keys()) & default_utterance_query
+        utterances = self.intent_mappings[utterance_query].button.tolist()
+
+        if len(utterances) > 0:
+            button_title = utterances[0]
+        else:
+            utterances = self.intent_mappings[default_utterance_query].button.tolist()
+            button_title = utterances[0] if len(utterances) > 0 else intent
+
+        return button_title.format(**entities)

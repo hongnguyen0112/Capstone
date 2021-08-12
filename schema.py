@@ -8,6 +8,15 @@ schema = {
         "representation": ["Product"]
     },
 
+    "Segment_info": {
+        "attributes": [
+            "iid",
+            "Segment"
+        ],
+        "key": "Segment",
+        "representation": ["Segment"]
+    },
+
     "TCSS_info": {
         "attributes": [
             "iid",
