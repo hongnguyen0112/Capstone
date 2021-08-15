@@ -851,7 +851,7 @@ class ActionDefaultAskAffirmation(Action):
         import pandas as pd
 
         # Extract intent and button mapping from csv file
-        self.intent_mappings = pd.read_csv("knowledge_base/data/intent_mapping.csv")
+        self.intent_mappings = pd.read_csv("./intent_mapping.csv")
         self.intent_mappings.fillna("", inplace=True)
         self.intent_mappings.entities = self.intent_mappings.entities.map(
             lambda entities: {e.strip() for e in entities.split(",")}

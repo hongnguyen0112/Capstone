@@ -23,9 +23,5 @@ services:
       - ./typedb:/app
     ports:
       - 1729:1729
-  web-ui:
-    build: ./ui
-    container_name: flutter-ui
-    ports: 
-      - 4040:4040
+
   

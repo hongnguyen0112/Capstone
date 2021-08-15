@@ -1,2 +1,3 @@
 schema==0.7.4
 typedb-client==2.2.0
+pandas==1.3.1
