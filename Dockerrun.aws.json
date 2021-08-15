@@ -1,0 +1,50 @@
+{
+  "AWSEBDockerrunVersion": 3,
+  "containerDefinitions": [
+    {
+      "name": "rasa",
+      "image": "glebbogachev/capstone_rasa",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 5005,
+          "containerPort": 5005
+        }
+      ],
+      "links": [
+        "action-server","typedb-server"
+      ]
+    },
+    {
+      "name": "action-server",
+      "image": "glebbogachev/capstone_action-server",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 5050,
+          "containerPort": 5050
+        }
+      ],
+      "links": [
+        "rasa","typedb-server"
+      ]
+    },
+    {
+      "name": "typedb-server",
+      "image": "glebbogachev/capstone_typedb-server",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 1729,
+          "containerPort": 1729
+        }
+      ],
+      "links": [
+        "rasa","action-server"
+      ]
+    }
+  ]
+}
