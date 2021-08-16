@@ -9,6 +9,17 @@ services:
       - ./typedb:/app
     ports:
       - 1729:1729
+      
+  typedb-console:
+    build: 
+      context: .
+      dockerfile: ./typedb_console/Dockerfile
+    container_name: typedb-console
+    volumes: 
+      - ./typedb:/app
+    depends_on: 
+      - typedb-server
+  
    
   rasa:
     build: .
