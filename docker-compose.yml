@@ -13,13 +13,12 @@ services:
   typedb-console:
     build: 
       context: .
-      dockerfile: ./typedb_console/Dockerfile
+      dockerfile: ./typedb/console_dockerfile/Dockerfile
     container_name: typedb-console
     volumes: 
       - ./typedb:/app
     depends_on: 
       - typedb-server
-  
    
   rasa:
     build: .
