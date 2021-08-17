@@ -5,21 +5,18 @@ services:
       context: .
       dockerfile: ./typedb/Dockerfile
     container_name: typedb-server
-    volumes: 
-      - ./typedb:/app
     ports:
       - 1729:1729
+  
       
   typedb-console:
     build: 
       context: .
       dockerfile: ./typedb/console_dockerfile/Dockerfile
     container_name: typedb-console
-    volumes: 
-      - ./typedb:/app
     depends_on: 
       - typedb-server
-   
+
   rasa:
     build: .
     container_name: rasa
@@ -27,6 +24,8 @@ services:
         - 5005:5005
     volumes: 
         - ./:/app
+    
+        
   action-server:
     container_name: action_server
     build: 

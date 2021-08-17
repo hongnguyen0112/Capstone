@@ -2,7 +2,7 @@ FROM vaticle/typedb:latest
 
 WORKDIR /app
 
-COPY ./typedb ./app
+COPY ./typedb ./
 
 USER root
 
