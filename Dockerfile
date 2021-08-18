@@ -8,6 +8,8 @@ COPY ./wait-for-it.sh  ./
 
 COPY ./docker-entrypoint.sh  ./
 
+COPY ./migration_script.sh ./
+
 USER root
 
 COPY . /app
