@@ -2,10 +2,16 @@ FROM vaticle/typedb:latest
 
 WORKDIR /app
 
+COPY ./typedb/wait-for-it.sh ./
+
+COPY ./typedb/docker-entrypoint.sh ./
+
+RUN chmod +x wait-for-it.sh docker-entrypoint.sh
+
 COPY ./typedb ./
 
-USER root
+USER 1000
 
-ENTRYPOINT [ "./typedb" ]
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
 
-CMD ["console", "--server=typedb-server:1729", "--script=script.sh" ]
+CMD ["./typedb","console", "--server=typedb-server:1729", "--script=script.sh" ]
