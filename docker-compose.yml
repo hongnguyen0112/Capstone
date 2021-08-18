@@ -24,6 +24,12 @@ services:
         - 5005:5005
     volumes: 
         - ./:/app
+    depends_on: 
+      - typedb-console
+      - typedb-server
+    environment: 
+      - HOST=typedb-server
+    
     
         
   action-server:
