@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 from typing import Text, Dict, Any, List, Union
 from rasa_sdk.events import SlotSet, AllSlotsReset, EventType
