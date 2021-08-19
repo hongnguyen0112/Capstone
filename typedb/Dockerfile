@@ -7,3 +7,4 @@ COPY ./typedb ./app
 USER root
 
 
+

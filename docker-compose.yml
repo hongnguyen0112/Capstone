@@ -16,6 +16,7 @@ services:
     container_name: typedb-console
     depends_on: 
       - typedb-server
+    
 
   rasa:
     build: .
@@ -30,8 +31,6 @@ services:
     environment: 
       - HOST=typedb-server
     
-    
-        
   action-server:
     container_name: action_server
     build: 
