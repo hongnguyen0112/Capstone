@@ -22,4 +22,4 @@ USER 1000
 
 ENTRYPOINT [ "./docker-entrypoint.sh" ]
 
-CMD ["rasa","shell"]
+
