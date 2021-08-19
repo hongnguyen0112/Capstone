@@ -1,0 +1,1 @@
+./typedb console --server=typedb-server:1729  --script=database.sh

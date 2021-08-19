@@ -1,0 +1,1 @@
+cd knowledge_base && python3 migrate.py 
