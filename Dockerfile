@@ -4,12 +4,6 @@ WORKDIR /app
 
 COPY ./requirements.txt ./
 
-COPY ./wait-for-it.sh  ./
-
-COPY ./docker-entrypoint.sh  ./
-
-COPY ./migration_script.sh ./
-
 USER root
 
 COPY . /app
@@ -20,6 +14,6 @@ RUN chmod +x wait-for-it.sh docker-entrypoint.sh
 
 USER 1000
 
-ENTRYPOINT [ "./docker-entrypoint.sh" ]
+CMD [ "shell" ]
 
 
