@@ -5,8 +5,6 @@ services:
       context: .
       dockerfile: ./typedb/Dockerfile
     container_name: typedb-server
-    volumes: 
-      - ./typedb:/app
     ports:
       - 1729:1729
   

@@ -1,0 +1,1 @@
+./typedb console --script=script.sh
