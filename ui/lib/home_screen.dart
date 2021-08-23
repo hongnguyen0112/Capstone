@@ -12,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //Properties and Variables
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<String> _data = [];
-  static const String BOT_URL = "http://localhost:5005/webhooks/rest/webhook";
+  static const String BOT_URL = "http://18.194.170.184:5005/webhooks/rest/webhook";
   TextEditingController queryController = TextEditingController();
   Map<String, String> requestHeaders = {
     "Content-type" : "application/json",
