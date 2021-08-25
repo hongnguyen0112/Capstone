@@ -11,9 +11,8 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  String error = "Loading..";
-  static const String BOT_URL =
-      "http://localhost:5005/webhooks/rest/webhook";
+  String status = "Loading, this may take few seconds..";
+  static const String BOT_URL = "http://localhost:5005/webhooks/rest/webhook";
   Map<String, String> requestHeaders = {
     "Content-type": "application/json",
   };
@@ -28,13 +27,12 @@ class _LoadingState extends State<Loading> {
       await client.post(Uri.parse(BOT_URL),
           headers: requestHeaders,
           body: jsonEncode({"sender": 'test', 'message': 'hi'}));
-          Navigator.pushNamed(context, '/chat');
+      Navigator.pushNamed(context, '/chat');
     } catch (e) {
       print('caught error:$e');
       setState(() {
-        error = "Loading Error...";
+        status = "Loading Error...";
       });
-      
     }
   }
 
@@ -48,9 +46,29 @@ class _LoadingState extends State<Loading> {
     return Scaffold(
         backgroundColor: Colors.blue[900],
         body: Center(
-            child: SpinKitWave(
-          color: Colors.white,
-          size: 50.0,
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SpinKitWave(color: Colors.white, size: 50.0),
+            SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              status,
+              style: TextStyle(fontSize: 20.0, color: Colors.white),
+            ),
+             SizedBox(
+              height: 20.0,
+            ),
+            TextButton.icon(
+                onPressed: () {
+                  getResponse();
+                },
+                icon: Icon(Icons.autorenew, color: Colors.white),
+                label: Text('Try again',
+                style: TextStyle( color: Colors.white)))
+          ],
         )));
   }
 }
+//Add I button in case there is an error
