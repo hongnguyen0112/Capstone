@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'package:ui/Pages/loading.dart';
+import 'Pages/home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Intel Chatbot",
-      home: HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/':(context) => Loading(),
+        '/chat':(context) => HomeScreen()
+      },
     );
   }
 }
