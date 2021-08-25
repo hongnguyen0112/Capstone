@@ -27,11 +27,11 @@ class _LoadingState extends State<Loading> {
       await client.post(Uri.parse(BOT_URL),
           headers: requestHeaders,
           body: jsonEncode({"sender": 'test', 'message': 'hi'}));
-      Navigator.pushNamed(context, '/chat');
+      Navigator.pushReplacementNamed(context, '/chat');
     } catch (e) {
       print('caught error:$e');
       setState(() {
-        status = "Loading Error...";
+        status = "Loading....";
       });
     }
   }
@@ -53,22 +53,15 @@ class _LoadingState extends State<Loading> {
             SizedBox(
               height: 20.0,
             ),
-            Text(
-              status,
-              style: TextStyle(fontSize: 20.0, color: Colors.white),
-            ),
-             SizedBox(
-              height: 20.0,
-            ),
+           
             TextButton.icon(
                 onPressed: () {
                   getResponse();
                 },
                 icon: Icon(Icons.autorenew, color: Colors.white),
-                label: Text('Try again',
+                label: Text('Click here, if it takes too long',
                 style: TextStyle( color: Colors.white)))
           ],
         )));
   }
 }
-//Add I button in case there is an error
