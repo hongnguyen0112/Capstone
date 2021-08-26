@@ -46,6 +46,11 @@ class _LoadingState extends State<Loading> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SpinKitWave(color: Colors.white, size: 50.0),
+                     SizedBox(
+              height: 20.0,
+            ),
+            Text('Connecting to the server....',style: TextStyle(color: Colors.white),),
+
             SizedBox(
               height: 20.0,
             ),
