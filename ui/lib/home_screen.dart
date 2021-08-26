@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -94,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (queryController.text.length > 0) {
       this.insertSingleItem(queryController.text);
       var client = getClient();
-    
+
       try {
         client.post(Uri.parse(BOT_URL),
             headers: requestHeaders,
@@ -121,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
               for (int i = 0; i < buttons.length; i++) {
                 int count = i + 1;
                 message +=
-                    ("\n" + count.toString() + "." + " " + buttons[i]['title']);
+                    (("\n") + count.toString() + "." + " " + buttons[i]['title']);
                 //Saving the button payload into a list
                 setState(() {
                   fallback_values.add(buttons[i]['title']);
@@ -130,23 +133,33 @@ class _HomeScreenState extends State<HomeScreen> {
               }
               insertSingleItem(messageData['text'] +
                   message +
-                  '\n' +
-                  '\n' +
+                  ("\n") +
+                  ("\n")+
                   '[Please Enter the corresponding number]' +
                   '<bot>');
             }
             // else insert all the items
-            else if (data.length >= 2 && messageData != null ) {
+            else if (data.length >= 2 && messageData != null) {
               String message = '';
-              data.forEach((e) => {message += (e['text'] + "\n")});
+              data.forEach((e) => {message += (e['text'] + ("\n"))});
               insertSingleItem(message + '<bot>');
-            } else if(data.isEmpty){
-              insertSingleItem("Sorry, this feature is under maintaneces..." + '<bot>');
+            } else if (data.isEmpty) {
+              insertSingleItem(
+                  "Sorry, this feature is under maintaneces..." + '<bot>');
             }
+          }).catchError((e) {
+            if (e.runtimeType == SocketException) {
+              Navigator.pushReplacementNamed(context, '/');
+            } else if (e.runtimeType == RangeError) {
+              insertSingleItem("Wrong format, please try again" + '<bot>');
+            } else if (e.runtimeType == NoSuchMethodError) {
+              insertSingleItem(
+                  "Could you provide more information, thank you!!" + '<bot>');
+            }
+            print(e);
+          
           });
       } catch (e) {
-        print(e);
-          insertSingleItem("Sorry, this feature is under maintaneces..." + '<bot>');
         return null;
       } finally {
         client.close();
@@ -192,5 +205,3 @@ Widget buildItem(String item, Animation<double> animation, int index) {
     ),
   );
 }
-
-
