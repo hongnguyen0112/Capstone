@@ -15,7 +15,8 @@ class _HomeScreenState extends State<HomeScreen> {
   //Properties and Variables
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<String> _data = [];
-  static const String BOT_URL = "http://54.91.194.114:5005/webhooks/rest/webhook";
+  String elasticIP = "52.0.152.39";
+  static const String BOT_URL = "http://52.0.152.39:5005/webhooks/rest/webhook";
   TextEditingController queryController = TextEditingController();
   List fallback_values = [];
   bool fallback = false;
@@ -123,8 +124,11 @@ class _HomeScreenState extends State<HomeScreen> {
               String message = '';
               for (int i = 0; i < buttons.length; i++) {
                 int count = i + 1;
-                message +=
-                    (("\n") + count.toString() + "." + " " + buttons[i]['title']);
+                message += (("\n") +
+                    count.toString() +
+                    "." +
+                    " " +
+                    buttons[i]['title']);
                 //Saving the button payload into a list
                 setState(() {
                   fallback_values.add(buttons[i]['title']);
@@ -134,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
               insertSingleItem(messageData['text'] +
                   message +
                   ("\n") +
-                  ("\n")+
+                  ("\n") +
                   '[Please Enter the corresponding number]' +
                   '<bot>');
             }
@@ -157,7 +161,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   "Could you provide more information, thank you!!" + '<bot>');
             }
             print(e);
-          
           });
       } catch (e) {
         return null;
