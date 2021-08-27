@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //Properties and Variables
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<String> _data = [];
-  static const String BOT_URL = "http://localhost:5005/webhooks/rest/webhook";
+  static const String BOT_URL = "http://54.91.194.114:5005/webhooks/rest/webhook";
   TextEditingController queryController = TextEditingController();
   List fallback_values = [];
   bool fallback = false;
