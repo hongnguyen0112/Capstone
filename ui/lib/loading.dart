@@ -11,7 +11,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  static const String BOT_URL = "http://localhost:5005/webhooks/rest/webhook";
+  static const String BOT_URL = "http://34.231.105.143:5005/webhooks/rest/webhook";
   Map<String, String> requestHeaders = {
     "Content-type": "application/json",
   };
