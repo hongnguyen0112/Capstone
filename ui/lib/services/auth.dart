@@ -13,7 +13,7 @@ class AuthServices {
     try {
       await _auth.signIn(email, password);
       User user = await _auth.getUser();
-      return _userFromFirebaseUser(user);
+      return user;
     } catch (e) {
       print(e.toString());
       return null;
@@ -31,6 +31,17 @@ class AuthServices {
       return user;
     } catch (e) {
       print(e.toString());
+      return null;
+    }
+  }
+
+  Future Login(email,password) async {
+    try {
+        await _auth.signIn(email, password);
+        User user = await _auth.getUser();
+        return user;
+    }catch(e){
+   print(e.toString());
       return null;
     }
   }
