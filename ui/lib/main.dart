@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui/loading.dart';
+import 'package:ui/login.dart';
 import 'home_screen.dart';
 
 void main() {
@@ -14,8 +15,11 @@ class MyApp extends StatelessWidget {
       title: "Intel Chatbot",
       initialRoute: '/',
       routes: {
-        '/':(context) => Loading(),
-        '/chat':(context) => HomeScreen()
+        '/':(context) => LogIn(),
+        '/loading':(context) => Loading(),
+        '/chat':(context) => HomeScreen(),
+        
+
       },
     );
   }
