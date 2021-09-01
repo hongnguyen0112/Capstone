@@ -87,17 +87,18 @@ class _SignUpState extends State<SignUp> {
                     if (_formKey.currentState!.validate()) {
                       await _auth.signUp(email, password);
                       if (_auth.isSignedIn()) {
-                        print('hi');
+                        Navigator.pushReplacementNamed(context, '/loading');
                       } else {
-                        setState(() => {
-                          error = 'Please check your credentials'
-                        });
+                        setState(
+                            () => {error = 'Please check your credentials'});
                       }
                     }
                   },
                   child: Text('Sign Up')),
-                  SizedBox(height: 20.0,),
-                  Text(error,style: TextStyle(color: Colors.red,fontSize: 14.0))
+              SizedBox(
+                height: 20.0,
+              ),
+              Text(error, style: TextStyle(color: Colors.red, fontSize: 14.0))
             ],
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
