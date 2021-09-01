@@ -21,7 +21,7 @@ class LogIn extends StatelessWidget {
             child:
             Column(children: [
             TextFormField(
-            decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Email",hintText: 'example@intel.com'),
+            decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Email",hintText: 'example@intel.com',prefixIcon: Icon(Icons.email)),
             onChanged: (val) {},
             keyboardType: TextInputType.emailAddress,
           ),
@@ -31,7 +31,7 @@ class LogIn extends StatelessWidget {
           TextFormField(
             onChanged: (val) {},
             obscureText: true,
-            decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Password"),
+            decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Password",prefixIcon: Icon(Icons.lock)),
             
             
           )],)),
