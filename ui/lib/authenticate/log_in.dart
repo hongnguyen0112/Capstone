@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ui/services/auth.dart';
 
 class LogIn extends StatefulWidget {
+   
+  final Function? toggleView;
+  LogIn({this.toggleView});
+
   @override
   _LogInState createState() => _LogInState();
 }
@@ -18,6 +22,16 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Intel Virtual Assistant'),
+        centerTitle: true,
+        backgroundColor: Colors.blue[800],
+        actions: [
+          TextButton.icon(onPressed: () =>(
+           Navigator.pushReplacementNamed(context, '/register')
+          ), icon: Icon(Icons.person),label: Text('Sign Up'),style: TextButton.styleFrom(primary: Colors.white, padding: EdgeInsets.symmetric(horizontal: 20)),)
+        ],
+      ),
         body: Container(
       child: Column(
         children: [

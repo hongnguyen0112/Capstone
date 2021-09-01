@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ui/services/auth.dart';
 
 class SignUp extends StatefulWidget {
-  
+  final Function? toggleView;
+  SignUp({this.toggleView});
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -17,6 +18,16 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
      return Scaffold(
+       appBar: AppBar(
+        title: Text('Intel Virtual Assistant'),
+        centerTitle: true,
+        backgroundColor: Colors.blue[800],
+        actions: [
+          TextButton.icon(onPressed: () =>(
+           Navigator.pushReplacementNamed(context, '/')
+          ), icon: Icon(Icons.person),label: Text('Login'),style: TextButton.styleFrom(primary: Colors.white, padding: EdgeInsets.symmetric(horizontal: 20)),)
+        ],
+      ),
         body: Container(
       child: Column(
         children: [
