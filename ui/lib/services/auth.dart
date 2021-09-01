@@ -24,6 +24,10 @@ class AuthServices {
     return _auth.isSignedIn;
   }
 
+  void singOut() async {
+    _auth.signOut();
+  }
+
   Future signUp(String email, String password) async {
     try {
       await _auth.signUp(email, password);
@@ -35,13 +39,13 @@ class AuthServices {
     }
   }
 
-  Future Login(email,password) async {
+  Future Login(email, password) async {
     try {
-        await _auth.signIn(email, password);
-        User user = await _auth.getUser();
-        return user;
-    }catch(e){
-   print(e.toString());
+      await _auth.signIn(email, password);
+      User user = await _auth.getUser();
+      return user;
+    } catch (e) {
+      print(e.toString());
       return null;
     }
   }

@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:ui/services/auth.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "Content-type": "application/json",
   };
   ScrollController _scrollController = new ScrollController();
+  final AuthServices _auth = AuthServices();
 
   @override
   void dispose() {
@@ -34,10 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Intel Virtual Assistant'),
-        centerTitle: true,
-        backgroundColor: Colors.blue[800],
-      ),
+          title: Text('Intel Virtual Assistant'),
+          centerTitle: true,
+          backgroundColor: Colors.blue[800],
+          actions: [
+            TextButton.icon(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/');
+                _auth.singOut();
+              },
+              icon: Icon(Icons.person),
+              label: Text('Logout'),
+              style: TextButton.styleFrom(
+                  primary: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 20)),
+            )
+          ]),
       body: Column(
         children: [
           Expanded(
