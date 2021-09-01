@@ -22,7 +22,17 @@ class AuthServices {
 
   bool isSignedIn() {
     return _auth.isSignedIn;
+  }
 
+  Future signUp(String email, String password) async {
+    try {
+      await _auth.signUp(email, password);
+      User user = await _auth.getUser();
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   Future signInAnons() async {

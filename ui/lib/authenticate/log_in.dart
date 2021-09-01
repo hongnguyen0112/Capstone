@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ui/services/auth.dart';
 
 class LogIn extends StatefulWidget {
-   
-  final Function? toggleView;
-  LogIn({this.toggleView});
+
 
   @override
   _LogInState createState() => _LogInState();
