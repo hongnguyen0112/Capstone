@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ui/screens/loading.dart';
-import 'package:ui/screens/login.dart';
+import 'package:ui/authenticate/log_in.dart';
+import 'package:ui/authenticate/sign_up.dart';
 import 'screens/home_screen.dart';
 import 'package:firedart/firedart.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/':(context) => LogIn(),
+        '/register':(context) => SignUp(),
         '/loading':(context) => Loading(),
         '/chat':(context) => HomeScreen(),
         
