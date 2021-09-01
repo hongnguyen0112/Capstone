@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firedart/auth/user_gateway.dart';
 import 'package:ui/services/auth.dart';
 
 class LogIn extends StatelessWidget {
   final AuthServices _auth = AuthServices();
+  bool status = AuthServices().isSignedIn();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,31 +15,35 @@ class LogIn extends StatelessWidget {
                   image: AssetImage('assets/intel.png'),
                   width: 200,
                   height: 200)),
-          ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(minimumSize: Size(200, 50)),
-              onPressed: () => {print('clicked')},
-              icon: Icon(
-                Icons.email,
-              ),
-              label: Text('Login')),
+          SizedBox(height: 20.0),
+          Container(
+            width: 300,
+            child:
+            Column(children: [
+            TextFormField(
+            decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Email",hintText: 'example@intel.com'),
+            onChanged: (val) {},
+            keyboardType: TextInputType.emailAddress,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            onChanged: (val) {},
+            obscureText: true,
+            decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Password"),
+            
+            
+          )],)),
           SizedBox(
             height: 20.0,
           ),
-          ElevatedButton.icon(
+          ElevatedButton(
               style: ElevatedButton.styleFrom(minimumSize: Size(200, 50)),
               onPressed: () async {
-                var result = await _auth.signInAnons();
-                if (result == null) {
-                  print('error');
-                } else {
-                  print('signIn');
-                  print(result);
-                }
+                print('clicked');
               },
-              icon: Icon(
-                Icons.email,
-              ),
-              label: Text('Login Anonusmouly')),
+              child: Text('Login')),
         ],
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
