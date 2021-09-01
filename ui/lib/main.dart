@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:ui/loading.dart';
-import 'package:ui/login.dart';
-import 'home_screen.dart';
+import 'package:ui/screens/loading.dart';
+import 'package:ui/screens/login.dart';
+import 'screens/home_screen.dart';
+import 'package:firedart/firedart.dart';
 
-void main() {
+Future main() async {
+  FirebaseAuth.initialize('AIzaSyARw0GgR7bfrK8d0O2Yy4un3W1MN25_EFc',VolatileStore());
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
