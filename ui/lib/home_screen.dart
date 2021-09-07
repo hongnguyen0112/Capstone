@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:math';
+
 
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //Properties and Variables
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<String> _data = [];
-  static const String BOT_URL = "http://34.231.105.143:5005/webhooks/rest/webhook";
+  static const String BOT_URL = "http://localhost:5005/webhooks/rest/webhook";
   TextEditingController queryController = TextEditingController();
   List fallback_values = [];
   bool fallback = false;
